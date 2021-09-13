@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+html, body {
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Poppins';
+}
+
+a:link {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: default;
+}
+
+a:visited {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: default;
+}
+
+/* NAVBAR */
+
+.navbar {
+    width: 100vw;
+    height: 3.3em;
+    background-color: #111928; /* 111928 / 283149 */
+    backdrop-filter: blur(14px) saturate(180%);
+    -webkit-backdrop-filter: blur(14px) saturate(180%);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+    display: grid;
+    grid-template-areas: 'logo links login';
+    align-items: center;
+}
+
+.logoNavbar {
+    height: 4.7em;
+    margin: auto;
+    top: -10px;
+    position: relative;
+    grid-area: logo;
+}
+
+.navLinks {
+    display: flex;
+    grid-area: links;
+    color: #eee;
+    font-family: 'Poppins';
+    flex-flow: row wrap;  justify-content: space-evenly;
+    position: relative;
+    top: -12px;
+    font-weight: 500;
+}
+
+.navLinks_link {
+    padding: 6px 15px;
+    border-radius: 20px;
+    cursor: default;
+}
+
+.navLinks_link:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.navLinks_link.active {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.userInfo {
+    grid-area: login;
+    display: flex;
+    flex-flow: row wrap;  justify-content: flex-end;
+    position: relative;
+    top: -12px;
+    margin-right: 10px;
+    cursor: default;
+}
+
+.userBackground {
+    /* background-color: rgba(255, 255, 255, 0.08); */
+    border-radius: 20px;
+}
+
+.userContent {
+    align-items: center;
+    display: flex;
+    backdrop-filter: blur(1px) brightness(30%);
+    border-radius: 20px;
+}
+
+.userInfo_name {
+    color: #fff;
+    font-family: 'Poppins';
+    align-self: center;
+    padding: 2px 8px 2px 15px;
+    font-weight: 300;
+}
+
+.userInfo_image {
+    width: 2.2em;
+    border-radius: 50%;
+    margin: 0px;
+    padding: 4px;
+}
+
+.userLogin button {
+    border: 0px;
+    border-radius: 20px;
+    padding: 6px 15px;
+}
+
+/* HOME PAGE */
+
+.homeContent {
+    background: linear-gradient(90deg, rgba(70,114,176,1) 0%, rgba(68,167,174,1) 100%);
+    height: calc(100vh - 3.3em);
+    width: 100vw;
+
+}
+
+.appContext {
+    margin: auto;
+    text-align: center;
+    padding: 2em 0em 0em 0em;
+    color: #111;
+    cursor: default;
+}
+
+.appHeader {
+    font-weight: 800;
+    font-size: 3.8em;
+    width: 15em;
+    line-height: 1.2em;
+    margin: auto;
+}
+
+.appText {
+    font-weight: 500;
+    font-size: 1.4em;
+    padding: 0.2em 0em 0em 0em;
+}
+
+.appImage {
+    margin: 18px auto auto auto;
+}
+
+.appImage img {
+    border-radius: 10px;
+}
+
+.appImage img.app {
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+.appImage img.visualizer {
+    position: absolute;
+    top: 47.5em;
+    right: 30em;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+
+.appButtons {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    margin: 12px auto auto auto;
+    width: 62%;
+}
+
+.appButtons button {
+    font-family: 'Poppins';
+    font-weight: 500;
+    display: grid;
+    grid-template-areas: 
+    'icon text'
+    'icon file';
+    border: 0px;
+    height: 51px;
+    width: 180px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    border-radius: 10px;
+    fill: #ddd;
+    color: #ddd;
+    cursor: pointer;
+}
+
+.appButtons button .icon {
+    grid-area: icon;
+    padding: 12px 0px;
+}
+.appButtons button .text {
+    grid-area: text;
+    margin: auto;
+    text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+}
+.appButtons button .file {
+    grid-area: file;
+    margin: -8px auto auto auto;
+    text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.appButtons #downloadEXE {
+    background-color: rgb(51, 155, 106);
+}
+
+.appButtons #downloadZIP {
+    background-color: rgb(209, 125, 47);
+}
+
+.appButtons #discordServer {
+    background-color: #697EC4;
+}
+
+.appButtons #githubRep {
+    background-color: #e0e1e2;
+    color: #222;
+    fill: #222
+}
