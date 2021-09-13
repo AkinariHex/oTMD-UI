@@ -44,7 +44,6 @@ export default NextAuth({
     },
     async jwt(token, user, account, profile, isNewUser) {
       if (account?.accessToken) {
-        console.log(account);
         token.accessToken = account.accessToken;
         token.refresh_token = account.refresh_token;
       }
