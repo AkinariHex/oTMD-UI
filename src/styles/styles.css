@@ -4,6 +4,7 @@ html, body {
     padding: 0px;
     margin: 0px;
     font-family: 'Poppins';
+    scrollbar-color: rgba(0, 0, 0, 0.6) rgba(17, 25, 40, 0.75);
 }
 
 a:link {
@@ -32,7 +33,9 @@ a:visited {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
     display: grid;
     grid-template-areas: 'logo links login';
+    grid-template-columns: 20vw auto 20vw;
     align-items: center;
+    z-index: 999;
 }
 
 .logoNavbar {
@@ -48,7 +51,9 @@ a:visited {
     grid-area: links;
     color: #eee;
     font-family: 'Poppins';
-    flex-flow: row wrap;  justify-content: space-evenly;
+    flex-flow: row wrap;  justify-content: space-around;
+    width: 50%;
+    margin: auto;
     position: relative;
     top: -12px;
     font-weight: 500;
@@ -135,10 +140,16 @@ a:visited {
     margin: auto;
 }
 
+.appHeader .logoAppHeader {
+    width: 3.8em;
+}
+
 .appText {
     font-weight: 500;
     font-size: 1.4em;
-    padding: 0.2em 0em 0em 0em;
+    padding: 0em 0em 0em 0em;
+    color: #fff;
+    text-shadow: 0px 1px 4px rgb(0 0 0 / 20%);
 }
 
 .appImage {
@@ -220,9 +231,86 @@ a:visited {
 }
 
 
+/* TOURNAMENTS PAGE */
 
+.tournamentsContainer {
+    background-color: rgba(17, 25, 40, 0.75);
+    padding: 4em 0em 2em 0em;
+    color: #fff;
+    font-family: 'Poppins';
+    text-align: center;
+}
 
+.tournamentsContainer #header{
+    text-align: center;
+    font-weight: 700;
+    font-size: 3.8em;
+}
+.tournamentsContainer #text{
+    text-align: center;
+    font-weight: 400;
+    font-size: 1.4em;
+}
 
+.tournamentsList {
+    margin-top: 20px;
+}
+
+.tournamentsList .entry {
+    display: grid;
+    grid-template-areas: 'acronym name status';
+    grid-template-columns: 6.5em auto 6em;
+    background-color: rgba(0, 0, 0, 0.14);
+    width: 40%;
+    border-radius: 15px;
+    margin: auto auto 5px auto;
+    font-size: 1.2em;
+    font-weight: 400;
+    align-content: center;
+    padding: 10px 0px;
+    transition: 0.12s ease-out;
+    cursor: pointer;
+}
+
+.tournamentsList .entry:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: 0.12s ease-in;
+}
+
+.tournamentsList .entry .acronym{
+    padding-left: 1em;
+    grid-area: acronym;
+    text-align: left;
+}
+
+.tournamentsList .entry .name{
+    grid-area: name;
+    text-align: left;
+}
+
+.tournamentsList .entry .status{
+    grid-area: status;
+    text-align: right;
+    padding-right: 1em;
+    font-weight: 300;
+    font-size: 0.9em;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.tournamentsList .entry .status span{
+    padding: 2px 10px;
+    border-radius: 15px;
+}
+
+.tournamentsList .entry .status.Active span{
+    background-color: rgb(61 136 61)
+}
+
+.tournamentsList .entry .status.Ended span{
+    background-color: rgb(179 49 49);
+}
 /* SCROLLBAR */
 
 ::-webkit-scrollbar {
@@ -231,7 +319,7 @@ a:visited {
   
   /* Track */
   ::-webkit-scrollbar-track {
-    background: transparent;
+    background: rgba(17, 25, 40, 0.75);
   }
   
   /* Handle */
