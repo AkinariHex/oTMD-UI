@@ -62,8 +62,7 @@ export default function Home({ session }) {
           </button>
         </div>
         <div className="appImage">
-          <img className="app" src={"/img/otmdapp.png"} />
-          <img className="visualizer" src={"/img/otmdvisualizer.png"} />
+          <object type="image/svg+xml" data="/img/otmdapp.svg" className="app" />
         </div>
       </div>
     </div>
