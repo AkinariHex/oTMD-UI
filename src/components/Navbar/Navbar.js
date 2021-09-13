@@ -31,7 +31,7 @@ export default function Navbar({ session }) {
             </div>
             <div className="userInfo">
                 {session !== null ? (
-                    <div className="userBackground" style={{background: `url('${session.cover_url}') center center / cover no-repeat`}}>
+                    <div className="userBackground" style={{background: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)) center center / cover no-repeat, url('${session.cover_url}') center center / cover no-repeat`}}>
                         <div className="userContent">
                             <span className="userInfo_name">{session.username}</span>
                             <img className="userInfo_image" src={session.avatar_url} alt="user image"/>
