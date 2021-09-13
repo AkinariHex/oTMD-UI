@@ -40,6 +40,9 @@ export default NextAuth({
           },
         })
       ).json();
+
+      if (userData.authentication === "basic") return {};
+
       return userData;
     },
     async jwt(token, user, account, profile, isNewUser) {
