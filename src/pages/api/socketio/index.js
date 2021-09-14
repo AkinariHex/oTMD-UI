@@ -5,9 +5,9 @@ const ioHandler = (req, res) => {
       console.log('*First use, starting socket.io')
   
       const io = new Server(res.socket.server, {
-        cors: {
-          origin: "http://localhost:3000",
-          methods: ["GET", "POST"]
+        allowRequest: (req, callback) => {
+          const noOriginHeader = req.headers.origin === undefined;
+          callback(null, noOriginHeader);
         }
       })
   
