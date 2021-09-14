@@ -1,3 +1,4 @@
+import io from 'socket.io-client'
 
 export default function Tournaments({ tournaments }) {
     return (
@@ -51,7 +52,10 @@ export async function getServerSideProps() {
         return item
 
     })
-    
+
+    /* var sock = await fetch(`${process.env.NEXTAUTH_URL}/api/socketio`)
+
+     */
   
     return {
       props: {
