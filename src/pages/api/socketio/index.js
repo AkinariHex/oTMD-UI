@@ -4,12 +4,17 @@ const ioHandler = (req, res) => {
     if (!res.socket.server.io) {
       console.log('*First use, starting socket.io')
   
-      const io = new Server(res.socket.server)
+      const io = new Server(res.socket.server, {
+        cors: {
+          origin: "http://localhost:3000",
+          methods: ["GET", "POST"]
+        }
+      })
   
       io.on('connection', socket => {
         socket.broadcast.emit('a user connected')
         socket.on('hello', msg => {
-          socket.emit('hello', 'world!')
+          socket.emit('hello', msg)
         })
       })
   
