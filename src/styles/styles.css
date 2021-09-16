@@ -474,6 +474,20 @@ a:visited {
 }
 
 
+/* ACCOUNT PAGE */
+.accountContainer {
+    display: grid;
+    grid-template-areas: 'profile actions';
+    grid-template-columns: 40% 60%;
+}
+
+.accountContainer .profileInfo{
+    grid-area: profile;
+}
+
+.accountContainer .profileActions{
+    grid-area: actions;
+}
 
 /* SCROLLBAR */
 
