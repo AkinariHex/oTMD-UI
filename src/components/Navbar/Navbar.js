@@ -4,7 +4,7 @@ import NavLink from '../NavLink/NavLink';
 import Link from "next/link";
 
 export default function Navbar({ session, userStatus }) {
-    
+
     let statusColor = {
         "Server": 'rgb(197, 56, 56)',
         "Tourney Manager": 'rgb(48, 164, 226);',
@@ -41,6 +41,7 @@ export default function Navbar({ session, userStatus }) {
                     <div className="userInfo">
                         {session !== null ? (
                             <Link href="/profile">
+                                <a>
                                     <div className="userBackground" style={{background: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)) center center / cover no-repeat, url('${session.cover_url}') center center / cover no-repeat`}}>
                                         <div className="userContent">
                                             <button className="userLogout" onClick={() => signOut()}><i className='bx bx-log-out-circle'></i></button>
@@ -48,6 +49,7 @@ export default function Navbar({ session, userStatus }) {
                                             <img className="userInfo_image" src={session.avatar_url} alt="user image"/>
                                         </div>
                                     </div>
+                                    </a>
                             </Link>
                         ) : (
                             <div className="userLogin">
