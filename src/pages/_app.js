@@ -3,7 +3,7 @@ import "../styles/styles.css";
 import Navbar from "../components/Navbar/Navbar";
 import Head from 'next/head'
 
-function MyApp({ Component, pageProps, session }) {
+function MyApp({ Component, pageProps, session, userStatus }) {
   return (
     <>
       <Head>
@@ -17,8 +17,9 @@ function MyApp({ Component, pageProps, session }) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content="https://akinariosu.s-ul.eu/y16opY95" />
         <meta property="og:site_name" content="osu! Tourney Match Displayer" />
+        <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'></link>
       </Head>
-      <Navbar session={session} />
+      <Navbar session={session} userStatus={userStatus} />
       <Component {...pageProps} />
     </>
   );
@@ -30,7 +31,15 @@ MyApp.getInitialProps = async (context) => {
   // Get user session
   const session = await getSession(context.ctx);
 
+  var statusData = []
+
+  if(session !== null) {
+    statusData = await fetch(`http://localhost:3000/api/users?u=${session.id}`) 
+    statusData = await statusData.json()
+  }
+
   return {
-      session
+      session: session,
+      userStatus: statusData[0]
   };
 } 

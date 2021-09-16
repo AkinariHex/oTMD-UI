@@ -1,4 +1,52 @@
 import NextAuth from "next-auth";
+import Airtable from "airtable";
+
+
+const postUserDB = (profile) => {
+  const base = new Airtable({apiKey: process.env.AIRTABLE_APIKEY}).base(process.env.AIRTABLE_BASE)
+
+      base('Users').create([
+        {
+          "fields": {
+            "ID": profile.id,
+            "Username": profile.username,
+            "Permissions": 'User',
+            "Discord": profile.discord,
+            "Twitter": profile.twitter
+          }
+        }
+      ], function(err, records) {
+        
+        if (err) {
+          console.error(err);
+          return;
+        }
+
+
+    });
+}
+
+const checkUserDB = (profile) => {
+  const base = new Airtable({apiKey: process.env.AIRTABLE_APIKEY}).base(process.env.AIRTABLE_BASE)
+
+  var mapped = ''
+
+    base('Users').select({
+      filterByFormula: `IF({ID} = '${profile.id}' , TRUE())`,
+      view: "Grid view"
+    }).eachPage(function page(records, fetchNextPage) {
+
+        mapped = records.map((record) => {return record.fields})
+
+        if(mapped[0] === undefined) postUserDB(profile)
+
+    }, function done(err) {
+        if (err) { console.error(err); return; }
+    });
+
+
+}
+
 
 export default NextAuth({
   providers: [
@@ -46,12 +94,17 @@ export default NextAuth({
       return userData;
     },
     async jwt(token, user, account, profile, isNewUser) {
+
       if (account?.accessToken) {
         token.accessToken = account.accessToken;
         token.refresh_token = account.refresh_token;
-      }
 
+        //Write user in database
+        checkUserDB(profile)
+      }
+      
       return Promise.resolve(token);
+
     },
   },
 });

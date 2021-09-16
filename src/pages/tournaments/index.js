@@ -1,11 +1,27 @@
-import io from 'socket.io-client'
 
-export default function Tournaments({ tournaments }) {
+export default function Tournaments({ tournaments, requests }) {
+
     return (
       <div className="homeContent">
           <div className="tournamentsContainer">
                 <span id="header">Tournaments</span> <br />
                 <span id="text">Currently {tournaments.length} tournaments supported!</span>
+                <div className="tournamentsList">
+                    {
+                        (requests.length > 0) &&
+                            requests.map((item, index) => {
+                                return(
+                                    <div className="entry" key={index} onClick={() => window.open(item.forumID, "_blank")}>
+                                        <span className="acronym">{item.Acronym}</span>
+                                            <span className="name">{item.Name}<span className="request">Requested by <img src={`http://s.ppy.sh/a/${item.RequesterID}`} className="propic" alt="propic user"/><span className="username">{item.RequesterUsername}</span></span></span>
+                                            <span className={`status Pending`}><span>Pending</span>
+                                        </span>
+                                    </div>
+                                )
+                            }) 
+                    }
+                </div>
+                {requests.length > 0 && <div className="tournamentsListDivider"/>}
                 <div className="tournamentsList">
                     {tournaments.map((item, index) => {
                         return(
@@ -53,13 +69,13 @@ export async function getServerSideProps() {
 
     })
 
-    /* var sock = await fetch(`${process.env.NEXTAUTH_URL}/api/socketio`)
+    var requests = await fetch(`${process.env.NEXTAUTH_URL}/api/tournaments/requests`)
+    requests = await requests.json()
 
-     */
-  
     return {
       props: {
-        tournaments: data
+        tournaments: data,
+        requests: requests
       },
     };
 }

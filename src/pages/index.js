@@ -56,7 +56,7 @@ export default function Home({ release }) {
           </button>
         </div>
         <div className="appImage">
-          <object type="image/svg+xml" data="/img/otmdapp.svg" className="app" />
+          <object type="image/svg+xml" data="/img/otmdappV1.svg" className="app" />
         </div>
       </div>
     </div>
