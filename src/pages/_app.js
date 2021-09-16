@@ -34,7 +34,7 @@ MyApp.getInitialProps = async (context) => {
   var statusData = []
 
   if(session !== null) {
-    statusData = await fetch(`http://localhost:3000/api/users?u=${session.id}`) 
+    statusData = await fetch(`${NEXTAUTH_URL}/api/users?u=${session.id}`) 
     statusData = await statusData.json()
   }
 
