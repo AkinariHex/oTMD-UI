@@ -52,7 +52,7 @@ export default NextAuth({
   providers: [
     {
       id: "osu",
-      name: "OSU",
+      name: "Osu!",
       type: "oauth",
       version: "2.0",
       scope: "identify",

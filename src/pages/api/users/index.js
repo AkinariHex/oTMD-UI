@@ -16,10 +16,10 @@ export default function handler(req, res) {
         
                     var mapped = records.map((record) => {return record.fields})
                 
-                    res.status(200).send(mapped)
+                    res.status(200).json(mapped)
                 
                 }, function done(err) {
-                    if (err) { console.error(err); return; }
+                    if (err) { console.error(err); return res.status(401); }
                 });
 
             }, 1000)

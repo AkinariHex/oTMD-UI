@@ -1,7 +1,7 @@
 import { getSession, Provider } from "next-auth/client";
 import "../styles/styles.css";
 import Navbar from "../components/Navbar/Navbar";
-import Head from 'next/head'
+import Head from "next/head";
 
 function MyApp({ Component, pageProps, session, userStatus }) {
   return (
@@ -25,21 +25,21 @@ function MyApp({ Component, pageProps, session, userStatus }) {
   );
 }
 
-export default MyApp;
-
 MyApp.getInitialProps = async (context) => {
   // Get user session
   const session = await getSession(context.ctx);
 
-  var statusData = []
-
-  if(session !== null) {
-    statusData = await fetch(`${process.env.NEXTAUTH_URL}/api/users?u=${session.id}`) 
-    statusData = await statusData.json()
-  }
+  const statusData =
+    session !== null
+      ? await fetch(
+          `${process.env.NEXTAUTH_URL}/api/users?u=${session.id}`
+        ).then((res) => res.json()).then(res => res[0])
+      : [{}];
 
   return {
-      session: session,
-      userStatus: statusData[0]
+    session: session,
+    userStatus: statusData,
   };
-} 
+};
+
+export default MyApp;
