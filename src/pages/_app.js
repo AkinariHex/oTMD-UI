@@ -28,15 +28,12 @@ function MyApp({ Component, pageProps, session, userStatus }) {
         <meta name="twitter:image:alt" content="OTMD Logo"/>
         <meta property="og:site_name" content="osu! Tourney Match Displayer" />
         <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'></link>
-        <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-VL5LFBSNM7"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
+        <script dangerouslySetInnerHTML={{ __html: `window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-          gtag('config', 'G-VL5LFBSNM7');
-        </script>
+        gtag('config', 'G-VL5LFBSNM7');`}}></script>
       </Head>
       <Navbar session={session} userStatus={userStatus} />
       <Component {...pageProps} />
