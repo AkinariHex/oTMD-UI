@@ -12,7 +12,8 @@ const postUserDB = (profile) => {
             "Username": profile.username,
             "Permissions": 'User',
             "Discord": profile.discord,
-            "Twitter": profile.twitter
+            "Twitter": profile.twitter,
+            "DateJoin": Math.floor(new Date().getTime()/1000.0)
           }
         }
       ], function(err, records) {

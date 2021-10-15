@@ -8,14 +8,24 @@ function MyApp({ Component, pageProps, session, userStatus }) {
     <>
       <Head>
         <link rel="icon" type="image/ico" href="/img/otmd.ico" />
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <title>osu! Tourney Match Displayer</title>
-        <meta property="og:title" content="osu! Tourney Match Displayer" />
-        <meta property="og:description" content="Simple displayer made to be used as a browser source on OBS/SLOBS that displays the current state of an osu! tournament match!" />
-        <meta property="og:image" content="https://akinariosu.s-ul.eu/y16opY95" />
-        <meta property="og:url" content="https://otmd.vercel.app" />
-        <meta name="twitter:creator" content="@akinari_osu" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="https://akinariosu.s-ul.eu/y16opY95" />
+        <meta name="description" content="Display easily the score of your osu! matches in real-time while streaming on twitch!"/>
+        <meta name="author" content="Akinari"/>
+        <meta name="copyright" content="Akinari"/>
+        <meta name="robots" content="index, follow"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="osu! Tourney Match Displayer"/>
+        <meta property="og:url" content="https://otmd.vercel.app"/>
+        <meta property="og:image" content="https://akinariosu.s-ul.eu/CKOXOZMi"/>
+        <meta property="og:description" content="Display easily the score of your osu! matches in real-time while streaming on twitch!"/>
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:title" content="osu! Tourney Match Displayer"/>
+        <meta name="twitter:site" content="@akinari_osu"/>
+        <meta name="twitter:description" content="Display easily the score of your osu! matches in real-time while streaming on twitch!"/>
+        <meta name="twitter:image" content="https://akinariosu.s-ul.eu/CKOXOZMi"/>
+        <meta name="twitter:image:alt" content="OTMD Logo"/>
         <meta property="og:site_name" content="osu! Tourney Match Displayer" />
         <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'></link>
       </Head>
