@@ -17,7 +17,7 @@ function MyApp({ Component, pageProps, session, userStatus }) {
         <meta name="robots" content="index, follow"/>
         <meta property="og:type" content="website"/>
         <meta property="og:title" content="osu! Tourney Match Displayer"/>
-        <meta property="og:url" content="https://otmd.vercel.app"/>
+        <meta property="og:url" content="https://otmd.app"/>
         <meta property="og:image" content="https://akinariosu.s-ul.eu/CKOXOZMi"/>
         <meta property="og:description" content="Display easily the score of your osu! matches in real-time while streaming on twitch!"/>
         <meta name="twitter:card" content="summary_large_image"/>
