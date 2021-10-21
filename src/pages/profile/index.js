@@ -1,7 +1,6 @@
 import { getSession } from "next-auth/client";
 import TournamentRequest from "../../components/Forms/TournamentRequest";
 import { useState } from "react";
-import Modal from 'react-modal';
 
 export default function Account({ session, userStatus }) {
 
@@ -38,47 +37,27 @@ export default function Account({ session, userStatus }) {
     }
 }
 
-  /* Modal.setAppElement('#modal');
 
-  const [modalIsOpen, setIsOpen] = useState(false)
+  const [openModal, setOpenModal] = useState(false)
 
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  } */
 
   return (
     <div className="homeContent">
 
-      {/* <div id="modal" className="modal hidden"></div>
-
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-      >
-        
-            <div className="content">
-                <div className="header">
-                    <span id="text">tournament request //</span>
-                    <div className="icon" onClick={closeModal}><i className='bx bx-x'></i></div>
-                </div>
-            </div>
-        
-      </Modal> */}
+      {openModal && <TournamentRequest closeModal={setOpenModal} />}
 
       <div className="accountContainer">
         <div className="profileInfo">
-          <img src="http://s.ppy.sh/a/4001304" alt="User Image" />
-          <div className="profileName">Akinari<span style={{backgroundColor: statusColor[userStatus.Permissions]}} id="role">{userStatus.Permissions}</span></div>
+          <img src={session.avatar_url} alt="User Image" />
+          <div className="profileName">{session.username}<span style={{backgroundColor: statusColor[userStatus.Permissions]}} id="role">{userStatus.Permissions}</span></div>
           <div className="timeProfile">Joined from {DateDiff.inDays(joinDate, nowDate)} days</div>
         </div>
-        <div className="profileActions">
-          <div className="actionsContainer" style={{display: "flex"}}>
-            <span style={{margin: "auto", color: "#EEE", fontFamily: "Poppins", fontSize: "20pt"}}>Coming Soon</span>
-            {/* <div className="actionCategory">
+        <div className="profileActions" style={{display: 'flex'}}>
+
+          <span style={{margin: "auto", color: "#EEE", fontFamily: "Poppins", fontSize: "20pt"}}>Coming Soon</span>
+
+          {/* <div className="actionsContainer">
+            <div className="actionCategory">
               <h2>Tournaments Management</h2>
               <div className="actionCentre">
                 <div className="action">
@@ -94,13 +73,13 @@ export default function Account({ session, userStatus }) {
                   <div className="text">Your tournament requests</div>
                   <div className="utilityIcon"><i className='bx bxs-down-arrow' ></i></div>
                 </div>
-                <div className="action" onClick={openModal}>
+                <div className="action" onClick={() => setOpenModal(true)}>
                   <div className="text">Request a tournament</div>
                   <div className="utilityIcon"><i className='bx bxs-right-arrow' ></i></div>
                 </div>
               </div>
-            </div> */}
-          </div>
+            </div>
+          </div> */}
         </div>
       </div>
     </div>
