@@ -4,8 +4,9 @@ export default function Tournaments({ tournaments, requests }) {
     return (
       <div className="homeContent">
           <div className="tournamentsContainer">
-                <span id="header">Tournaments</span> <br />
+                <span id="header">Tournaments</span><br/>
                 <span id="text">Currently {tournaments.length} tournaments supported!</span>
+                { (requests.length > 0) && <><br/><span id="subtext_requests">The accepted tournaments will be added every friday!</span></> }
                 <div className="tournamentsList">
                     {
                         (requests.length > 0) &&
@@ -14,7 +15,7 @@ export default function Tournaments({ tournaments, requests }) {
                                     <div className="entry" key={index} onClick={() => window.open(item.forumID, "_blank")}>
                                         <span className="acronym">{item.Acronym}</span>
                                             <span className="name">{item.Name}<span className="request">Requested by <img src={`http://s.ppy.sh/a/${item.RequesterID}`} className="propic" alt="propic user"/><span className="username">{item.RequesterUsername}</span></span></span>
-                                            <span className={`status Pending`}><span>Pending</span>
+                                            <span className={`status ${item.Status}`}><span>{item.Status}</span>
                                         </span>
                                     </div>
                                 )

@@ -1,10 +1,11 @@
+import { motion } from "framer-motion";
 
 export default function Home({ release }) {
   return (
     <div className="homeContent">
       <div className="appContext">
         <div className="appHeader">
-          <object type="image/svg+xml" data="/img/otmdLOGO.svg" className="logoAppHeader" />
+          <object type="image/svg+xml" data="/img/otmdLOGO.svg" className="logoAppHeader" alt="otmd logo"/>
         </div>
         <div className="appText">
           Display easily your osu! Tournament Matches while streaming on Twitch.
@@ -55,9 +56,13 @@ export default function Home({ release }) {
             </div>
           </button>
         </div>
-        <div className="appImage">
-          <object type="image/svg+xml" data="/img/otmdappV1.svg" className="app" />
-        </div>
+        <motion.div
+          animate={{ y: -100, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="appImage"
+        >
+          <object type="image/svg+xml" data="/img/otmdappV1.svg" className="app" alt="otmd app image"/>
+        </motion.div>
       </div>
     </div>
   );

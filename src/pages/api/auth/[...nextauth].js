@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import Airtable from "airtable";
-
+import { v4 as uuidv4 } from 'uuid';
 
 const postUserDB = (profile) => {
   const base = new Airtable({apiKey: process.env.AIRTABLE_APIKEY}).base(process.env.AIRTABLE_BASE)
@@ -10,6 +10,7 @@ const postUserDB = (profile) => {
           "fields": {
             "ID": profile.id,
             "Username": profile.username,
+            "UUID": uuidv4(),
             "Permissions": 'User',
             "Discord": profile.discord,
             "Twitter": profile.twitter,
@@ -39,7 +40,22 @@ const checkUserDB = (profile) => {
 
         mapped = records.map((record) => {return record.fields})
 
-        if(mapped[0] === undefined) postUserDB(profile)
+        console.log(mapped[0].RecordID)
+
+        if(mapped[0] === undefined) {
+          postUserDB(profile)
+        } else if(mapped[0].UUID == '' || mapped[0].UUID == null ||  mapped[0].UUID == undefined){
+          base('Users').update([
+            {
+              "id": mapped[0].RecordID,
+              "fields": {
+                "UUID": uuidv4()
+              }
+            }
+          ], function(err) {
+            if (err) { console.error(err); return; }
+          });
+        }
 
     }, function done(err) {
         if (err) { console.error(err); return; }

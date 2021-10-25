@@ -1,25 +1,54 @@
-import { set, useForm } from 'react-hook-form';
-import { useState } from "react";
+import { Formik, Field, Form } from 'formik';
+import { useState } from 'react';
 
-function TournamentRequest({ setClass }) {
+function TournamentRequest({ profile, session }) {
 
-    const [modalClass, setModalClass] = useState('')
-
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-      } = useForm();
-    const onSubmit = (data) => console.log(data);
+    const [isSubmitted, setSubmitted] = useState(false)
 
     return (
-        <div className={`${setClass} ${modalClass}`}>
-            <div className="content">
-                <div className="header">
-                    <span id="text">tournament request //</span>
-                    <div className="icon" onClick={() => setModalClass('hidden')}><i className='bx bx-x'></i></div>
+        <div className="collapsibleBody">
+                <div className="body">
+                    {/* Shows the form if haven't submitted yet */}
+                    {!isSubmitted &&
+                    <Formik
+                        initialValues={{
+                            tourneyName: '',
+                            tourneyURL: '',
+                            username: profile.Username
+                        }}
+                        onSubmit={async (values) => {
+                            await new Promise((r) => setTimeout(r, 500));
+                            let submit = await fetch(`/api/tournaments/requests?s=${profile.UUID}`, {
+                                method: "POST",
+                                headers: new Headers({"Accept": "application/json", "Content-Type":  "application/json"}),
+                                body: JSON.stringify(values)
+                            })
+                            submit = await submit.json();
+                            setSubmitted(true)
+                            setTimeout(() => location.reload(), 500)
+
+                        }}
+                      >
+                        {({ isSubmitting }) => (
+                            <Form id="tourneyRequest">
+                                <Field id="tourneyName" name="tourneyName" placeholder="Tournament Name" required/>
+                                <div className="info">
+                                    <Field id="tourneyURL" name="tourneyURL" placeholder="Tournament Link" type="url" required/>
+                                    <Field id="userName" name="username" disabled/>
+                                </div>
+                                <button type="submit" disabled={isSubmitting}>Request</button>
+                            </Form>
+                        )}
+                    </Formik>}
+                    {/* Shows the submission complete of the form */}
+                    {isSubmitted && 
+                    <div className="formSubmitted">
+                        <img src="/img/success.png" alt="formSuccess" className="formSuccessIcon"/>
+                        <span id="text">Tournament successfully requested!</span>
+                        <span id="subtext">Reloading the page in <b>1 second</b>!</span>
+                    </div>
+                    }
                 </div>
-            </div>
         </div>
     )
 }

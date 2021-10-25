@@ -10,14 +10,20 @@
   },
   "dependencies": {
     "airtable": "^0.11.1",
+    "formik": "^2.2.9",
+    "framer-motion": "^4.1.17",
     "next": "11.1.2",
     "next-auth": "^3.29.0",
     "react": "17.0.2",
+    "react-accessible-accordion": "^4.0.0",
+    "react-collapsible": "^2.8.4",
     "react-dom": "17.0.2",
+    "react-dropdown": "^1.9.2",
     "react-hook-form": "^7.17.4",
     "react-modal": "^3.14.3",
     "socket.io": "^4.2.0",
-    "socket.io-client": "^4.2.0"
+    "socket.io-client": "^4.2.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "eslint": "7.32.0",
