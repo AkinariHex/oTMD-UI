@@ -85,8 +85,7 @@ export default function Account({ session, userStatus, requests }) {
                                     <div id="acronym">{item.Acronym}</div>
                                     <div id="name">{item.Name}</div>
                                   </div>
-                                  {/* <div id="status">{item.Status}</div> */}
-                                  <span className={`status Pending`}><span>Pending</span></span>
+                                  <span className={`status ${item.Status}`}><span>{item.Status}</span></span>
                               </div>
                           )
                       })

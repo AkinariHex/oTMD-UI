@@ -42,7 +42,7 @@ export default async function handler(req, res) {
               {
                 "fields": {
                   "UUID": uuidv4(),
-                  "Acronym": "",
+                  "Acronym": req.body.acronym,
                   "Name": req.body.tourneyName,
                   "forumID": req.body.tourneyURL,
                   "RequesterID": session.id,

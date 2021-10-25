@@ -416,7 +416,7 @@ a:visited {
     border-radius: 15px;
 }
 
-.tournamentsList .entry :is(.status.Active, .status.Accepted) span{
+.tournamentsList .entry :is(.status.Active, .status.Accepted) span, .collapsibleBody .item :is(.status.Active, .status.Accepted) span{
     background-color: rgb(61 136 61)
 }
 
