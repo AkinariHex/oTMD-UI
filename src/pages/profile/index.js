@@ -52,10 +52,10 @@ export default function Account({ session, userStatus, requests }) {
             <div className="profileName">{session.username}<span style={{backgroundColor: statusColor[userStatus.Permissions]}} id="role">{userStatus.Permissions}</span></div>
             <div className="timeProfile">Joined from {DateDiff.inDays(joinDate, nowDate)} days</div>
           </div>
-          <div className="userSocial">
+          {/* <div className="userSocial">
             <div id="twitter"><i className='bx bxl-twitter'></i>Akinari_osu</div>
             <div id="discord"><i className='bx bxl-discord-alt' ></i>Akinari#3171</div>
-          </div>
+          </div> */}
         </div>
         <div className="profileActions">
           <div className="actionsContainer">
