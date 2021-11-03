@@ -28,7 +28,7 @@ function MyApp({ Component, pageProps, session, userStatus }) {
         <meta name="twitter:image" content="https://akinariosu.s-ul.eu/CKOXOZMi"/>
         <meta name="twitter:image:alt" content="OTMD Logo"/>
         <meta property="og:site_name" content="osu! Tourney Match Displayer" />
-        <meta name="theme-color" content="#111928e6"/>
+        <meta name="theme-color" content="#0C121DCC"/>
         <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'></link>
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-FB42B4PE0Q"></script>
         <script dangerouslySetInnerHTML={{ __html: ` window.dataLayer = window.dataLayer || [];

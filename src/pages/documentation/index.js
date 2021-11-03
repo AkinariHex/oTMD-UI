@@ -8,7 +8,7 @@ export default function Documentation({ release }) {
               <h1>How to install</h1>
               <p>The current documentation is valid for the <span className="string">v1.9.0</span> of osu! Tourney Match Displayer.<br/>You have two methods to install it, using the installer or just unzipping the .zip file.</p>
               <h2>Installer</h2>
-              <p>First of all you need to download the <a style={{fontWeight: 600}} href={`https://github.com/AkinariHex/oTMD/releases/download/${release[0].tag_name}/otmd_${release[0].tag_name}_installer.exe`} target="_blank" rel="noreferrer">installer</a>!<br/>Once downloaded, run the installer and continue installing it!<br/>The installer runs with Administrator Privileges.<br/>If Microsoft Defender SmartScreen alert you, don&apos;t worry about it and click Run anyway.<br/><span style={{fontWeight: 600}}>(Make sure you have downloaded it from <a href="https://otmd.vercel.app">otmd.vercel.app</a> to avoid malicius softwares!).</span></p>
+              <p>First of all you need to download the <a style={{fontWeight: 600}} href={`https://github.com/AkinariHex/oTMD/releases/download/${release[0].tag_name}/otmd_${release[0].tag_name}_installer.exe`} target="_blank" rel="noreferrer">installer</a>!<br/>Once downloaded, run the installer and continue installing it!<br/>The installer runs with Administrator Privileges.<br/>If Microsoft Defender SmartScreen alert you, don&apos;t worry about it and click Run anyway.<br/><span style={{fontWeight: 600}}>(Make sure you have downloaded it from <a href="https://otmd.app">otmd.app</a> to avoid malicius softwares!).</span></p>
               <p>The default installation folder is <span className="string">C:\Program Files\osu-tourney-match-displayer</span>!</p>
               <p>At first run it will ask you to allow the .exe for the firewall, check only for private networks and allow access.</p>
               <h2>Zip Archive</h2>
@@ -61,7 +61,7 @@ export default function Documentation({ release }) {
                   <li>Uncheck &apos;Local File box&apos;</li>
                   <li><span className="string">URL</span> : <span className="string link">http://localhost:3000/visualizer</span> <span style={{fontWeight: 600}}>(the app copy automatically the url when you save the settings so you can just paste it inside obs)</span></li>
                   <li><span className="string">Width</span> : <span className="string">400</span></li>
-                  <li><span className="string">Height</span> : <span className="string">130</span> or <span className="string">80</span> if you&apos;re using the small displayer)</li>
+                  <li><span className="string">Height</span> : <span className="string">130</span> or <span className="string">80</span> (if you&apos;re using the small displayer)</li>
                   <li>Check &apos;Refresh browser when scene becomes active&apos; box</li>
                 </ul>
                 <img src="https://drive.google.com/uc?export=view&id=1BTEAz996uFtjzTXmIORPMMHJX6pOXOsV" style={{width: "898px"}} />
