@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     const base = new Airtable({apiKey: process.env.AIRTABLE_APIKEY}).base(process.env.AIRTABLE_BASE)
 
     if (req.method === 'GET') {
-        base('TournamentsRequests').select({
+        base(process.env.AIRTABLE_TOURNAMENTS_TABLE).select({
             view: "Grid view"
         }).eachPage(function page(records, fetchNextPage) {
 
@@ -38,7 +38,7 @@ export default async function handler(req, res) {
               return res.status(401).json({ status: 'no body', uuid: uuidValidateV4(req.query.s)})
             }
 
-            base('TournamentsRequests').create([
+            base(process.env.AIRTABLE_TOURNAMENTS_TABLE).create([
               {
                 "fields": {
                   "UUID": uuidv4(),

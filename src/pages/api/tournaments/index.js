@@ -27,7 +27,7 @@ export default function handler(req, res) {
         }
 
         if(req.query.u){
-            base('TournamentsRequests').select({
+            base(process.env.AIRTABLE_TOURNAMENTS_TABLE).select({
                 filterByFormula: `IF({RequesterID} = '${req.query.u}' , TRUE())`,
                 view: "Grid view"
             }).eachPage(function page(records, fetchNextPage) {

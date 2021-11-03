@@ -1179,6 +1179,14 @@ header {
         display: none;
     }
 
+    .tournamentsList .entry .name .request {
+        margin: auto;
+    }
+
+    #subtext_requests {
+        font-size: 11pt;
+    }
+
     .documentationContainer span#header {
         font-size: 2.4em;
     }
