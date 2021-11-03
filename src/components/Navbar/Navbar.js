@@ -2,6 +2,7 @@
 import { signIn, signOut } from "next-auth/client";
 import NavLink from '../NavLink/NavLink';
 import Link from "next/link";
+import { Home2, Cup, TableDocument } from "iconsax-react";
 
 export default function Navbar({ session, userStatus }) {
 
@@ -80,24 +81,24 @@ export default function Navbar({ session, userStatus }) {
                         aria-current="page"
                         href={"/"}
                     >
-                        <div className="item"><i className='bx bx-home'></i></div>
+                        <div className="item"><Home2 color="#D9E3F0"/></div>
                     </NavLink>
                     <NavLink
                         activeClassName="active"
                         aria-current="page"
                         href={"/tournaments"}
                     >
-                        <div className="item"><i className='bx bx-trophy'></i></div>
+                        <div className="item"><Cup color="#d9e3f0"/></div>
                     </NavLink>
                     <NavLink
                         activeClassName="active"
                         aria-current="page"
                         href={"/documentation"}
                     >
-                        <div className="item"><i className='bx bx-file'></i></div>
+                        <div className="item"><TableDocument color="#d9e3f0"/></div>
                     </NavLink>
                     {session !== null ? (
-                                    <Link href="/profile">
+                                    <Link href="/profile" passHref>
                                         <div className="item"><img src={session.avatar_url} alt="user propic"/></div>
                                     </Link>
                                 ) : (
