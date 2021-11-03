@@ -2,6 +2,6 @@ module.exports = {
   reactStrictMode: true,
   target: "serverless",
   images: {
-    domains: ['s.ppy.sh'],
+    domains: ['s.ppy.sh', 'a.ppy.sh'],
   },
 }

@@ -21,41 +21,41 @@ a:visited {
 
 /* NAVBAR */
 
-.navbar {
-    overflow: hidden;
-    width: 100%;
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     height: 3.3em;
     position: fixed;
-    top: 0;
+    width: 100vw;
+    /* background-color: #293d74; */
     background-color: #111928e6;
     backdrop-filter: blur(14px) saturate(180%);
     -webkit-backdrop-filter: blur(14px) saturate(180%);
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-    display: grid;
-    grid-template-areas: 'logo links login';
-    grid-template-columns: 20vw auto 20vw;
-    align-items: center;
     z-index: 999;
 }
 
 .logoNavbar {
     height: 2.5em;
-    margin: auto;
-    grid-area: logo;
     display: flex;
     align-content: center;
+    margin-left: 6em;
 }
 
 .navLinks {
-    display: flex;
-    grid-area: links;
     color: #eee;
     font-family: 'Poppins';
-    flex-flow: row wrap;  justify-content: space-around;
-    width: 50%;
+    display: flex;
+    gap: 10px;
     margin: auto;
-    position: relative;
     font-weight: 500;
+    list-style: none;
+    padding: 0;
+}
+
+.navLinks li {
+   display: inline-block;
 }
 
 .navLinks_link {
@@ -75,12 +75,50 @@ a:visited {
 }
 
 .userInfo {
-    grid-area: login;
     display: flex;
     flex-flow: row wrap;  justify-content: flex-end;
     position: relative;
     margin-right: 10px;
     cursor: default;
+}
+
+.userInfo .userInfoContent{
+    position: relative;
+}
+
+.userInfo .userInfoContent .profileActions{
+    position: absolute;
+    display: flex;
+    flex-flow: column;
+    top: 3.2em;
+    right: 1px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: #111928e6;
+    backdrop-filter: blur(2px) saturate(180%);
+    -webkit-backdrop-filter: blur(14px) saturate(180%);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+    z-index: 999;
+}
+
+.userInfo .userInfoContent .profileActions .item{
+    font-size: 12pt;
+    color: #DDD;
+    padding: 5px 20px;
+    text-align: center;
+}
+
+.userInfo .userInfoContent .profileActions .item:hover{
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #EEE;
+}
+
+.userInfo .userInfoContent .profileActions .item:first-child:hover{
+    border-radius: 10px 10px 0 0;
+}
+
+.userInfo .userInfoContent .profileActions .item:last-child:hover{
+    border-radius: 0 0 10px 10px;
 }
 
 .userBackground {
@@ -159,6 +197,58 @@ a:visited {
     transition: 0.1s ease-in;
 }
 
+/* =============================== MOBILE NAVBAR =================================== */
+
+.mobileNav {
+    display: none;
+    position: fixed;
+    bottom: 10px;
+    width: 100vw;
+    height: 4.2em;
+    z-index: 999;
+}
+
+.mobileNav .nav{
+    padding: 0 10px;
+    margin: auto;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+    border-radius: 100vh;
+    width: fit-content;
+    gap: 30px;
+    color: #DDD;
+    /* border: 1px solid hsla(219, 40%, 20%, 0.902); */
+    background-color: #111928e6;
+    backdrop-filter: blur(14px) saturate(180%);
+    -webkit-backdrop-filter: blur(14px) saturate(180%);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+}
+
+.mobileNav .nav .item{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 100vh;
+}
+
+.mobileNav .nav .item img{
+    width: 24px;
+    height: 24px;
+    border-radius: 100vh;
+}
+
+.mobileNav .nav .item.active{
+    background-color: hsla(219, 40%, 20%, 0.902);
+}
+
+.mobileNav .nav .item i{
+    font-size: 19pt;
+    margin-bottom: 2px;
+}
+
 /* HOME PAGE */
 
 .homeContent {
@@ -230,9 +320,10 @@ a:visited {
     width: 62%;
 }
 
-.appButtons button {
+.appButtons a {
     font-family: 'Poppins';
     font-weight: 500;
+    font-size: 14px;
     display: grid;
     grid-template-areas: 
     'icon text'
@@ -249,21 +340,22 @@ a:visited {
     margin-top: 5px;
 }
 
-.appButtons button:hover {
+.appButtons a:hover {
     transform: scale(1.04);
     transition: 0.1s ease-in;
 }
 
-.appButtons button .icon {
+.appButtons a .icon {
     grid-area: icon;
-    padding: 12px 0px;
+    padding: 13px 0px 13px 6px;
 }
-.appButtons button .text {
+.appButtons a .text {
     grid-area: text;
     margin: auto;
+    padding-right: 6px;
     text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
 }
-.appButtons button .file {
+.appButtons a .file {
     grid-area: file;
     margin: -8px auto auto auto;
     text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
@@ -520,7 +612,7 @@ a:visited {
     gap: 5px;
 }
 
-.accountContainer .profileInfo .userSocial div{
+.accountContainer .profileInfo .userSocial a{
     background-color: rgba(0, 0, 0, 0.3);
     color: #70b7fd;
     padding: 4px 0px;
@@ -529,9 +621,16 @@ a:visited {
     border-radius: 10px;
     display: flex;
     align-items: center;
+    user-select: none;
+    cursor: pointer;
+    transition: all .4s;
 }
 
-.accountContainer .profileInfo .userSocial div i{
+.accountContainer .profileInfo .userSocial a:hover{
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.accountContainer .profileInfo .userSocial a i{
     padding: 0 10px 0 0
 }
 
@@ -867,13 +966,133 @@ a:visited {
     border-radius: 100vh;
 }
 
+/* ============================ SCHEDULE PAGE ================================== */
+/* 
+.scheduleBack {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    background-color: black;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.scheduleBack .scheduleContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 40em;
+    width: 25em;
+    margin: auto;
+    background-color: #283149;
+    color: #DBEDF3;
+}
+
+.scheduleList {
+    width: 90%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.scheduleList .match {
+    display: flex;
+    flex-direction: column;
+    height: 6.8em;
+    width: 100%;
+    border-radius: 15px;
+    background-color: #404B69;
+    box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.1) , 0px 1px 2px 0px rgba(0,0,0,0.06);
+}
+
+.scheduleList .match .teams{
+    width: 100%;
+    height: 100%;
+    border-radius: 15px 15px 0 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.scheduleList .match .teams span.vs{
+    width: auto;
+    text-align: center;
+}
+
+.scheduleList .match .teams .team{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.scheduleList .match .teams .team:first-child{
+    margin-right: auto;
+    justify-content: left;
+}
+.scheduleList .match .teams .team:last-child{
+    margin-left: auto;
+    justify-content: right;
+}
+
+.scheduleList .match .teams img{
+    width: 2.2em;
+    border-radius: 100vh;
+}
+
+.scheduleList .match .tournament{
+    margin-top: auto;
+    width: 100%;
+    height: 1.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    font-size: 10pt;
+    background-color: hsl(224, 29%, 25%);
+}
+
+.scheduleList .match .time{
+    margin-top: auto;
+    width: 100%;
+    height: 1.8em;
+    border-radius: 0 0 15px 15px;
+    background-color: hsl(224, 29%, 18%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.scheduleList .match .time .text{
+    color: rgba(244, 208, 63, 1);
+    font-size: 10.5pt;
+} */
 
 /* ============================ RESPONSIVE ================================== */
 
+@media only screen and (max-width: 655px) {
+    header .logoNavbar {
+        margin: auto;
+    }
+    
+    header .navbar, header .userInfo {
+        display: none;
+    }
+
+    .mobileNav {
+        display: block;
+    }
+  }
+
 @media only screen and (max-width: 792px) {
+
     .accountContainer .profileInfo::after{
         display: none;
     }
+
     .actionCategory {
         padding-right: 0
     ;

@@ -2,6 +2,8 @@ import { getSession } from "next-auth/client";
 import TournamentRequest from "../../components/Forms/TournamentRequest";
 import { useState } from "react";
 import Collapsible from "react-collapsible";
+import { ExternalLink } from 'react-external-link';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 export default function Account({ session, userStatus, requests }) {
 
@@ -53,8 +55,8 @@ export default function Account({ session, userStatus, requests }) {
             <div className="timeProfile">Joined from {DateDiff.inDays(joinDate, nowDate)} days</div>
           </div>
           <div className="userSocial">
-            { (userStatus.Twitter) && <div id="twitter"><i className='bx bxl-twitter'></i>{userStatus.Twitter}</div>}
-            { (userStatus.Discord) && <div id="discord"><i className='bx bxl-discord-alt' ></i>{userStatus.Discord}</div>}
+            { (userStatus.Twitter) && <ExternalLink id="twitter" href={`https://twitter.com/${userStatus.Twitter}`}><i className='bx bxl-twitter'></i>{userStatus.Twitter}</ExternalLink>}
+            { (userStatus.Discord) && <CopyToClipboard text={userStatus.Discord}><ExternalLink id="discord"><i className='bx bxl-discord-alt' ></i>{userStatus.Discord}</ExternalLink></CopyToClipboard> }
           </div>
         </div>
         <div className="profileActions">
@@ -80,13 +82,13 @@ export default function Account({ session, userStatus, requests }) {
                       (requests.length > 0) &&
                       requests.map((item, index) => {
                           return(
-                              <div className="item" key={index} onClick={() => window.open(item.forumID, "_blank")}>
+                              <ExternalLink href={item.forumID} className="item" key={index}>
                                   <div className="text">
                                     <div id="acronym">{item.Acronym}</div>
                                     <div id="name">{item.Name}</div>
                                   </div>
                                   <span className={`status ${item.Status}`}><span>{item.Status}</span></span>
-                              </div>
+                              </ExternalLink>
                           )
                       })
                     }
