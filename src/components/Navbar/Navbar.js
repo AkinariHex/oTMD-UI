@@ -2,7 +2,7 @@
 import { signIn, signOut } from "next-auth/client";
 import NavLink from '../NavLink/NavLink';
 import Link from "next/link";
-import { Home2, Cup, TableDocument } from "iconsax-react";
+import { Home2, Cup, TableDocument, Login } from "iconsax-react";
 
 export default function Navbar({ session, userStatus }) {
 
@@ -69,7 +69,7 @@ export default function Navbar({ session, userStatus }) {
                                     </div>
                                 ) : (
                                     <div className="userLogin">
-                                        <button style={{display: "flex", alignContent: "center", color: "#fff", backgroundColor: "#404B69", fill: "#fff", fontWeight: 400}} onClick={() => signIn("osu")}><img style={{width: "25px", filter: "contrast(0) brightness(2)"}} src="https://img.icons8.com/ios/50/000000/osu.png" alt="osu! logo"/> <span style={{margin: "auto", paddingLeft: "5px", fontFamily: "Poppins"}}>Login</span></button>
+                                        <button style={{display: "flex", alignContent: "center", color: "#fff", backgroundColor: "var(--navbar-link-active-background-color)", fill: "#fff", fontWeight: 400}} onClick={() => signIn("osu")}><img style={{width: "25px", filter: "contrast(0) brightness(2)"}} src="https://img.icons8.com/ios/50/000000/osu.png" alt="osu! logo"/> <span style={{margin: "auto", paddingLeft: "5px", fontFamily: "Poppins"}}>Login</span></button>
                                     </div>
                                 )}
                 </div>
@@ -102,7 +102,7 @@ export default function Navbar({ session, userStatus }) {
                                         <div className="item"><img src={session.avatar_url} alt="user propic"/></div>
                                     </Link>
                                 ) : (
-                                    <div className="item" onClick={() => signIn("osu")}><i className='bx bx-log-in-circle' ></i></div>
+                                    <div className="item" onClick={() => signIn("osu")}><Login color="#d9e3f0"/></div>
                                 )}
                     
                 </div>

@@ -6,6 +6,7 @@
     --scrollbar-color-hover: hsla(219, 40%, 4%);
     --navbar-color: hsl(219, 41%, 8%, 0.8);
     --navbar-link-active-background-color: hsla(219, 40%, 16%, 0.9);
+    --navbar-login-button-hover: hsla(219, 40%, 20%, 0.9);
     --site-background-color: #121B2B;
     --action-div-color: hsl(219, 40%, 16%);
     --action-div-color2: hsl(219, 40%, 14%);
@@ -209,7 +210,7 @@ header {
 }
 
 .userLogin button:hover {
-    background-color: #293d74 !important;
+    background-color: var(--navbar-login-button-hover) !important;
     transition: 0.1s ease-in;
 }
 
