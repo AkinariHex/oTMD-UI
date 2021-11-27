@@ -36,3 +36,7 @@ yarn-error.log*
 
 # folder
 src/pages/schedule/
+JSON Examples/mappoolsjsonexample.json
+JSON Examples/notificationsexample.json
+JSON Examples/playersjsonexample.json
+JSON Examples/scoresjsonexample.json
