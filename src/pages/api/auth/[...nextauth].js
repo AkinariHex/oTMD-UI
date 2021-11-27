@@ -40,21 +40,8 @@ const checkUserDB = (profile) => {
 
         mapped = records.map((record) => {return record.fields})
 
-        console.log(mapped[0].RecordID)
-
-        if(mapped[0] === undefined) {
+        if(mapped[0] === undefined || mapped === undefined) {
           postUserDB(profile)
-        } else if(mapped[0].UUID == '' || mapped[0].UUID == null ||  mapped[0].UUID == undefined){
-          base('Users').update([
-            {
-              "id": mapped[0].RecordID,
-              "fields": {
-                "UUID": uuidv4()
-              }
-            }
-          ], function(err) {
-            if (err) { console.error(err); return; }
-          });
         }
 
     }, function done(err) {
