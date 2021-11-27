@@ -42,6 +42,17 @@ const checkUserDB = (profile) => {
 
         if(mapped[0] === undefined || mapped === undefined) {
           postUserDB(profile)
+        } else if(mapped[0].UUID == '' || mapped[0].UUID == null ||  mapped[0].UUID == undefined){
+          base('Users').update([
+            {
+              "id": mapped[0].RecordID,
+              "fields": {
+                "UUID": uuidv4()
+              }
+            }
+          ], function(err) {
+            if (err) { console.error(err); return; }
+          });
         }
 
     }, function done(err) {
@@ -59,7 +70,7 @@ export default NextAuth({
       name: "Osu!",
       type: "oauth",
       version: "2.0",
-      scope: "identify",
+      scope: "identify public",
       params: { grant_type: "authorization_code" },
       accessTokenUrl: "https://osu.ppy.sh/oauth/token",
       requestTokenUrl: "https://osu.ppy.sh/oauth/token",
@@ -95,6 +106,8 @@ export default NextAuth({
 
       if (userData.authentication === "basic") return {};
 
+      userData.access_token = user.accessToken
+      
       return userData;
     },
     async jwt(token, user, account, profile, isNewUser) {
