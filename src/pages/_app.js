@@ -2,8 +2,37 @@ import { getSession, Provider } from "next-auth/client";
 import "../styles/styles.css";
 import Navbar from "../components/Navbar/Navbar";
 import Head from "next/head";
+import io from 'socket.io-client';
+import { useEffect } from "react";
 
-function MyApp({ Component, pageProps, session, userStatus }) {
+function MyApp({ Component, pageProps, session, userStatus, notifications }) {
+
+  const socket = session !== null ? io({autoConnect: false}) : null;
+  
+    useEffect(() => {
+      if(session !== null){
+
+        fetch('/api/socketio').finally(async() => {
+          socket.user = {
+            userid: 4001304,
+            username: "Akinari"
+          }
+          socket.connect();
+  
+          socket.on('connect', () => {
+            console.log('connected')
+            socket.emit('join', {userid: session.id});
+          })
+
+          socket.on('disconnect', () => {
+            console.log('disconnect')
+          })
+  
+        })
+
+      }
+    }, [])
+  
   return (
     <>
       <Head>
@@ -37,13 +66,14 @@ function MyApp({ Component, pageProps, session, userStatus }) {
 
           gtag('config', 'G-FB42B4PE0Q');`}}></script>
       </Head>
-      <Navbar session={session} userStatus={userStatus} />
-      <Component {...pageProps} />
+      <Navbar session={session} userStatus={userStatus} notifications={notifications}/>
+      <Component {...pageProps} socket={socket} />
     </>
   );
 }
 
 MyApp.getInitialProps = async (context) => {
+
   // Get user session
   const session = await getSession(context.ctx);
 
@@ -54,9 +84,17 @@ MyApp.getInitialProps = async (context) => {
         ).then((res) => res.json()).then(res => res[0])
       : [{}];
 
+  const notificationsData =
+    session !== null
+      ? await fetch(
+          `${process.env.NEXTAUTH_URL}/api/notifications?u=${session.id}&status=0`
+        ).then((res) => res.json())
+      : [{}];
+
   return {
     session: session,
     userStatus: statusData,
+    notifications: notificationsData,
   };
 };
 

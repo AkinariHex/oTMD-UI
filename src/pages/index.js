@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { ExternalLink } from 'react-external-link';
 
 export default function Home({ release }) {
+
+
   return (
     <div className="homeContent">
       <div className="appContext">
@@ -69,14 +71,14 @@ export default function Home({ release }) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
   
   const release = await fetch('https://api.github.com/repos/AkinariHex/oTMD/releases');
   
 
   return {
     props: {
-      release: await release.json()
+      release: await release.json(),
     },
   };
 }

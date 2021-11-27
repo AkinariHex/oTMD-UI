@@ -1,19 +1,24 @@
 {
-  "name": "nextjs",
+  "name": "osu-tourney-match-displayer-website",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev2": "node server.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "airtable": "^0.11.1",
+    "cors": "^2.8.5",
+    "downshift": "^6.1.7",
+    "express": "^4.17.1",
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
+    "http": "0.0.1-security",
     "iconsax-react": "0.0.4",
-    "next": "11.1.2",
+    "next": "^12.0.2",
     "next-auth": "^3.29.0",
     "react": "17.0.2",
     "react-accessible-accordion": "^4.0.0",
@@ -26,7 +31,10 @@
     "react-hook-form": "^7.17.4",
     "react-modal": "^3.14.3",
     "react-odometerjs": "^2.1.2",
-    "socket.io": "^4.2.0",
+    "react-tabs": "^3.2.3",
+    "react-timestamp": "^5.1.0",
+    "react-use-websocket": "^2.9.1",
+    "socket.io": "^4.3.2",
     "socket.io-client": "^4.2.0",
     "uuid": "^8.3.2"
   },

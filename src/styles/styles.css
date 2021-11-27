@@ -2,15 +2,56 @@
 
 /* VAR COLORS */
 :root {
+    --notification-server-border-color: hsl(130, 45%, 60%);
+    --notification-server-background-color: hsl(130, 26%, 25%);
+    --notification-server-timestamp-color: hsl(130, 45%, 80%);
+    --notification-friend-border-color: hsl(0, 55%, 58%);
+    --notification-friend-background-color: hsl(0, 26%, 20%);
+    --notification-friend-timestamp-color: hsl(0, 55%, 80%);
+    --notification-team-border-color: hsl(214, 43%, 60%);
+    --notification-team-background-color: hsl(214, 43%, 20%);
+    --notification-team-timestamp-color: hsl(214, 43%, 80%);
+
     --scrollbar-color: hsla(219, 40%, 5%);
     --scrollbar-color-hover: hsla(219, 40%, 4%);
     --navbar-color: hsl(219, 41%, 8%, 0.8);
-    --navbar-link-active-background-color: hsla(219, 40%, 16%, 0.9);
+    --navbar-text-color: #d9e3f0;
+    --navbar-text-hover-color: hsl(214, 43%, 95%);
+    --navbar-link-active-background-color: hsla(219, 40%, 16%);
     --navbar-login-button-hover: hsla(219, 40%, 20%, 0.9);
+    --navbar-logout-text-color: #F47373;
+    --navbar-logout-text-hover-color: hsl(0, 0%, 100%);
+    --navbar-logout-bg-color: hsla(0, 47%, 26%, 0.6);
     --site-background-color: #121B2B;
     --action-div-color: hsl(219, 40%, 16%);
     --action-div-color2: hsl(219, 40%, 14%);
     --action-div-hover-color: hsl(219, 40%, 18%);
+    --team-overview-bg-color: hsla(219, 40%, 16%);
+    --team-overview-text-color: hsl(0, 0%, 95%);
+    --team-member-bg-color: hsla(219, 40%, 12%);
+    --team-mappool-bg-color: hsla(219, 40%, 17%);
+    --team-mappool-header-color: hsla(219, 40%, 10%);
+
+    --team-mappool-input-color: hsl(214, 43%, 90%);
+    --team-mappool-input-placeholder-color: hsl(214, 43%, 60%);
+
+
+    --mods-text-light: #d9e3f0;
+    --mods-text-dark: hsl(219, 41%, 8%);
+    --mods-nm-bg: hsl(226, 99%, 65%);
+    --mods-nm-bg-row: hsla(226, 99%, 65%, 0.15);
+    --mods-hd-bg: hsl(43, 98%, 60%);
+    --mods-hd-bg-row: hsla(43, 98%, 60%, 0.15);
+    --mods-hr-bg: hsl(0, 100%, 69%);
+    --mods-hr-bg-row: hsla(0, 100%, 69%, 0.15);
+    --mods-ez-bg: hsl(120, 100%, 50%);
+    --mods-ez-bg-row: hsla(120, 100%, 50%, 0.15);
+    --mods-dt-bg: hsl(267, 97%, 73%);
+    --mods-dt-bg-row: hsla(267, 97%, 73%, 0.15);
+    --mods-fm-bg: hsl(101, 38%, 63%);
+    --mods-fm-bg-row: hsla(101, 38%, 63%, 0.15);
+    --mods-tb-bg: hsl(191, 26%, 57%);
+    --mods-tb-bg-row: hsla(191, 26%, 57%, 0.15);
 }
 
 html, body {
@@ -61,7 +102,7 @@ header {
 }
 
 .navLinks {
-    color: #eee;
+    color: var(--navbar-text-color);
     font-family: 'Poppins';
     display: flex;
     gap: 10px;
@@ -97,6 +138,7 @@ header {
     position: relative;
     margin-right: 10px;
     cursor: default;
+    gap: 8px;
 }
 
 .userInfo .userInfoContent{
@@ -109,33 +151,40 @@ header {
     flex-flow: column;
     top: 3.2em;
     right: 1px;
-    width: 100%;
+    width: 9em;
+    padding: 5px;
+    gap: 1px;
     border-radius: 10px;
-    background-color: #111928e6;
+    background-color: var(--navbar-color);
     backdrop-filter: blur(2px) saturate(180%);
     -webkit-backdrop-filter: blur(14px) saturate(180%);
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-    z-index: 999;
+    z-index: 995;
 }
 
 .userInfo .userInfoContent .profileActions .item{
-    font-size: 12pt;
-    color: #DDD;
-    padding: 5px 20px;
-    text-align: center;
+    display: flex;
+    font-size: 11pt;
+    color: var(--navbar-text-color);
+    padding: 4px 12px;
+    text-align: left;
+    border-radius: 8px;
+    align-items: center;
+    gap: 8px;
 }
 
 .userInfo .userInfoContent .profileActions .item:hover{
-    background-color: rgba(0, 0, 0, 0.2);
-    color: #EEE;
+    background-color: var(--navbar-link-active-background-color);
+    color: var(--navbar-text-hover-color);
 }
 
-.userInfo .userInfoContent .profileActions .item:first-child:hover{
-    border-radius: 10px 10px 0 0;
+.userInfo .userInfoContent .profileActions .item:last-child{
+    color: var(--navbar-logout-text-color);
 }
 
 .userInfo .userInfoContent .profileActions .item:last-child:hover{
-    border-radius: 0 0 10px 10px;
+    background-color: var(--navbar-logout-bg-color);
+    color: var(--navbar-logout-text-color);
 }
 
 .userBackground {
@@ -146,38 +195,18 @@ header {
     align-items: center;
     display: flex;
     border-radius: 20px;
-}
-
-.userContent .userLogout {
-    width: 32px;
-    height: 32px;
-    background-color: #a23b3b99;
-    border: 0px;
-    border-radius: 50%;
-    align-items: center;
-    color: #fff;
-    margin-left: 5px;
-    padding: 0px 1px 0px 0px;
-    transition: 0.1s ease-out;
-}
-
-.userContent .userLogout:hover {
-    background-color: #a23b3bbd;
-    transition: 0.1s ease-in;
-}
-
-.userContent .userLogout i{
-    font-size: 1.65em;
-    text-align: center;
+    cursor: pointer;
 }
 
 .userInfo_name {
-    color: #fff;
+    color: var(--navbar-text-color);
     font-family: 'Poppins';
     align-self: center;
     padding: 2px 8px 2px 8px;
     font-weight: 300;
     position: relative;
+    margin-left: 8px;
+    user-select: none;
 }
 
 .userInfo_name #userPermissions {
@@ -214,6 +243,212 @@ header {
     transition: 0.1s ease-in;
 }
 
+
+/* =============================== NOTIFICATIONS NAVBAR ======================================== */
+
+.notificationsContainer {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    position: relative;
+    align-items: center;
+}
+
+.notificationsButton {
+    height: 40px;
+    width: 40px;
+    border: 0;
+    border-radius: 100vh;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.notificationsButton:hover, .notificationsButton:focus {
+    background-color: var(--navbar-link-active-background-color);
+    color: var(--navbar-text-hover-color);
+    transition: 0.1s all ease-in;
+    cursor: pointer;
+}
+
+.notificationsButton span{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    background-color: var(--navbar-logout-text-color);
+    padding: 0px 4px;
+    border-radius: 100vh;
+    font-size: 7pt;
+    font-weight: 600;
+    font-family: 'Poppins';
+    color: var(--site-background-color);
+}
+
+.notificationsList {
+    position: absolute;
+    top: 32px;
+    right: 0;
+    width: 400px;
+    max-height: 131px;
+    overflow-y: auto;
+    background-color: var(--navbar-color);
+    border: 1px solid hsla(219, 40%, 15%);
+    border-radius: 10px;
+    list-style: none;
+    padding: 0;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+}
+
+.notificationsList .notification {
+    display: flex;
+    flex-flow: row;
+    color: var(--navbar-text-color);
+    height: 65px;
+    align-items: center;
+    gap: 8px;
+    font-size: 11pt;
+}
+
+.notificationsList .notification .noContent{
+    margin: auto;
+}
+
+.notificationsList .notification.type0 {
+    background-color: var(--notification-server-background-color);
+}
+
+.notificationsList .notification.type0 > .image {
+    background-color: var(--notification-server-border-color);
+}
+
+.notificationsList .notification.type1 {
+    background-color: var(--notification-friend-background-color);
+}
+
+.notificationsList .notification.type1 > .image {
+    background-color: var(--notification-friend-border-color);
+}
+
+.notificationsList .notification.type2 {
+    background-color: var(--notification-team-background-color);
+}
+
+.notificationsList .notification.type2 > .image {
+    background-color: var(--notification-team-border-color);
+}
+
+.notification.type0 .timestamp {
+    color: var(--notification-server-timestamp-color)
+}
+.notification.type1 .timestamp {
+    color: var(--notification-friend-timestamp-color)
+}
+.notification.type2 .timestamp {
+    color: var(--notification-team-timestamp-color)
+}
+
+.notificationsList .notification:not(:last-child) {
+    border-bottom: 1px solid var(--site-background-color);
+}
+
+.notificationsList .notification .image {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5px;
+    border-radius: 0 10px 10px 0;
+}
+
+.notificationsList .notification .image .senderPropic {
+    width: 40px;
+    height: 40px;
+    border-radius: 100vh;
+}
+
+.notificationsList .notification .content {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    justify-content: center;
+}
+
+.notificationsList .notification .content .text {
+    font-size: 11pt;
+    font-weight: 300;
+    line-height: 16px;
+    height: 42px;
+    padding: 5px 0 0 0;
+    display: flex;
+    align-items: center;
+}
+
+
+.notificationsList .notification .content .text div :is(span, a) {
+    font-weight: 600;
+}
+
+.notificationsList .notification .content .text div a {
+    cursor: pointer;
+}
+
+.notificationsList .notification .content .timestamp {
+    font-size: 8.5pt;
+    margin: 0 0 2px 0;
+}
+
+.notificationsList .notification .buttons {
+    width: auto;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5px 0 0;
+    gap: 4px;
+    margin-left: auto;
+}
+
+.notificationsList .notification .buttons button {
+    width: 30px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.buttons button.accept {
+    background-color: hsla(120, 50%, 55%, 0.5);
+    color: hsla(120, 50%, 5%, 1);
+    border: 1px solid hsla(120, 50%, 5%, 0.5);
+    animation: 0.1s all ease-in-out;
+}
+
+.buttons button.refuse {
+    background-color: hsla(0, 50%, 55%, 0.5);
+    color: hsla(0, 50%, 5%, 1);
+    border: 1px solid hsla(0, 50%, 5%, 0.5);
+    animation: 0.1s all ease-in-out;
+}
+
+.buttons button.accept:hover {
+    background-color: hsla(120, 50%, 55%, 0.7);
+    animation: 0.1s all ease-in-out;
+}
+
+.buttons button.refuse:hover {
+    background-color: hsla(0, 50%, 55%, 0.7);
+    animation: 0.1s all ease-in-out;
+}
+
+
+
 /* =============================== MOBILE NAVBAR =================================== */
 
 .mobileNav {
@@ -221,7 +456,7 @@ header {
     position: fixed;
     bottom: 10px;
     width: 100vw;
-    height: 4.2em;
+    height: 4em;
     z-index: 999;
 }
 
@@ -236,7 +471,7 @@ header {
     border-radius: 100vh;
     width: fit-content;
     gap: 30px;
-    color: #DDD;
+    color: var(--navbar-text-color);
     /* border: 1px solid hsla(219, 40%, 20%, 0.902); */
     background-color: var(--navbar-color);
     backdrop-filter: blur(14px) saturate(180%);
@@ -907,7 +1142,7 @@ header {
 }
 
 .collapsibleBody :is(.item:hover, .item:last-child):hover{
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--action-div-hover-color);
 }
 
 .collapsibleBody .item:last-child{
@@ -941,42 +1176,6 @@ header {
     position: absolute
 } */
 
-/* SCROLLBAR */
-
-::-webkit-scrollbar {
-    width: 10px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: transparent;
-    margin-top: 3.3em;
-  }
-  
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-color);
-    border-radius: 10px;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--scrollbar-color-hover);
-  }
-
-.collapsibleBody::-webkit-scrollbar {
-    width: 8px;
-}
-
-.collapsibleBody::-webkit-scrollbar-track {
-    background: transparent;
-    margin: 0 0 0.95em 0;
-}
-
-.collapsibleBody::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 100vh;
-}
 
 /* ============================ SCHEDULE PAGE ================================== */
 /* 
@@ -1082,6 +1281,639 @@ header {
     color: rgba(244, 208, 63, 1);
     font-size: 10.5pt;
 } */
+
+
+/* ============================ TEAM LIST PAGE ================================== */
+
+
+.teamsContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    color: #FFFFFF;
+    padding: 4em 1.8em 0 1.8em;
+}
+
+.teamsContainer h1, .teamsContainer h2{
+    margin: 5px 0 0 0;
+}
+
+.teamsList {
+    display: flex;
+    flex-direction: row wrap;
+    width: 100%;
+    overflow-y: auto;
+    margin: 10px auto;
+    gap: 10px;
+}
+
+.teamsList .item{
+    height: 150px;
+    width: 200px;
+    background-color: var(--navbar-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    text-align: center;
+    user-select: none;
+    cursor: pointer;
+}
+
+.teamsList .item:is(.add, .join){
+    color: var(--team-mappool-input-placeholder-color);
+    font-weight: 400;
+    font-size: 12pt;
+}
+
+.teamsList .item img.normal{
+    border-radius: 100vh;
+    height: 45px;
+    width: 45px;
+    margin: 5px auto;
+}
+
+.teamsList .item img.national{
+    width: 45px;
+    margin: 13px auto;
+}
+
+.teamsList .item .item-name {
+    font-size: 14pt;
+    font-weight: 600;
+}
+
+.teamsList .item .item-tournament {
+    font-size: 11pt;
+}
+
+
+
+/* ============================ TEAM MANAGEMENT PAGE ================================== */
+
+.teamOverview{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    height: 14rem;
+    width: 100vw;
+    padding: 3.3em 30px 0px 30px;
+    background-color: var(--team-overview-bg-color);
+    color: var(--team-overview-text-color);
+}
+
+.teamOverview .teamOverview_Info {
+    width: auto;
+    padding: 0 8em;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.teamOverview .teamOverview_Info img {
+    width: 4.5em;
+}
+
+.teamOverview .teamOverview_Info .teamOverview_Info_Name {
+    font-size: 16pt;
+    font-weight: 600;
+    padding-top: 1px;
+}
+
+.teamOverview .teamOverview_Members {
+    display: flex;
+    flex-flow: column wrap;
+    width: auto;
+    height: 100%;
+    justify-content: center;
+}
+
+.teamOverview .teamOverview_Members .teamOverview_Members_List {
+    display: flex;
+    flex-flow: column wrap;
+    width: auto;
+    height: 70%;
+    gap: 5px;
+    justify-content: flex-start;
+}
+
+.teamOverview .teamOverview_Members .teamOverview_Members_List .item {
+    display: flex;
+    flex-flow: row;
+    background-color: var(--team-member-bg-color);
+    padding: 5px 10px 5px 5px;
+    border-radius: 100vh;
+    gap: 6px;
+    font-weight: 300;
+    width: 115px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.teamOverview .teamOverview_Members .teamOverview_Members_List .item.captain {
+    background-color: hsl(46, 53%, 50%, 0.3);
+}
+
+.teamOverview .teamOverview_Members .teamOverview_Members_List .item img {
+    width: 25px;
+    height: 25px;
+    border-radius: 100vh;
+}
+
+
+
+.teamTabs .teamTabsBar {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    height: 3.3em;
+    background-color: var(--navbar-color);
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+    color: var(--navbar-text-color);
+    margin: 0;
+    list-style: none;
+    padding: 0;
+}
+
+.teamTabs .teamTabsBar .teamTabsBarItem {
+    padding: 6px 15px;
+    border-radius: 20px;
+    cursor: default;
+    transition: 0.2s ease-out;
+}
+
+.teamTabs .teamTabsBar .teamTabsBarItem:hover, .teamTabs .teamTabsBar .teamTabsBarItem.react-tabs__tab--selected {
+    background-color: var(--navbar-link-active-background-color);
+    transition: 0.2s ease-in;
+}
+
+.teamTabsContent .scoresTab {
+    max-height: 38em;
+    width: 95vw;
+    display: grid;
+    grid-template-areas: 
+    'mappool players';
+    grid-template-columns: 600px auto;
+    margin: 15px auto 0px auto;
+    background-color: var(--team-mappool-bg-color);
+    border-radius: 15px;
+    overflow-x: auto;
+}
+
+.teamTabsContent .scoresTab::-webkit-scrollbar-track {
+    margin: 0;
+}
+
+.teamTabsContent .scoresTab .mappool{
+    width: 600px;
+    height: 100%;
+    grid-area: mappool;
+    display: flex;
+    flex-flow: column;
+    border-right: 1px solid var(--team-member-bg-color);
+}
+
+.teamTabsContent .scoresTab .players{
+    grid-area: players;
+    display: grid;
+    grid-template-columns: repeat(8, minmax(140px, auto));
+    grid-auto-columns: column;
+}
+
+.teamTabsContent .scoresTab .players .player{
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    border-right: 1px solid var(--team-member-bg-color);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.teamTabsContent .scoresTab :is(.mappool, .players .player) .header{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--team-mappool-header-color);
+    color: var(--navbar-text-color);
+    padding: 5px 0;
+    border-radius: 15px 0 0 0;
+}
+
+.teamTabsContent .scoresTab .players .player .header{
+    border-radius: 0 0 0 0;
+}
+
+.teamTabsContent .scoresTab .mappool .item{
+    display: flex;
+    flex-flow: row wrap;
+    height: 130px;
+    width: 100%;
+    align-items: center;
+}
+
+.teamTabsContent .scoresTab .mappool .item:not(:last-child) {
+    border-bottom: 1px solid var(--team-member-bg-color);
+}
+
+.teamTabsContent .scoresTab .mappool .item:last-child > .image img {
+    border-radius: 0 0 0 15px;
+}
+
+.teamTabsContent .scoresTab .mappool .item.nm{
+    background-color: var(--mods-nm-bg-row);
+}
+.teamTabsContent .scoresTab .mappool .item.hd{
+    background-color: var(--mods-hd-bg-row);
+}
+.teamTabsContent .scoresTab .mappool .item.hr{
+    background-color: var(--mods-hr-bg-row);
+}
+.teamTabsContent .scoresTab .mappool .item.dt{
+    background-color: var(--mods-dt-bg-row);
+}
+.teamTabsContent .scoresTab .mappool .item.fm{
+    background-color: var(--mods-fm-bg-row);
+}
+.teamTabsContent .scoresTab .mappool .item.tb{
+    background-color: var(--mods-tb-bg-row);
+}
+.teamTabsContent .scoresTab .mappool .item.ez{
+    background-color: var(--mods-ez-bg-row);
+}
+
+.teamTabsContent .scoresTab .mappool .item .image{
+   display: flex;
+   flex-flow: column;
+}
+
+.teamTabsContent .scoresTab .mappool .item .image .mod{
+   width: 100%;
+   text-align: center;
+   border-radius: 0px 12px 0 0;
+   font-weight: 500;
+   font-size: 11pt;
+   color: var(--mods-text-dark)
+}
+
+.teamTabsContent .scoresTab .mappool .item .image .mod.nm{
+   background-color: var(--mods-nm-bg);
+}
+
+.teamTabsContent .scoresTab .mappool .item .image .mod.nm + img{
+   border: 2px solid var(--mods-nm-bg);
+}
+
+.teamTabsContent .scoresTab .mappool .item .image .mod.hd{
+   background-color: var(--mods-hd-bg);
+}
+
+.teamTabsContent .scoresTab .mappool .item .image .mod.hd + img{
+   border: 2px solid var(--mods-hd-bg);
+}
+
+.teamTabsContent .scoresTab .mappool .item .image .mod.hr{
+   background-color: var(--mods-hr-bg);
+}
+
+.teamTabsContent .scoresTab .mappool .item .image .mod.hr + img{
+   border: 2px solid var(--mods-hr-bg);
+}
+
+.teamTabsContent .scoresTab .mappool .item .image .mod.dt{
+   background-color: var(--mods-dt-bg);
+}
+
+.teamTabsContent .scoresTab .mappool .item .image .mod.dt + img{
+   border: 2px solid var(--mods-dt-bg);
+}
+
+.teamTabsContent .scoresTab .mappool .item .image .mod.fm{
+   background-color: var(--mods-fm-bg);
+}
+
+.teamTabsContent .scoresTab .mappool .item .image .mod.fm + img{
+   border: 2px solid var(--mods-fm-bg);
+}
+
+.teamTabsContent .scoresTab .mappool .item .image .mod.tb{
+   background-color: var(--mods-tb-bg);
+}
+
+.teamTabsContent .scoresTab .mappool .item .image .mod.tb + img{
+   border: 2px solid var(--mods-tb-bg);
+}
+
+.teamTabsContent .scoresTab .mappool .item .image img{
+    height: 6.5em;
+}
+
+.teamTabsContent .scoresTab .mappool .item .info{
+    width: calc(100% - 153px);
+    height: calc(100% - 21px);
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 21px 0 0 10px;
+    color: var(--navbar-text-color);
+}
+
+.teamTabsContent .scoresTab .mappool .item .info .song{
+    display: flex;
+    flex-flow: row;
+    gap: 5px;
+    font-size: 13pt;
+    font-weight: 500;
+}
+
+.teamTabsContent .scoresTab .mappool .item .info .creator{
+    display: flex;
+    height: 100%;
+    flex-flow: row;
+    font-size: 11pt;
+    font-weight: 300;
+}
+
+.teamTabsContent .scoresTab .mappool .item .info .stats{
+    display: flex;
+    flex-flow: row wrap;
+    font-size: 11pt;
+    font-weight: 300;
+    gap: 10px;
+    align-items: center;
+    padding: 0 0 4px 0;
+}
+
+.teamTabsContent .scoresTab .mappool .item .info .stats span{
+    font-weight: 600;
+}
+
+.teamTabsContent .scoresTab .players .player .item{
+    display: grid;
+    grid-template-areas: 
+    'average'
+    'scores'
+    'vote';
+    gap: 4px;
+    padding: 4px;
+    height: 122px;
+    border-bottom: 1px solid var(--team-member-bg-color);
+}
+
+.teamTabsContent .scoresTab .players .player :is(.average, .scores .score, .vote) :is(input, button){
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    text-align: center;
+    background-color: var(--team-mappool-header-color);
+    color: var(--team-mappool-input-color);
+    font-family: 'Poppins';
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.teamTabsContent .scoresTab .players .player .vote.me {
+    display: grid;
+    grid-template-columns: 48.5% 48.5%;
+    gap: 4px;
+}
+
+.teamTabsContent .scoresTab .players .player .vote.me button:hover {
+    cursor: pointer;
+    background-color: hsla(219, 40%, 8%);
+    transition: all 0.2s ease-in-out;
+}
+
+.teamTabsContent .scoresTab .players .player :is(.average, .scores .score, .vote) input::placeholder{
+    color: var(--team-mappool-input-placeholder-color)
+}
+
+.teamTabsContent .scoresTab .players .player :is(.average, .scores .score, .vote) input:read-only{
+    cursor: default;
+}
+
+.teamTabsContent .scoresTab .players .player :is(.average, .scores .score, .vote) input:focus-visible{
+    border: 0;
+    outline: 0;
+}
+
+.teamTabsContent .scoresTab .players .player .scores{
+    height: 100%;
+    display: grid;
+    grid-area: scores;
+    grid-template-columns: repeat(4, auto);
+    gap: 4px;
+}
+
+
+.teamTabsContent .mappoolTab {
+    width: 100vw;
+    display: flex;
+    margin: 0 6em;
+    flex-flow: column;
+}
+
+.teamTabsContent .mappoolTab .stage{
+    display: flex;
+    flex-flow: row wrap;
+    font-size: 20pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--navbar-text-color);
+    gap: 10px;
+    user-select: none;
+    position: relative;
+    margin: 0 0 10px 0;
+}
+
+
+.teamTabsContent .mappoolTab .mapInputs {
+    display: flex;
+    flex-flow: row;
+    gap: 3px;
+}
+
+.teamTabsContent .mappoolTab .stage .stageDropdown, .mappoolTab :is(input, select, button){
+    background-color: var(--navbar-color);
+    padding: 10px 10px;
+    font-size: 12pt;
+    font-weight: 500;
+    border-radius: 10px;
+    align-self: center; 
+    cursor: pointer;
+    z-index: 10;
+    backdrop-filter: blur(14px) saturate(180%);
+    color: var(--navbar-text-color);
+    border: 0;
+}
+
+.teamTabsContent .mappoolTab .stage .stageDropdown:focus-visible, .mappoolTab :is(input, select, button):focus-visible {
+    outline: 0;
+}
+
+
+.teamTabsContent .mappoolTab .mapsList {
+    display: flex;
+    flex-flow: column;
+    width: 40em;
+    gap: 4px;
+    margin: 15px 0 40px 0;
+}
+
+.teamTabsContent .mappoolTab .mapsList .item{
+    display: flex;
+    flex-flow: row;
+    height: 4em;
+    border-radius: 10px;
+    background-color: var(--navbar-link-active-background-color);
+    color: var(--navbar-text-color);
+    align-items: center;
+}
+
+.teamTabsContent .mappoolTab .mapsList .item.nm{
+    border: 1px solid var(--mods-nm-bg)
+}
+.teamTabsContent .mappoolTab .mapsList .item.hd{
+    border: 1px solid var(--mods-hd-bg)
+}
+.teamTabsContent .mappoolTab .mapsList .item.hr{
+    border: 1px solid var(--mods-hr-bg)
+}
+.teamTabsContent .mappoolTab .mapsList .item.dt{
+    border: 1px solid var(--mods-dt-bg)
+}
+.teamTabsContent .mappoolTab .mapsList .item.fm{
+    border: 1px solid var(--mods-fm-bg)
+}
+.teamTabsContent .mappoolTab .mapsList .item.tb{
+    border: 1px solid var(--mods-tb-bg)
+}
+
+.teamTabsContent .mappoolTab .mapsList .mod{
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    border-radius: 8px 0 0 8px;
+    font-weight: 500;
+}
+
+.teamTabsContent .mappoolTab .mapsList .mod.nm{
+    background-color: var(--mods-nm-bg);
+    color: var(--mods-text-dark)
+}
+.teamTabsContent .mappoolTab .mapsList .mod.hd{
+    background-color: var(--mods-hd-bg);
+    color: var(--mods-text-dark)
+}
+.teamTabsContent .mappoolTab .mapsList .mod.hr{
+    background-color: var(--mods-hr-bg);
+    color: var(--mods-text-dark)
+}
+.teamTabsContent .mappoolTab .mapsList .mod.dt{
+    background-color: var(--mods-dt-bg);
+    color: var(--mods-text-dark)
+}
+.teamTabsContent .mappoolTab .mapsList .mod.fm{
+    background-color: var(--mods-fm-bg);
+    color: var(--mods-text-dark)
+}
+.teamTabsContent .mappoolTab .mapsList .mod.tb{
+    background-color: var(--mods-tb-bg);
+    color: var(--mods-text-dark)
+}
+
+.teamTabsContent .mappoolTab .mapsList .item img{
+    height: 4em;
+}
+
+.teamTabsContent .mappoolTab .mapsList .item .info{
+    display: flex;
+    flex-flow: column;
+    padding: 0 10px;
+    width: 75%;
+}
+
+.teamTabsContent .mappoolTab .mapsList .item .info .title{
+    overflow: hidden;
+    font-weight: 500;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.teamTabsContent .mappoolTab .mapsList .item .info .mapper{
+    font-weight: 300;
+    font-size: 10pt;
+}
+
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+    margin-top: 3.3em;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-color);
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-color-hover);
+  }
+
+.collapsibleBody::-webkit-scrollbar {
+    width: 8px;
+}
+
+.collapsibleBody::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 0 0 0.95em 0;
+}
+
+.collapsibleBody::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 100vh;
+}
+
+
+.notificationsList::-webkit-scrollbar {
+    width: 6px;
+}
+
+.notificationsList::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 0.3em 0;
+}
+
+.notificationsList::-webkit-scrollbar-thumb{
+    background: hsl(219, 41%, 28%, 0.8);
+}
+
 
 /* ============================ RESPONSIVE ================================== */
 

@@ -1,7 +1,9 @@
 module.exports = {
   reactStrictMode: true,
-  target: "serverless",
   images: {
-    domains: ['s.ppy.sh', 'a.ppy.sh'],
+    domains: ['s.ppy.sh', 'a.ppy.sh', 'b.ppy.sh', 'github.com', 'raw.githubusercontent.com'],
   },
+  swcMinify: true,
+  concurrentFeatures: true,
+  serverComponents: true
 }
