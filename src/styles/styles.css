@@ -549,7 +549,6 @@ header {
     display: flex;
     flex-flow: row wrap;
     width: auto;
-    margin: 8px 0 0 0;
 }
 
 .tournamentsList .entry .info .about{
@@ -563,20 +562,14 @@ header {
     align-items: center;
 }
 
-.tournamentsList .entry .info .about :is(.host, .forum, .website){
+.tournamentsList .entry .info .about :is(.forum, .website){
     display: flex;
     gap: 6px;
 }
 
-.info .about .host img {
-    width: 20px;
-    height: 20px;
-    border-radius: 100vh;
-}
-
 .tournamentsList .entry .info .progressbar-container{
-    margin: auto;
     width: 90%;
+    margin: 8px auto 0 auto;
 }
 
 .progress-bar {
