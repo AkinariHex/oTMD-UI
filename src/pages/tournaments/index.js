@@ -94,8 +94,6 @@ export async function getServerSideProps() {
             item.Class = 'Active'
         }
 
-        item.Link = (item.forumID.length < 15) ? `https://osu.ppy.sh/community/forums/topics/${item.forumID}` : item.forumID
-
         item.Stages = JSON.parse(item.Stages)
 
         var prevDate = todayDate - 86400000;
