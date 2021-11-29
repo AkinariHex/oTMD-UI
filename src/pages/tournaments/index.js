@@ -43,7 +43,7 @@ export default function Tournaments({ tournaments, requests }) {
                                     exit={{ opacity: 0, y: -5, display: "none", height: 0}}
                                 >
                                     {
-                                        item.Stages && 
+                                        item.Stages.stages[0] && 
                                         <div className="progressbar-container">
                                             <ol className="progress-bar">
                                                 {item.Stages.stages.map((stage, index) => {
@@ -54,9 +54,9 @@ export default function Tournaments({ tournaments, requests }) {
                                             </ol>
                                         </div>
                                     }
-
+                                    <br />
                                     <div className="about">
-                                        <div className="forum" onClick={() => window.open(`https://osu.ppy.sh/community/forums/topics/${item.forumID}`, "_blank")} ><Chainlink size="16" style={{marginTop: '2px'}} color="hsla(219, 40%, 60%, 1)"/> Forum Thread</div>
+                                        {item.forumID && <div className="forum" onClick={() => window.open(`https://osu.ppy.sh/community/forums/topics/${item.forumID}`, "_blank")} ><Chainlink size="16" style={{marginTop: '2px'}} color="hsla(219, 40%, 60%, 1)"/> Forum Thread</div>}
                                         {item.Website && <div className="website" onClick={() => window.open(item.Website, "_blank")} ><Link1 size="16" style={{marginTop: '2px'}} color="hsla(219, 40%, 60%, 1)"/> Website</div>}
                                     </div>
                                 </motion.div>}
