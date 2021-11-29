@@ -1,5 +1,11 @@
+import { Chainlink, Link1 } from "iconsax-react";
+import { motion } from "framer-motion";
+import { useState } from "react";
 
 export default function Tournaments({ tournaments, requests }) {
+
+    const [isTournamentOpen, setIsTournamentOpen] = useState([]);
+
 
     return (
       <div className="homeContent">
@@ -26,10 +32,34 @@ export default function Tournaments({ tournaments, requests }) {
                 <div className="tournamentsList">
                     {tournaments.map((item, index) => {
                         return(
-                            <div className="entry" key={index} onClick={() => window.open(item.Link, "_blank")}>
+                            <div className="entry" key={index} onClick={() => { (isTournamentOpen[0] == index && isTournamentOpen[1] == true) ? setIsTournamentOpen([0, false]) : setIsTournamentOpen([index, true]) }}>
                                 <span className="acronym">{item.Acronym}</span>
                                 <span className="name">{item.Name}</span>
                                 <span className={`status ${item.Class}`}><span>{item.Status}</span></span>
+                                {(isTournamentOpen[0] == index && isTournamentOpen[1] == true) && 
+                                <motion.div className="info"
+                                    initial={{ opacity: 0, y: -5, display: "none", height: 0}}
+                                    animate={{ opacity: 1, y: 0, display: "flex", height: "auto"}}
+                                    exit={{ opacity: 0, y: -5, display: "none", height: 0}}
+                                >
+                                    {
+                                        item.Stages && 
+                                        <div className="progressbar-container">
+                                            <ol className="progress-bar">
+                                                {item.Stages.stages.map((stage, index) => {
+                                                    return(
+                                                        <li key={index} className={item.StagesStatus[index]}><span>{stage.stage}</span></li>
+                                                    )
+                                                })}
+                                            </ol>
+                                        </div>
+                                    }
+
+                                    <div className="about">
+                                        <div className="forum" onClick={() => window.open(`https://osu.ppy.sh/community/forums/topics/${item.forumID}`, "_blank")} ><Chainlink size="16" style={{marginTop: '2px'}} color="hsla(219, 40%, 60%, 1)"/> Forum Thread</div>
+                                        {item.Website && <div className="website" onClick={() => window.open(item.Website, "_blank")} ><Link1 size="16" style={{marginTop: '2px'}} color="hsla(219, 40%, 60%, 1)"/> Website</div>}
+                                    </div>
+                                </motion.div>}
                             </div>
                         )
                     })}
@@ -65,6 +95,26 @@ export async function getServerSideProps() {
         }
 
         item.Link = (item.forumID.length < 15) ? `https://osu.ppy.sh/community/forums/topics/${item.forumID}` : item.forumID
+
+        item.Stages = JSON.parse(item.Stages)
+
+        var prevDate = todayDate - 86400000;
+        var stageStatus = []
+
+        item.Stages.stages.forEach(el => {
+            let stageDate = new Date(el.date)
+            if(prevDate === null) prevDate = stageDate
+            if(todayDate > stageDate && todayDate > prevDate){
+                stageStatus.push("is-complete")
+            } else if(todayDate <= stageDate && todayDate > prevDate){
+                stageStatus.push("is-active")
+            } else if(todayDate > prevDate && todayDate < stageDate){
+                stageStatus.push("")
+            }
+            prevDate = stageDate
+        });
+
+        item.StagesStatus = stageStatus
 
         return item
 
