@@ -40,6 +40,22 @@ export default function handler(req, res) {
                 if (err) { console.error(err); return; }
             });
         }
+
+        if(req.query.from === "app" && req.query.t){
+            base('Tournaments').select({
+                filterByFormula: `IF({Acronym} = '${req.query.t}' , TRUE())`,
+                view: "Grid view"
+            }).eachPage(function page(records, fetchNextPage) {
+                
+                let tournamentName = records[0].fields.Name
+                let multipliers = JSON.parse(records[0].fields.Multipliers)
+            
+                return res.status(200).json({ tournamentName, multipliers})
+            
+            }, function done(err) {
+                if (err) { console.error(err); return; }
+            });
+        }
         
     }
   }
