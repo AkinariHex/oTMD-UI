@@ -35,7 +35,7 @@ export default async function handler(req, res) {
                 return res.status(200).json({ tournamentName, multipliers})
             
             }, function done(err) {
-                if (err) { console.error(err); return res.json(null); }
+                if (err) { console.error(err); return res.status(200).json(null); }
             });
         }
         
