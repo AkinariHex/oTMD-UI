@@ -28,14 +28,22 @@ export default async function handler(req, res) {
                 filterByFormula: `IF({Acronym} = '${req.query.t}' , TRUE())`,
                 view: "Grid view"
             }).eachPage(function page(records, fetchNextPage) {
+
+                if(records[0]) {
+                  let tournamentName = records[0].fields.Name
+                  let multipliers = JSON.parse(records[0].fields.Multipliers)
+                  return res.status(200).json({ tournamentName, multipliers})
+                } else {
+                  return res.status(500).json({ error: "No tournament found"});
+                }
                 
-                let tournamentName = records[0].fields.Name
-                let multipliers = JSON.parse(records[0].fields.Multipliers)
             
-                return res.status(200).json({ tournamentName, multipliers})
             
             }, function done(err) {
-                if (err) { console.error(err); return res.status(200).json(null); }
+                if (err) { 
+                  console.error(err);
+                  return;
+                }
             });
         }
         
