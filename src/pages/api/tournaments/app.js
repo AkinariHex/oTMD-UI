@@ -34,7 +34,7 @@ export default async function handler(req, res) {
                   let multipliers = JSON.parse(records[0].fields.Multipliers)
                   return res.status(200).json({ tournamentName, multipliers})
                 } else {
-                  return res.status(500).json({ error: "No tournament found"});
+                  return res.status(200).json({ error: "No tournament found"});
                 }
                 
             
