@@ -1,12 +1,13 @@
 import { motion } from "framer-motion";
 import { ExternalLink } from 'react-external-link';
 
+
 export default function Home({ release }) {
   return (
     <div className="homeContent">
       <div className="appContext">
         <div className="appHeader">
-          <object type="image/svg+xml" data="/img/otmdLOGO.svg" className="logoAppHeader" alt="otmd logo"/>
+          <object type="image/svg+xml" data="/img/otmdLOGO.svg" className="logoAppHeader" alt="otmd logo" loading="lazy"/>
         </div>
         <div className="appText">
           Display easily your osu! Tournament Matches while streaming on Twitch.
@@ -56,13 +57,24 @@ export default function Home({ release }) {
               Repository
             </div>
           </ExternalLink>
+          <ExternalLink id="kofiDon" href={'https://ko-fi.com/akinari'}>
+            <div className="icon">
+              <img height="35px" width="35px" src="/img/kofi_Icon.png" alt="Ko-fi Logo" />
+            </div>
+            <div className="text">
+              Support the app
+            </div>{/* 
+            <div className="file">
+              Repository
+            </div> */}
+          </ExternalLink>
         </div>
         <motion.div
           animate={{ y: -100, opacity: 1 }}
           transition={{ duration: 0.5 }}
           className="appImage"
         >
-          <object type="image/svg+xml" data="/img/otmdappV1.svg" className="app" alt="otmd app image"/>
+          <object type="image/svg+xml" data="/img/otmdappV1.svg" className="app" alt="otmd app image" loading="lazy"/>
         </motion.div>
       </div>
     </div>
