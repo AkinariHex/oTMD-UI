@@ -2,7 +2,7 @@ import Airtable from "airtable";
 import Cors from "cors";
 
 const cors = Cors({
-    methods: ['POST'],
+    methods: ['GET'],
 })
 
 function runMiddleware(req, res, fn) {
