@@ -6,7 +6,7 @@ export default function Documentation({ release }) {
             <span id="header">Documentation</span>
             <div className="installation">
               <h1>How to install</h1>
-              <p>The current documentation is valid for the <span className="string">v1.9.0</span> of osu! Tourney Match Displayer.<br/>You have two methods to install it, using the installer or just unzipping the .zip file.</p>
+              <p>The current documentation is valid for the <span className="string">{release[0].tag_name}</span> of osu! Tourney Match Displayer.<br/>You have two methods to install it, using the installer or just unzipping the .zip file.</p>
               <h2>Installer</h2>
               <p>First of all you need to download the <a style={{fontWeight: 600}} href={`https://github.com/AkinariHex/oTMD/releases/download/${release[0].tag_name}/otmd_${release[0].tag_name}_installer.exe`} target="_blank" rel="noreferrer">installer</a>!<br/>Once downloaded, run the installer and continue installing it!<br/>The installer runs with Administrator Privileges.<br/>If Microsoft Defender SmartScreen alert you, don&apos;t worry about it and click Run anyway.<br/><span style={{fontWeight: 600}}>(Make sure you have downloaded it from <a href="https://otmd.app">otmd.app</a> to avoid malicius softwares!).</span></p>
               <p>The default installation folder is <span className="string">C:\Program Files\osu-tourney-match-displayer</span>!</p>
