@@ -11,23 +11,22 @@ function MyApp({ Component, pageProps, session, userStatus }) {
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>osu! Tourney Match Displayer</title>
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="osu! Tourney Match Displayer" />
+        <meta property="og:description" content="Display easily the score of your osu! matches in real-time while streaming on twitch!" />
+        <meta property="og:url" content="https://otmd.app" />
+        <meta property="og:image" content="https://akinariosu.s-ul.eu/CKOXOZMi" />
         <meta name="description" content="Display easily the score of your osu! matches in real-time while streaming on twitch!"/>
         <meta name="author" content="Akinari"/>
         <meta name="copyright" content="Akinari"/>
         <meta name="keywords" content="OTMD, o!TMD, otmd, osu! Tourney Match Displayer, osu! Match Displayer"/>
         <meta name="robots" content="index, follow"/>
-        <meta property="og:type" content="website"/>
-        <meta property="og:title" content="osu! Tourney Match Displayer"/>
-        <meta property="og:url" content="https://otmd.app"/>
-        <meta property="og:image" content="https://akinariosu.s-ul.eu/CKOXOZMi"/>
-        <meta property="og:description" content="Display easily the score of your osu! matches in real-time while streaming on twitch!"/>
         <meta name="twitter:card" content="summary_large_image"/>
         <meta name="twitter:title" content="osu! Tourney Match Displayer"/>
         <meta name="twitter:site" content="@akinari_osu"/>
         <meta name="twitter:description" content="Display easily the score of your osu! matches in real-time while streaming on twitch!"/>
         <meta name="twitter:image" content="https://akinariosu.s-ul.eu/CKOXOZMi"/>
         <meta name="twitter:image:alt" content="OTMD Logo"/>
-        <meta property="og:site_name" content="osu! Tourney Match Displayer" />
         <meta name="theme-color" content="#0C121DCC"/>
         <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'></link>
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-FB42B4PE0Q"></script>
