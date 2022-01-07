@@ -13,7 +13,7 @@ export default function Home({ release }) {
           Display easily your osu! Tournament Matches while streaming on Twitch.
         </div>
         <div className="appButtons">
-          <ExternalLink id="downloadEXE" href={`https://github.com/AkinariHex/oTMD/releases/download/${release[0].tag_name}/otmd_${release[0].tag_name}_installer.exe`}>
+          <ExternalLink id="downloadEXE" href={`https://github.com/AkinariHex/oTMD/releases/download/${release[0].tag_name}/otmd_${release[0].tag_name}_x64_installer.exe`}>
             <div className="icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 12v-8.646l10-1.355v10.001h-10zm11 0h13v-12l-13 1.807v10.193zm-1 1h-10v7.646l10 1.355v-9.001zm1 0v9.194l13 1.806v-11h-13z"/></svg>
             </div>
