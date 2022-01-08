@@ -2,23 +2,56 @@
 
 /* VAR COLORS */
 :root {
+    --notification-server-border-color: hsl(130, 45%, 60%);
+    --notification-server-background-color: hsl(130, 26%, 25%);
+    --notification-server-timestamp-color: hsl(130, 45%, 80%);
+    --notification-friend-border-color: hsl(0, 55%, 58%);
+    --notification-friend-background-color: hsl(0, 26%, 20%);
+    --notification-friend-timestamp-color: hsl(0, 55%, 80%);
+    --notification-team-border-color: hsl(214, 43%, 60%);
+    --notification-team-background-color: hsl(214, 43%, 20%);
+    --notification-team-timestamp-color: hsl(214, 43%, 80%);
+
     --scrollbar-color: hsla(219, 40%, 5%);
     --scrollbar-color-hover: hsla(219, 40%, 4%);
     --navbar-color: hsl(219, 41%, 8%, 0.8);
-    --navbar-link-active-background-color: hsla(219, 40%, 16%, 0.9);
+    --navbar-text-color: #d9e3f0;
+    --navbar-text-hover-color: hsl(214, 43%, 95%);
+    --navbar-link-active-background-color: hsla(219, 40%, 16%);
     --navbar-login-button-hover: hsla(219, 40%, 20%, 0.9);
+    --navbar-logout-text-color: #F47373;
+    --navbar-logout-text-hover-color: hsl(0, 0%, 100%);
+    --navbar-logout-bg-color: hsla(0, 47%, 26%, 0.6);
     --site-background-color: #121B2B;
     --action-div-color: hsl(219, 40%, 16%);
     --action-div-color2: hsl(219, 40%, 14%);
     --action-div-hover-color: hsl(219, 40%, 18%);
+    --team-overview-bg-color: hsla(219, 40%, 16%);
+    --team-overview-text-color: hsl(0, 0%, 95%);
+    --team-member-bg-color: hsla(219, 40%, 12%);
+    --team-mappool-bg-color: hsla(219, 40%, 17%);
+    --team-mappool-header-color: hsla(219, 40%, 10%);
 
-    /* PROGRESS BAR */
-    --color-inactive: hsl(219, 40%, 16%);
-    --color-gray: hsl(219, 40%, 8%);
-    --color-gray-disabled: hsl(219, 40%, 9%);
-    --color-active: hsla(219, 40%, 60%, 1);
-    --font-size-small: .75rem;
-    --font-size-default: .875rem;
+    --team-mappool-input-color: hsl(214, 43%, 90%);
+    --team-mappool-input-placeholder-color: hsl(214, 43%, 60%);
+
+
+    --mods-text-light: #d9e3f0;
+    --mods-text-dark: hsl(219, 41%, 8%);
+    --mods-nm-bg: hsl(226, 99%, 65%);
+    --mods-nm-bg-row: hsla(226, 99%, 65%, 0.15);
+    --mods-hd-bg: hsl(43, 98%, 60%);
+    --mods-hd-bg-row: hsla(43, 98%, 60%, 0.15);
+    --mods-hr-bg: hsl(0, 100%, 69%);
+    --mods-hr-bg-row: hsla(0, 100%, 69%, 0.15);
+    --mods-ez-bg: hsl(120, 100%, 50%);
+    --mods-ez-bg-row: hsla(120, 100%, 50%, 0.15);
+    --mods-dt-bg: hsl(267, 97%, 73%);
+    --mods-dt-bg-row: hsla(267, 97%, 73%, 0.15);
+    --mods-fm-bg: hsl(101, 38%, 63%);
+    --mods-fm-bg-row: hsla(101, 38%, 63%, 0.15);
+    --mods-tb-bg: hsl(191, 26%, 57%);
+    --mods-tb-bg-row: hsla(191, 26%, 57%, 0.15);
 }
 
 html, body {
@@ -105,6 +138,7 @@ header {
     position: relative;
     margin-right: 10px;
     cursor: default;
+    gap: 8px;
 }
 
 .userInfo .userInfoContent{
@@ -117,33 +151,40 @@ header {
     flex-flow: column;
     top: 3.2em;
     right: 1px;
-    width: 100%;
+    width: 9em;
+    padding: 5px;
+    gap: 1px;
     border-radius: 10px;
-    background-color: #111928e6;
+    background-color: var(--navbar-color);
     backdrop-filter: blur(2px) saturate(180%);
     -webkit-backdrop-filter: blur(14px) saturate(180%);
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-    z-index: 999;
+    z-index: 995;
 }
 
 .userInfo .userInfoContent .profileActions .item{
-    font-size: 12pt;
-    color: #DDD;
-    padding: 5px 20px;
-    text-align: center;
+    display: flex;
+    font-size: 11pt;
+    color: var(--navbar-text-color);
+    padding: 4px 12px;
+    text-align: left;
+    border-radius: 8px;
+    align-items: center;
+    gap: 8px;
 }
 
 .userInfo .userInfoContent .profileActions .item:hover{
-    background-color: rgba(0, 0, 0, 0.2);
-    color: #EEE;
+    background-color: var(--navbar-link-active-background-color);
+    color: var(--navbar-text-hover-color);
 }
 
-.userInfo .userInfoContent .profileActions .item:first-child:hover{
-    border-radius: 10px 10px 0 0;
+.userInfo .userInfoContent .profileActions .item:last-child{
+    color: var(--navbar-logout-text-color);
 }
 
 .userInfo .userInfoContent .profileActions .item:last-child:hover{
-    border-radius: 0 0 10px 10px;
+    background-color: var(--navbar-logout-bg-color);
+    color: var(--navbar-logout-text-color);
 }
 
 .userBackground {
@@ -154,38 +195,18 @@ header {
     align-items: center;
     display: flex;
     border-radius: 20px;
-}
-
-.userContent .userLogout {
-    width: 32px;
-    height: 32px;
-    background-color: #a23b3b99;
-    border: 0px;
-    border-radius: 50%;
-    align-items: center;
-    color: #fff;
-    margin-left: 5px;
-    padding: 0px 1px 0px 0px;
-    transition: 0.1s ease-out;
-}
-
-.userContent .userLogout:hover {
-    background-color: #a23b3bbd;
-    transition: 0.1s ease-in;
-}
-
-.userContent .userLogout i{
-    font-size: 1.65em;
-    text-align: center;
+    cursor: pointer;
 }
 
 .userInfo_name {
-    color: #fff;
+    color: var(--navbar-text-color);
     font-family: 'Poppins';
     align-self: center;
     padding: 2px 8px 2px 8px;
     font-weight: 300;
     position: relative;
+    margin-left: 8px;
+    user-select: none;
 }
 
 .userInfo_name #userPermissions {
@@ -772,7 +793,7 @@ header {
 .accountContainer .profileInfo{
     display: flex;
     flex-direction: column;
-    flex-grow: 2;
+    flex-grow: 1;
     position: relative;
 }
 
@@ -859,7 +880,7 @@ header {
 
 .accountContainer .profileActions{
     display: flex;
-    flex-grow: 6;
+    width: 75vw;
 }
 
 .accountContainer .profileActions h2{
@@ -984,7 +1005,7 @@ header {
     gap: 5px;
 }
 
-.collapsibleBody .body #tourneyRequest :is(#tourneyName, .info input){
+.tourneyNameInfo #tourneyName, .info #tourneyURL{
     display: flex;
     width: 100%;
     height: 40px;
@@ -998,17 +1019,31 @@ header {
     padding: 0;
 }
 
-.collapsibleBody .body #tourneyRequest #tourneyName::placeholder, .collapsibleBody .body #tourneyRequest .info input::placeholder{
+.tourneyNameInfo #acronym, .info #host{
+    display: flex;
+    width: 50%;
+    height: 40px;
+    font-size: 16pt;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 0;
+    font-family: 'Poppins';
+    color: #DDD;
+    border-radius: 12px;
+    padding: 0;
+}
+
+.collapsibleBody .body #tourneyRequest .tourneyNameInfo::placeholder, .collapsibleBody .body #tourneyRequest :is(.tourneyNameInfo, .info) input::placeholder{
     color: #999
 }
 
-.collapsibleBody .body #tourneyRequest :is(#tourneyName:focus-visible, #tourneyName:focus, .info input:focus-visible, .info input:focus){
+.collapsibleBody .body #tourneyRequest :is(input:focus-visible, input:focus){
     outline: 0;
     outline-offset: 0;
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-.collapsibleBody .body #tourneyRequest .info{
+.collapsibleBody .body #tourneyRequest :is(.tourneyNameInfo, .info) {
     display: flex;
     flex-flow: row;
     gap: 5px;
@@ -1106,6 +1141,95 @@ header {
     background-color: #aaa;
     position: absolute
 } */
+
+
+
+/* HOST TOURNAMENT EDIT */
+
+#tourneyEdit {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 8px;
+}
+
+#tourneyEdit input{
+    display: flex;
+    width: 100%;
+    height: 40px;
+    font-size: 16pt;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 0;
+    font-family: 'Poppins';
+    color: #DDD;
+    border-radius: 12px;
+    padding: 0;
+} 
+
+.multiplierStatus {
+    width: 100px !important;
+}
+
+
+#tourneyEdit :is(input:focus-visible, input:focus){
+    outline: 0;
+    outline-offset: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+#tourneyEdit label{
+    color: #ddd;
+    margin: 0 0 2px 6px;
+    font-size: 11.2pt;
+} 
+
+#tourneyEdit label span.specialInfo {
+    font-size: 10pt;
+    color: hsla(224, 85%, 80%);
+}
+
+#tourneyEdit button{
+    width: 100%;
+    height: 40px;
+    font-size: 14pt;
+    text-align: center;
+    background-color: hsla(224, 35%, 50%, 0.35);
+    border: 0;
+    font-family: 'Poppins';
+    color: #DDD;
+    border-radius: 12px;
+}
+
+#tourneyEdit button:hover{
+    background-color: hsla(224, 35%, 50%, 0.45);
+}
+
+.settingsMultiplier {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 8px;
+}
+
+.tourneyEditName, .editSocials, .startEndDates {
+    display: flex;
+    flex-flow: row;
+    width: 100%;
+    gap: 8px;
+}
+
+.multipliers {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 8px;
+}
+
+.tourneyEditName .acronym, .tourneyEditName .name, .editSocials .forum, .editSocials .website, .startEndDates .start, .startEndDates .end, .multipliers .multiplier {
+    display: flex;
+    flex-flow: column wrap;
+    width: 100%;
+}
+
 
 /* SCROLLBAR */
 
@@ -1249,6 +1373,39 @@ header {
     font-size: 10.5pt;
 } */
 
+/* ============================== SETTINGS PAGE =================================== */
+
+.settingsPage {
+    padding: 60px 0;
+    width: 100%;
+    height: 100%;
+}
+
+.settingsContainer {
+    margin: 20px auto;
+    display: flex;
+    width: calc(60em);
+    height: 200px;
+    border-radius: 20px;
+    background-color: var(--settings-container-background-color);
+}
+
+.titleContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    background-color: var(--settings-container-background-color);
+    color: #EEE;
+}
+
+.account img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100vh;
+}
+
 /* ============================ RESPONSIVE ================================== */
 
 /* PHONE */
@@ -1310,6 +1467,11 @@ header {
 
     .accountContainer .profileInfo::after{
         display: none;
+    }
+
+    .accountContainer .profileActions{
+        display: flex;
+        width: 100%;
     }
 
     .actionCategory {

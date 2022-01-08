@@ -2,7 +2,9 @@
 import { signIn, signOut } from "next-auth/client";
 import NavLink from '../NavLink/NavLink';
 import Link from "next/link";
-import { Home2, Cup, TableDocument, Login } from "iconsax-react";
+import { useState } from "react";
+import { Home2, Cup, TableDocument, Login, Logout, User, Profile2User, Setting2 } from "iconsax-react";
+import { motion } from "framer-motion";
 
 export default function Navbar({ session, userStatus }) {
 
@@ -12,6 +14,12 @@ export default function Navbar({ session, userStatus }) {
         "Tournaments Host": 'rgb(226, 168, 48);',
         "User": 'transparent'
     }
+
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+    const variants = {
+        open: { opacity: 1, y: 0, display: 'block' },
+        closed: { opacity: 0, y: -10, display: 'none' },
+      }
 
     return (
         <>
@@ -51,21 +59,21 @@ export default function Navbar({ session, userStatus }) {
                 <div className="userInfo">
                                 {session !== null ? (
                                     <div className="userInfoContent">
-                                        <Link href="/profile">
+                                        <div href="/profile" onClick={() => setIsDropdownOpen(isDropdownOpen => !isDropdownOpen)} >
                                             <a>
                                                 <div className="userBackground" style={{background: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)) center center / cover no-repeat, url('${session.cover_url}') center center / cover no-repeat`}}>
                                                     <div className="userContent">
-                                                        <button className="userLogout" onClick={() => signOut()}><i className='bx bx-log-out-circle'></i></button>
                                                         <span className="userInfo_name"><span style={{backgroundColor: statusColor[userStatus.Permissions]}} id="userPermissions"></span>{session.username}</span>
                                                         <img className="userInfo_image" src={session.avatar_url} alt="user image"/>
                                                     </div>
                                                 </div>
                                             </a>
-                                        </Link>
-                                        {/* <div className="profileActions">
-                                            <div className="item">Profile</div>
-                                            <div className="item">Logout</div>
-                                        </div> */}
+                                        </div>
+                                        <motion.div className="profileActions" animate={isDropdownOpen ? "open" : "closed"} variants={variants} transition={{duration: 0.2}}>
+                                                <Link href="/profile"><div className="item" onClick={() => setIsDropdownOpen(false)}><User size="16" color="#d9e3f0"/>Profile</div></Link>
+                                                <Link href="/settings"><div className="item" onClick={() => setIsDropdownOpen(false)}><Setting2 size="16" color="#d9e3f0"/>Settings</div></Link>
+                                                <div className="item" onClick={() => {signOut(), setIsDropdownOpen(false)}}><Logout size="16" color="#F47373"/>Logout</div>
+                                        </motion.div>
                                     </div>
                                 ) : (
                                     <div className="userLogin">

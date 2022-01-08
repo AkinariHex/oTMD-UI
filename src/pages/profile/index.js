@@ -1,11 +1,12 @@
 import { getSession } from "next-auth/client";
 import TournamentRequest from "../../components/Forms/TournamentRequest";
+import EditTournament from "../../components/Forms/EditTournament";
 import { useState } from "react";
 import Collapsible from "react-collapsible";
 import { ExternalLink } from 'react-external-link';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-export default function Account({ session, userStatus, requests }) {
+export default function Account({ session, userStatus, requests, mytournaments }) {
 
   let statusColor = {
     "Server": 'rgb(197, 56, 56)',
@@ -62,13 +63,32 @@ export default function Account({ session, userStatus, requests }) {
         <div className="profileActions">
           <div className="actionsContainer">
             {
+              (mytournaments.length > 0) &&
+              <div className="actionCategory">
+                <h2>Your Active Tournaments</h2>
+                <div className="actionCentre">
+                  {
+                    mytournaments.map((tournament, index) => {
+                      let todayDate = new Date();
+                      let tDate = tournament.Tourney_End.split('/')
+                      let endDate = new Date(`${tDate[0]}-${tDate[1]}-${tDate[2]}`);
+                        return (
+                          (todayDate < endDate) &&
+                            <EditTournament key={index} profile={userStatus} session={session} tournament={tournament}/>
+                        )
+                    })
+                  }
+                </div>
+              </div>
+            }
+            {
               (userStatus.Permissions === 'Server' || userStatus.Permissions === 'Tourney Manager') &&
               <div className="actionCategory">
                 <h2>Tournaments Management</h2>
                 <div className="actionCentre">
                   <div className="action">
                     <div className="text">Manage tournament requests</div>
-                    <div className="utilityIcon"><i className='bx bxs-down-arrow' ></i></div>
+                    <div className="utilityIcon"><i className='bx bxs-down-arrow'></i></div>
                   </div>
                 </div>
               </div>
@@ -126,6 +146,12 @@ export async function getServerSideProps(context) {
       ? await fetch(`${process.env.NEXTAUTH_URL}/api/tournaments?u=${session.id}`)
       .then((res) => res.json())
       : [{}];
+      
+      var mytournaments = 
+        session !== null
+          ? await fetch(`${process.env.NEXTAUTH_URL}/api/tournaments/me?u=${session.id}`)
+          .then((res) => res.json())
+          : [{}];
 
   const returnProps =
     session === null
@@ -139,7 +165,8 @@ export async function getServerSideProps(context) {
           props: {
             session: session,
             userStatus: statusData,
-            requests: requests
+            requests: requests,
+            mytournaments: mytournaments,
           },
         };
 

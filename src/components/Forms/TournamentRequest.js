@@ -14,7 +14,8 @@ function TournamentRequest({ profile, session }) {
                         initialValues={{
                             tourneyName: '',
                             tourneyURL: '',
-                            acronym: ''
+                            acronym: '',
+                            host: ''
                         }}
                         onSubmit={async (values) => {
                             await new Promise((r) => setTimeout(r, 500));
@@ -31,9 +32,12 @@ function TournamentRequest({ profile, session }) {
                       >
                         {({ isSubmitting }) => (
                             <Form id="tourneyRequest">
-                                <Field id="tourneyName" name="tourneyName" placeholder="Tournament Name" required/>
-                                <div className="info">
+                                <div className="tourneyNameInfo">
                                     <Field id="acronym" name="acronym" placeholder="Tournament Acronym"/>
+                                    <Field id="tourneyName" name="tourneyName" placeholder="Tournament Name" required/>
+                                </div>
+                                <div className="info">
+                                    <Field id="host" name="host" placeholder="Tournament Host ID"/>
                                     <Field id="tourneyURL" name="tourneyURL" placeholder="Tournament Link" type="url" required/>
                                 </div>
                                 <button type="submit" disabled={isSubmitting}>Request</button>

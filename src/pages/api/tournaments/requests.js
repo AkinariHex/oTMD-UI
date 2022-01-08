@@ -37,13 +37,14 @@ export default async function handler(req, res) {
             if(!req.body){
               return res.status(401).json({ status: 'no body', uuid: uuidValidateV4(req.query.s)})
             }
-
+            
             base(process.env.AIRTABLE_TOURNAMENTS_TABLE).create([
               {
                 "fields": {
                   "UUID": uuidv4(),
                   "Acronym": req.body.acronym,
                   "Name": req.body.tourneyName,
+                  "TourneyHost": parseInt(req.body.host),
                   "forumID": req.body.tourneyURL,
                   "RequesterID": session.id,
                   "RequesterUsername": session.username,
