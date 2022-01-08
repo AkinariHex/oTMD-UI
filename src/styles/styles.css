@@ -26,6 +26,15 @@
     --action-div-color: hsl(219, 40%, 16%);
     --action-div-color2: hsl(219, 40%, 14%);
     --action-div-hover-color: hsl(219, 40%, 18%);
+
+    /* PROGRESS BAR */
+    --color-inactive: hsl(219, 40%, 16%);
+    --color-gray: hsl(219, 40%, 8%);
+    --color-gray-disabled: hsl(219, 40%, 9%);
+    --color-active: hsla(219, 40%, 60%, 1);
+    --font-size-small: .75rem;
+    --font-size-default: .875rem;
+
     --team-overview-bg-color: hsla(219, 40%, 16%);
     --team-overview-text-color: hsl(0, 0%, 95%);
     --team-member-bg-color: hsla(219, 40%, 12%);
