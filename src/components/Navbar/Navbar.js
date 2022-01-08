@@ -71,7 +71,7 @@ export default function Navbar({ session, userStatus }) {
                                         </div>
                                         <motion.div className="profileActions" animate={isDropdownOpen ? "open" : "closed"} variants={variants} transition={{duration: 0.2}}>
                                                 <Link href="/profile"><div className="item" onClick={() => setIsDropdownOpen(false)}><User size="16" color="#d9e3f0"/>Profile</div></Link>
-                                                <Link href="/settings"><div className="item" onClick={() => setIsDropdownOpen(false)}><Setting2 size="16" color="#d9e3f0"/>Settings</div></Link>
+                                                {/* <Link href="/settings"><div className="item" onClick={() => setIsDropdownOpen(false)}><Setting2 size="16" color="#d9e3f0"/>Settings</div></Link> */}
                                                 <div className="item" onClick={() => {signOut(), setIsDropdownOpen(false)}}><Logout size="16" color="#F47373"/>Logout</div>
                                         </motion.div>
                                     </div>
