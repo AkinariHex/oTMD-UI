@@ -69,7 +69,7 @@ export default function Account({ session, userStatus, requests, mytournaments }
                 <div className="actionCentre">
                   {
                     mytournaments.map((tournament, index) => {
-                      if(Tourney_End){
+                      if(tournament.Tourney_End){
                         let todayDate = new Date();
                         let tDate = tournament.Tourney_End.split('/')
                         let endDate = new Date(`${tDate[0]}-${tDate[1]}-${tDate[2]}`);
