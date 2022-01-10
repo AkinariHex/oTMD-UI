@@ -121,7 +121,6 @@ function EditTournament({ profile, session, tournament }) {
                         name="website"
                         placeholder="Website"
                         spellCheck="false"
-                        required
                         />
                     </div>
                   </div>
