@@ -97,7 +97,6 @@ export default function Account({
                       let todayDate = new Date();
                       let tDate = tournament.Tourney_End.split("/");
                       let endDate = new Date(tDate[2], tDate[0] - 1, tDate[1]);
-                      console.log(endDate);
                       return (
                         todayDate < endDate && (
                           <EditTournament
