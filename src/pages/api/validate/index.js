@@ -2,7 +2,7 @@ import Airtable from "airtable";
 import Cors from "cors";
 
 const cors = Cors({
-  methods: ["POST"],
+  methods: ["POST", "GET"],
 });
 
 function runMiddleware(req, res, fn) {
@@ -42,7 +42,26 @@ export default async function handler(req, res) {
           if (err) {
             console.error(err);
           }
-          res.end();
+        }
+      );
+  } else if (req.method === "GET") {
+    base("Users")
+      .select({
+        filterByFormula: `IF({Apikey} = '${req.query.api}' , TRUE())`,
+        view: "Grid view",
+      })
+      .eachPage(
+        function page(records, fetchNextPage) {
+          if (records.length > 0) {
+            return res.status(200).json({ user: records[0].get("ID") });
+          } else {
+            return res.status(404).json({ error: "Wrong apikey!" });
+          }
+        },
+        function done(err) {
+          if (err) {
+            console.error(err);
+          }
         }
       );
   }
