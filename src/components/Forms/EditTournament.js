@@ -126,7 +126,7 @@ function EditTournament({ profile, session, tournament }) {
                   </div>
                   <div className="startEndDates">
                     <div className="start">
-                        <label htmlFor="startDate">Start Date <span className="specialInfo">*mm/dd/yyyy</span></label>
+                        <label htmlFor="startDate">Qualifiers Date <span className="specialInfo">*mm/dd/yyyy</span></label>
                         <Field
                         id="startDate"
                         name="startDate"
@@ -136,7 +136,7 @@ function EditTournament({ profile, session, tournament }) {
                         />
                     </div>
                     <div className="end">
-                        <label htmlFor="endDate">End Date <span className="specialInfo">*mm/dd/yyyy</span></label>
+                        <label htmlFor="endDate">Grand Finals Date <span className="specialInfo">*mm/dd/yyyy</span></label>
                         <Field
                         id="endDate"
                         name="endDate"

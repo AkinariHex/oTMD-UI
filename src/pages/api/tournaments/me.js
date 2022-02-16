@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 
         if(req.query.u){
 
-            base("Tournaments").select({
+            base(process.env.AIRTABLE_TOURNAMENTS_MAIN_TABLE).select({
                 filterByFormula: `IF({Host} = '${req.query.u}', TRUE())`,
                 view: "Grid view"
             }).eachPage(function page(records, fetchNextPage) {
@@ -83,7 +83,7 @@ export default async function handler(req, res) {
                     }
                 }
 
-                  base('Tournaments').update([
+                  base(process.env.AIRTABLE_TOURNAMENTS_MAIN_TABLE).update([
                     {
                       "id": req.query.t,
                       "fields": {

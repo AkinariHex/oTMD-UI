@@ -1,67 +1,87 @@
 import NextAuth from "next-auth";
 import Airtable from "airtable";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 const postUserDB = (profile) => {
-  const base = new Airtable({apiKey: process.env.AIRTABLE_APIKEY}).base(process.env.AIRTABLE_BASE)
+  const base = new Airtable({ apiKey: process.env.AIRTABLE_APIKEY }).base(
+    process.env.AIRTABLE_BASE
+  );
 
-      base('Users').create([
-        {
-          "fields": {
-            "ID": profile.id,
-            "Username": profile.username,
-            "UUID": uuidv4(),
-            "Permissions": 'User',
-            "Discord": profile.discord,
-            "Twitter": profile.twitter,
-            "DateJoin": Math.floor(new Date().getTime()/1000.0)
-          }
+  base("Users").create(
+    [
+      {
+        fields: {
+          ID: profile.id,
+          Username: profile.username,
+          UUID: uuidv4(),
+          Permissions: "User",
+          Discord: profile.discord,
+          Twitter: profile.twitter,
+          DiscordChannelsMatch: "[]",
+          DateJoin: Math.floor(new Date().getTime() / 1000.0),
+        },
+      },
+    ],
+    function (err, records) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    }
+  );
+};
+
+const checkUserDB = (profile) => {
+  const base = new Airtable({ apiKey: process.env.AIRTABLE_APIKEY }).base(
+    process.env.AIRTABLE_BASE
+  );
+
+  var mapped = "";
+
+  base("Users")
+    .select({
+      filterByFormula: `IF({ID} = '${profile.id}' , TRUE())`,
+      view: "Grid view",
+    })
+    .eachPage(
+      function page(records, fetchNextPage) {
+        mapped = records.map((record) => {
+          return record.fields;
+        });
+
+        if (mapped[0] === undefined || mapped === undefined) {
+          postUserDB(profile);
+        } else if (
+          mapped[0].UUID == "" ||
+          mapped[0].UUID == null ||
+          mapped[0].UUID == undefined
+        ) {
+          base("Users").update(
+            [
+              {
+                id: mapped[0].RecordID,
+                fields: {
+                  UUID: uuidv4(),
+                },
+              },
+            ],
+            function (err) {
+              if (err) {
+                console.error(err);
+                return;
+              }
+            }
+          );
         }
-      ], function(err, records) {
-        
+      },
+      function done(err) {
         if (err) {
           console.error(err);
           return;
         }
-
-
-    });
-}
-
-const checkUserDB = (profile) => {
-  const base = new Airtable({apiKey: process.env.AIRTABLE_APIKEY}).base(process.env.AIRTABLE_BASE)
-
-  var mapped = ''
-
-    base('Users').select({
-      filterByFormula: `IF({ID} = '${profile.id}' , TRUE())`,
-      view: "Grid view"
-    }).eachPage(function page(records, fetchNextPage) {
-
-        mapped = records.map((record) => {return record.fields})
-
-        if(mapped[0] === undefined || mapped === undefined) {
-          postUserDB(profile)
-        } else if(mapped[0].UUID == '' || mapped[0].UUID == null ||  mapped[0].UUID == undefined){
-          base('Users').update([
-            {
-              "id": mapped[0].RecordID,
-              "fields": {
-                "UUID": uuidv4()
-              }
-            }
-          ], function(err) {
-            if (err) { console.error(err); return; }
-          });
-        }
-
-    }, function done(err) {
-        if (err) { console.error(err); return; }
-    });
-
-
-}
-
+      }
+    );
+};
 
 export default NextAuth({
   providers: [
@@ -106,22 +126,20 @@ export default NextAuth({
 
       if (userData.authentication === "basic") return {};
 
-      userData.access_token = user.accessToken
-      
+      userData.access_token = user.accessToken;
+
       return userData;
     },
     async jwt(token, user, account, profile, isNewUser) {
-
       if (account?.accessToken) {
         token.accessToken = account.accessToken;
         token.refresh_token = account.refresh_token;
 
         //Write user in database
-        checkUserDB(profile)
+        checkUserDB(profile);
       }
-      
-      return Promise.resolve(token);
 
+      return Promise.resolve(token);
     },
   },
 });

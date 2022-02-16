@@ -1,910 +1,919 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 /* VAR COLORS */
 :root {
-    --notification-server-border-color: hsl(130, 45%, 60%);
-    --notification-server-background-color: hsl(130, 26%, 25%);
-    --notification-server-timestamp-color: hsl(130, 45%, 80%);
-    --notification-friend-border-color: hsl(0, 55%, 58%);
-    --notification-friend-background-color: hsl(0, 26%, 20%);
-    --notification-friend-timestamp-color: hsl(0, 55%, 80%);
-    --notification-team-border-color: hsl(214, 43%, 60%);
-    --notification-team-background-color: hsl(214, 43%, 20%);
-    --notification-team-timestamp-color: hsl(214, 43%, 80%);
+  --notification-server-border-color: hsl(130, 45%, 60%);
+  --notification-server-background-color: hsl(130, 26%, 25%);
+  --notification-server-timestamp-color: hsl(130, 45%, 80%);
+  --notification-friend-border-color: hsl(0, 55%, 58%);
+  --notification-friend-background-color: hsl(0, 26%, 20%);
+  --notification-friend-timestamp-color: hsl(0, 55%, 80%);
+  --notification-team-border-color: hsl(214, 43%, 60%);
+  --notification-team-background-color: hsl(214, 43%, 20%);
+  --notification-team-timestamp-color: hsl(214, 43%, 80%);
 
-    --scrollbar-color: hsla(219, 40%, 5%);
-    --scrollbar-color-hover: hsla(219, 40%, 4%);
-    --navbar-color: hsl(219, 41%, 8%, 0.8);
-    --navbar-text-color: #d9e3f0;
-    --navbar-text-hover-color: hsl(214, 43%, 95%);
-    --navbar-link-active-background-color: hsla(219, 40%, 16%);
-    --navbar-login-button-hover: hsla(219, 40%, 20%, 0.9);
-    --navbar-logout-text-color: #F47373;
-    --navbar-logout-text-hover-color: hsl(0, 0%, 100%);
-    --navbar-logout-bg-color: hsla(0, 47%, 26%, 0.6);
-    --site-background-color: #121B2B;
-    --action-div-color: hsl(219, 40%, 16%);
-    --action-div-color2: hsl(219, 40%, 14%);
-    --action-div-hover-color: hsl(219, 40%, 18%);
+  --scrollbar-color: hsla(219, 40%, 5%);
+  --scrollbar-color-hover: hsla(219, 40%, 4%);
+  --navbar-color: hsl(219, 41%, 8%, 0.8);
+  --navbar-text-color: #d9e3f0;
+  --navbar-text-hover-color: hsl(214, 43%, 95%);
+  --navbar-link-active-background-color: hsla(219, 40%, 16%);
+  --navbar-login-button-hover: hsla(219, 40%, 20%, 0.9);
+  --navbar-logout-text-color: #f47373;
+  --navbar-logout-text-hover-color: hsl(0, 0%, 100%);
+  --navbar-logout-bg-color: hsla(0, 47%, 26%, 0.6);
+  --site-background-color: #121b2b;
+  --action-div-color: hsl(219, 40%, 16%);
+  --action-div-color2: hsl(219, 40%, 14%);
+  --action-div-hover-color: hsl(219, 40%, 18%);
 
-    /* PROGRESS BAR */
-    --color-inactive: hsl(219, 40%, 16%);
-    --color-gray: hsl(219, 40%, 8%);
-    --color-gray-disabled: hsl(219, 40%, 9%);
-    --color-active: hsla(219, 40%, 60%, 1);
-    --font-size-small: .75rem;
-    --font-size-default: .875rem;
+  /* PROGRESS BAR */
+  --color-inactive: hsl(219, 40%, 16%);
+  --color-gray: hsl(219, 40%, 8%);
+  --color-gray-disabled: hsl(219, 40%, 9%);
+  --color-active: hsla(219, 40%, 60%, 1);
+  --font-size-small: 0.75rem;
+  --font-size-default: 0.875rem;
 
-    --team-overview-bg-color: hsla(219, 40%, 16%);
-    --team-overview-text-color: hsl(0, 0%, 95%);
-    --team-member-bg-color: hsla(219, 40%, 12%);
-    --team-mappool-bg-color: hsla(219, 40%, 17%);
-    --team-mappool-header-color: hsla(219, 40%, 10%);
+  --team-overview-bg-color: hsla(219, 40%, 16%);
+  --team-overview-text-color: hsl(0, 0%, 95%);
+  --team-member-bg-color: hsla(219, 40%, 12%);
+  --team-mappool-bg-color: hsla(219, 40%, 17%);
+  --team-mappool-header-color: hsla(219, 40%, 10%);
 
-    --team-mappool-input-color: hsl(214, 43%, 90%);
-    --team-mappool-input-placeholder-color: hsl(214, 43%, 60%);
+  --team-mappool-input-color: hsl(214, 43%, 90%);
+  --team-mappool-input-placeholder-color: hsl(214, 43%, 60%);
 
-
-    --mods-text-light: #d9e3f0;
-    --mods-text-dark: hsl(219, 41%, 8%);
-    --mods-nm-bg: hsl(226, 99%, 65%);
-    --mods-nm-bg-row: hsla(226, 99%, 65%, 0.15);
-    --mods-hd-bg: hsl(43, 98%, 60%);
-    --mods-hd-bg-row: hsla(43, 98%, 60%, 0.15);
-    --mods-hr-bg: hsl(0, 100%, 69%);
-    --mods-hr-bg-row: hsla(0, 100%, 69%, 0.15);
-    --mods-ez-bg: hsl(120, 100%, 50%);
-    --mods-ez-bg-row: hsla(120, 100%, 50%, 0.15);
-    --mods-dt-bg: hsl(267, 97%, 73%);
-    --mods-dt-bg-row: hsla(267, 97%, 73%, 0.15);
-    --mods-fm-bg: hsl(101, 38%, 63%);
-    --mods-fm-bg-row: hsla(101, 38%, 63%, 0.15);
-    --mods-tb-bg: hsl(191, 26%, 57%);
-    --mods-tb-bg-row: hsla(191, 26%, 57%, 0.15);
+  --mods-text-light: #d9e3f0;
+  --mods-text-dark: hsl(219, 41%, 8%);
+  --mods-nm-bg: hsl(226, 99%, 65%);
+  --mods-nm-bg-row: hsla(226, 99%, 65%, 0.15);
+  --mods-hd-bg: hsl(43, 98%, 60%);
+  --mods-hd-bg-row: hsla(43, 98%, 60%, 0.15);
+  --mods-hr-bg: hsl(0, 100%, 69%);
+  --mods-hr-bg-row: hsla(0, 100%, 69%, 0.15);
+  --mods-ez-bg: hsl(120, 100%, 50%);
+  --mods-ez-bg-row: hsla(120, 100%, 50%, 0.15);
+  --mods-dt-bg: hsl(267, 97%, 73%);
+  --mods-dt-bg-row: hsla(267, 97%, 73%, 0.15);
+  --mods-fm-bg: hsl(101, 38%, 63%);
+  --mods-fm-bg-row: hsla(101, 38%, 63%, 0.15);
+  --mods-tb-bg: hsl(191, 26%, 57%);
+  --mods-tb-bg-row: hsla(191, 26%, 57%, 0.15);
 }
 
-html, body {
-    height: 100vh;
-    width: 100vw;
-    padding: 0px;
-    margin: 0px;
-    font-family: 'Poppins';
-    scrollbar-color: var(--scrollbar-color) transparent;
-    overflow: hidden auto;
-    background-color: var(--site-background-color);
+html,
+body {
+  height: 100vh;
+  width: 100vw;
+  padding: 0px;
+  margin: 0px;
+  font-family: "Poppins";
+  scrollbar-color: var(--scrollbar-color) transparent;
+  overflow: hidden auto;
+  background-color: var(--site-background-color);
 }
 
 a:link {
-    text-decoration: inherit;
-    color: inherit;
-    cursor: default;
+  text-decoration: inherit;
+  color: inherit;
+  cursor: default;
 }
 
 a:visited {
-    text-decoration: inherit;
-    color: inherit;
-    cursor: default;
+  text-decoration: inherit;
+  color: inherit;
+  cursor: default;
 }
 
 /* NAVBAR */
 
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 3.3em;
-    position: fixed;
-    width: 100vw;
-    /* background-color: #293d74; */
-    background-color: var(--navbar-color);
-    backdrop-filter: blur(14px) saturate(180%);
-    -webkit-backdrop-filter: blur(14px) saturate(180%);
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-    z-index: 999;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 3.3em;
+  position: fixed;
+  width: 100vw;
+  /* background-color: #293d74; */
+  background-color: var(--navbar-color);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  z-index: 999;
 }
 
 .logoNavbar {
-    height: 2.5em;
-    display: flex;
-    align-content: center;
-    margin-left: 6em;
+  height: 2.5em;
+  display: flex;
+  align-content: center;
+  margin-left: 6em;
 }
 
 .navLinks {
-    color: #eee;
-    font-family: 'Poppins';
-    display: flex;
-    gap: 10px;
-    margin: auto;
-    font-weight: 500;
-    list-style: none;
-    padding: 0;
+  color: #eee;
+  font-family: "Poppins";
+  display: flex;
+  gap: 10px;
+  margin: auto;
+  font-weight: 500;
+  list-style: none;
+  padding: 0;
 }
 
 .navLinks li {
-   display: inline-block;
+  display: inline-block;
+  cursor: pointer;
 }
 
 .navLinks_link {
-    padding: 6px 15px;
-    border-radius: 20px;
-    cursor: default;
-    transition: 0.2s ease-out;
+  padding: 6px 15px;
+  border-radius: 20px;
+  cursor: pointer !important;
+  transition: 0.2s ease-out;
 }
 
 .navLinks_link:hover {
-    background-color: var(--navbar-link-active-background-color);
-    transition: 0.2s ease-in;
+  background-color: var(--navbar-link-active-background-color);
+  transition: 0.2s ease-in;
 }
 
 .navLinks_link.active {
-    background-color: var(--navbar-link-active-background-color);
+  background-color: var(--navbar-link-active-background-color);
 }
 
 .userInfo {
-    display: flex;
-    flex-flow: row wrap;  justify-content: flex-end;
-    position: relative;
-    margin-right: 10px;
-    cursor: default;
-    gap: 8px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-end;
+  position: relative;
+  margin-right: 10px;
+  cursor: default;
+  gap: 8px;
 }
 
-.userInfo .userInfoContent{
-    position: relative;
+.userInfo .userInfoContent {
+  position: relative;
 }
 
-.userInfo .userInfoContent .profileActions{
-    position: absolute;
-    display: flex;
-    flex-flow: column;
-    top: 3.2em;
-    right: 1px;
-    width: 9em;
-    padding: 5px;
-    gap: 1px;
-    border-radius: 10px;
-    background-color: var(--navbar-color);
-    backdrop-filter: blur(2px) saturate(180%);
-    -webkit-backdrop-filter: blur(14px) saturate(180%);
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-    z-index: 995;
+.userInfo .userInfoContent .profileActions {
+  position: absolute;
+  display: flex;
+  flex-flow: column;
+  top: 3.2em;
+  right: 1px;
+  width: 9em;
+  padding: 5px;
+  gap: 1px;
+  border-radius: 10px;
+  background-color: var(--navbar-color);
+  backdrop-filter: blur(2px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  z-index: 995;
 }
 
-.userInfo .userInfoContent .profileActions .item{
-    display: flex;
-    font-size: 11pt;
-    color: var(--navbar-text-color);
-    padding: 4px 12px;
-    text-align: left;
-    border-radius: 8px;
-    align-items: center;
-    gap: 8px;
+.userInfo .userInfoContent .profileActions .item {
+  display: flex;
+  font-size: 11pt;
+  color: var(--navbar-text-color);
+  padding: 4px 12px;
+  text-align: left;
+  border-radius: 8px;
+  align-items: center;
+  gap: 8px;
 }
 
-.userInfo .userInfoContent .profileActions .item:hover{
-    background-color: var(--navbar-link-active-background-color);
-    color: var(--navbar-text-hover-color);
+.userInfo .userInfoContent .profileActions .item:hover {
+  background-color: var(--navbar-link-active-background-color);
+  color: var(--navbar-text-hover-color);
 }
 
-.userInfo .userInfoContent .profileActions .item:last-child{
-    color: var(--navbar-logout-text-color);
+.userInfo .userInfoContent .profileActions .item:last-child {
+  color: var(--navbar-logout-text-color);
 }
 
-.userInfo .userInfoContent .profileActions .item:last-child:hover{
-    background-color: var(--navbar-logout-bg-color);
-    color: var(--navbar-logout-text-color);
+.userInfo .userInfoContent .profileActions .item:last-child:hover {
+  background-color: var(--navbar-logout-bg-color);
+  color: var(--navbar-logout-text-color);
 }
 
 .userBackground {
-    border-radius: 20px;
+  border-radius: 20px;
 }
 
 .userContent {
-    align-items: center;
-    display: flex;
-    border-radius: 20px;
-    cursor: pointer;
+  align-items: center;
+  display: flex;
+  border-radius: 20px;
+  cursor: pointer;
 }
 
 .userInfo_name {
-    color: var(--navbar-text-color);
-    font-family: 'Poppins';
-    align-self: center;
-    padding: 2px 8px 2px 8px;
-    font-weight: 300;
-    position: relative;
-    margin-left: 8px;
-    user-select: none;
+  color: var(--navbar-text-color);
+  font-family: "Poppins";
+  align-self: center;
+  padding: 2px 8px 2px 8px;
+  font-weight: 300;
+  position: relative;
+  margin-left: 8px;
+  user-select: none;
 }
 
 .userInfo_name #userPermissions {
-    content: '';
-    position: absolute;
-    width: 79%;
-    height: 2px;
-    border-radius: 10px;
-    bottom: 2px;
+  content: "";
+  position: absolute;
+  width: 79%;
+  height: 2px;
+  border-radius: 10px;
+  bottom: 2px;
 }
 
 .userInfo_image {
-    width: 2.2em;
-    border-radius: 50%;
-    margin: 0px;
-    padding: 4px;
+  width: 2.2em;
+  border-radius: 50%;
+  margin: 0px;
+  padding: 4px;
 }
 
 .profileDropdown {
-    height: 200px;
-    width: 30px;
-    position: absolute;
+  height: 200px;
+  width: 30px;
+  position: absolute;
 }
 
 .userLogin button {
-    border: 0px;
-    border-radius: 20px;
-    padding: 6px 15px;
-    transition: 0.1s ease-out;
+  border: 0px;
+  border-radius: 20px;
+  padding: 6px 15px;
+  transition: 0.1s ease-out;
 }
 
 .userLogin button:hover {
-    background-color: var(--navbar-login-button-hover) !important;
-    transition: 0.1s ease-in;
+  background-color: var(--navbar-login-button-hover) !important;
+  transition: 0.1s ease-in;
 }
 
 /* =============================== MOBILE NAVBAR =================================== */
 
 .mobileNav {
-    display: none;
-    position: fixed;
-    bottom: 10px;
-    width: 100vw;
-    height: 4.2em;
-    z-index: 999;
+  display: none;
+  position: fixed;
+  bottom: 10px;
+  width: 100vw;
+  height: 4.2em;
+  z-index: 999;
 }
 
-.mobileNav .nav{
-    padding: 0 10px;
-    margin: auto;
-    display: flex;
-    flex-flow: row;
-    justify-content: space-evenly;
-    align-items: center;
-    height: 100%;
-    border-radius: 100vh;
-    width: fit-content;
-    gap: 30px;
-    color: #DDD;
-    /* border: 1px solid hsla(219, 40%, 20%, 0.902); */
-    background-color: var(--navbar-color);
-    backdrop-filter: blur(14px) saturate(180%);
-    -webkit-backdrop-filter: blur(14px) saturate(180%);
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+.mobileNav .nav {
+  padding: 0 10px;
+  margin: auto;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+  border-radius: 100vh;
+  width: fit-content;
+  gap: 30px;
+  color: #ddd;
+  /* border: 1px solid hsla(219, 40%, 20%, 0.902); */
+  background-color: var(--navbar-color);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
 }
 
-.mobileNav .nav .item{
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-radius: 100vh;
+.mobileNav .nav .item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 100vh;
 }
 
-.mobileNav .nav .item img{
-    width: 24px;
-    height: 24px;
-    border-radius: 100vh;
+.mobileNav .nav .item img {
+  width: 24px;
+  height: 24px;
+  border-radius: 100vh;
 }
 
-.mobileNav .nav .item.active{
-    background-color: var(--navbar-link-active-background-color);
+.mobileNav .nav .item.active {
+  background-color: var(--navbar-link-active-background-color);
 }
 
-.mobileNav .nav .item i{
-    font-size: 19pt;
-    margin-bottom: 2px;
+.mobileNav .nav .item i {
+  font-size: 19pt;
+  margin-bottom: 2px;
 }
 
 /* HOME PAGE */
 
 .homeContent {
-    min-height: 100vh;
-    width: 100vw;
+  min-height: 100vh;
+  width: 100vw;
 }
 
 .appContext {
-    margin: auto;
-    text-align: center;
-    padding: 5em 0em 0em 0em;
-    color: #111;
-    cursor: default;
+  margin: auto;
+  text-align: center;
+  padding: 5em 0em 0em 0em;
+  color: #111;
+  cursor: default;
 }
 
 .appHeader {
-    font-weight: 800;
-    font-size: 3.8em;
-    width: 15em;
-    max-width: 95%;
-    line-height: 1.2em;
-    margin: auto;
+  font-weight: 800;
+  font-size: 3.8em;
+  width: 15em;
+  max-width: 95%;
+  line-height: 1.2em;
+  margin: auto;
 }
 
 .appHeader .logoAppHeader {
-    width: 3.8em;
-    max-width: 55%;
+  width: 3.8em;
+  max-width: 55%;
 }
 
 .appText {
-    font-weight: 500;
-    font-size: 1.4em;
-    padding: 0em 0em 0em 0em;
-    color: #fff;
-    text-shadow: 0px 1px 4px rgb(0 0 0 / 20%);
+  font-weight: 500;
+  font-size: 1.4em;
+  padding: 0em 0em 0em 0em;
+  color: #fff;
+  text-shadow: 0px 1px 4px rgb(0 0 0 / 20%);
 }
 
 .appImage {
-    margin: 18px auto auto auto;
-    position: relative;
-    top: 100px;
-    opacity: 0;
+  margin: 18px auto auto auto;
+  position: relative;
+  top: 100px;
+  opacity: 0;
 }
 
 .appImage object {
-    border-radius: 10px;
+  border-radius: 10px;
 }
 
 .appImage object.app {
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-    max-width: 90%;
-    height: auto;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  max-width: 90%;
+  height: auto;
 }
 
 .appImage img.visualizer {
-    position: absolute;
-    top: 30em;
-    right: 13em;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  position: absolute;
+  top: 30em;
+  right: 13em;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
 .appButtons {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-evenly;
-    margin: 12px auto auto auto;
-    width: 62%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  margin: 12px auto auto auto;
+  width: 62%;
 }
 
 .appButtons a {
-    font-family: 'Poppins';
-    font-weight: 500;
-    font-size: 14px;
-    display: grid;
-    grid-template-areas: 
-    'icon text'
-    'icon file';
-    grid-template-columns: 50px auto;
-    border: 0px;
-    height: 51px;
-    width: 180px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    border-radius: 10px;
-    fill: #ddd;
-    color: #ddd;
-    cursor: pointer;
-    transition: 0.1s ease-out;
-    margin-top: 5px;
+  font-family: "Poppins";
+  font-weight: 500;
+  font-size: 14px;
+  display: grid;
+  grid-template-areas:
+    "icon text"
+    "icon file";
+  grid-template-columns: 50px auto;
+  border: 0px;
+  height: 51px;
+  width: 180px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  border-radius: 10px;
+  fill: #ddd;
+  color: #ddd;
+  cursor: pointer;
+  transition: 0.1s ease-out;
+  margin-top: 5px;
 }
 
 .appButtons a:hover {
-    transform: scale(1.04);
-    transition: 0.1s ease-in;
+  transform: scale(1.04);
+  transition: 0.1s ease-in;
 }
 
 .appButtons a .icon {
-    grid-area: icon;
-    display: flex;
-    margin: auto
+  grid-area: icon;
+  display: flex;
+  margin: auto;
 }
 .appButtons a .text {
-    grid-area: text;
-    margin: auto;
-    padding-right: 6px;
-    text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+  grid-area: text;
+  margin: auto;
+  padding-right: 6px;
+  text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
 }
 .appButtons a .file {
-    grid-area: file;
-    margin: -8px auto auto auto;
-    text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+  grid-area: file;
+  margin: -8px auto auto auto;
+  text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
 }
 
 .appButtons #downloadEXE {
-    background-color: rgb(51, 155, 106);
+  background-color: rgb(51, 155, 106);
 }
 
 .appButtons #downloadZIP {
-    background-color: rgb(209, 125, 47);
+  background-color: rgb(209, 125, 47);
 }
 
 .appButtons #discordServer {
-    background-color: #697EC4;
+  background-color: #697ec4;
 }
 
 .appButtons #githubRep {
-    background-color: #e0e1e2;
-    color: #222;
-    fill: #222
+  background-color: #e0e1e2;
+  color: #222;
+  fill: #222;
 }
 
 .appButtons #kofiDon {
-    background-color: #434B57;
-    display: grid;
-    grid-template-areas:
-        'icon text';
+  background-color: #434b57;
+  display: grid;
+  grid-template-areas: "icon text";
 }
 
-.appButtons #kofiDon .text{
-    margin: auto
+.appButtons #kofiDon .text {
+  margin: auto;
 }
-
 
 /* TOURNAMENTS PAGE */
 #subtext_requests {
-    display: flex;
-    font-size: 14pt;
-    margin-top: 10px;
-    justify-content: center;
+  display: flex;
+  font-size: 14pt;
+  margin-top: 10px;
+  justify-content: center;
 }
 
 .tournamentsContainer {
-    padding: 4em 0em 2em 0em;
-    color: #fff;
-    font-family: 'Poppins';
-    text-align: center;
+  padding: 4em 0em 2em 0em;
+  color: #fff;
+  font-family: "Poppins";
+  text-align: center;
 }
 
-.tournamentsContainer #header{
-    text-align: center;
-    font-weight: 700;
-    font-size: 3.8em;
+.tournamentsContainer #header {
+  text-align: center;
+  font-weight: 700;
+  font-size: 3.8em;
 }
-.tournamentsContainer #text{
-    text-align: center;
-    font-weight: 400;
-    font-size: 1.4em;
+.tournamentsContainer #text {
+  text-align: center;
+  font-weight: 400;
+  font-size: 1.4em;
 }
 
 .tournamentsList {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .tournamentsListDivider {
-    content: '';
-    width: 54%;
-    position: relative;
-    height: 2px;
-    background-color: rgba(255, 255, 255, 0.1);
-    margin: 18px auto 0px auto;
-    border-radius: 10px;
+  content: "";
+  width: 54%;
+  position: relative;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.1);
+  margin: 18px auto 0px auto;
+  border-radius: 10px;
 }
 
 .tournamentsList .entry {
-    display: grid;
-    grid-template-areas:
-    'acronym name status'
-    'info info info';
-    grid-template-columns: 7em auto 5.5em;
-    background-color: var(--action-div-color);
-    width: 50%;
-    border-radius: 15px;
-    margin: auto auto 5px auto;
-    font-size: 1.2em;
-    font-weight: 400;
-    align-content: center;
-    padding: 10px 0px;
-    transition: 0.12s ease-out;
-    cursor: pointer;
+  display: grid;
+  grid-template-areas:
+    "acronym name status"
+    "info info info";
+  grid-template-columns: 7em auto 5.5em;
+  background-color: var(--action-div-color);
+  width: 50%;
+  border-radius: 15px;
+  margin: auto auto 5px auto;
+  font-size: 1.2em;
+  font-weight: 400;
+  align-content: center;
+  padding: 10px 0px;
+  transition: 0.12s ease-out;
+  cursor: pointer;
 }
 
 .tournamentsList .entry:hover {
-    background-color: var(--action-div-hover-color);
-    transition: 0.12s ease-in;
+  background-color: var(--action-div-hover-color);
+  transition: 0.12s ease-in;
 }
 
-.tournamentsList .entry .acronym{
-    padding-left: 1em;
-    padding-right: 12px;
-    grid-area: acronym;
-    text-align: left;
-    display: flex;
-    align-items: center;
+.tournamentsList .entry .acronym {
+  padding-left: 1em;
+  padding-right: 12px;
+  grid-area: acronym;
+  text-align: left;
+  display: flex;
+  align-items: center;
 }
 
-.tournamentsList .entry .name{
-    grid-area: name;
-    text-align: left;
-    position: relative;
-    padding-left: 12px;
-    display: flex;
-    flex-flow: column wrap;
+.tournamentsList .entry .name {
+  grid-area: name;
+  text-align: left;
+  position: relative;
+  padding-left: 12px;
+  display: flex;
+  flex-flow: column wrap;
 }
 
-.tournamentsList .entry .name::before{
-    content: '';
-    width: 2px;
-    border-radius: 10px;
-    left: 0px;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.1);
-    position: absolute
+.tournamentsList .entry .name::before {
+  content: "";
+  width: 2px;
+  border-radius: 10px;
+  left: 0px;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  position: absolute;
 }
 
-.tournamentsList .entry .name .request{
-    font-size: 0.7em;
-    font-weight: 300;
-    color: #ddd;
-    display: flex;
-    flex-flow: row wrap;
-    align-content: center;
+.tournamentsList .entry .name .request {
+  font-size: 0.7em;
+  font-weight: 300;
+  color: #ddd;
+  display: flex;
+  flex-flow: row wrap;
+  align-content: center;
 }
 
-.tournamentsList .entry .name .request .propic{
-    width: 20px;
-    border-radius: 50%;
-    margin-left: 4px;
-    background: center center / cover no-repeat;
+.tournamentsList .entry .name .request .propic {
+  width: 20px;
+  border-radius: 50%;
+  margin-left: 4px;
+  background: center center / cover no-repeat;
 }
 
-.tournamentsList .entry .name .request .username{
-    margin-left: 4px;
-    font-weight: 400;
-    color: #eee;
+.tournamentsList .entry .name .request .username {
+  margin-left: 4px;
+  font-weight: 400;
+  color: #eee;
 }
 
-.tournamentsList .entry .status{
-    grid-area: status;
-    text-align: right;
-    padding-right: 1em;
-    font-weight: 300;
-    font-size: 0.9em;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+.tournamentsList .entry .status {
+  grid-area: status;
+  text-align: right;
+  padding-right: 1em;
+  font-weight: 300;
+  font-size: 0.9em;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
-.tournamentsList .entry .status span, .collapsibleBody .item .status span{
-    padding: 2px 10px;
-    border-radius: 15px;
+.tournamentsList .entry .status span,
+.collapsibleBody .item .status span {
+  padding: 2px 10px;
+  border-radius: 15px;
 }
 
-.tournamentsList .entry :is(.status.Active, .status.Accepted) span, .collapsibleBody .item :is(.status.Active, .status.Accepted) span{
-    background-color: rgb(61 136 61)
+.tournamentsList .entry :is(.status.Active, .status.Accepted) span,
+.collapsibleBody .item :is(.status.Active, .status.Accepted) span {
+  background-color: rgb(61 136 61);
 }
 
-.tournamentsList .entry .status.Ended span{
-    background-color: rgb(179 49 49);
+.tournamentsList .entry .status.Ended span {
+  background-color: rgb(179 49 49);
 }
 
-.tournamentsList .entry .status.Pending span, .collapsibleBody .item .status.Pending span{
-    background-color: rgb(230 140 37);
+.tournamentsList .entry .status.Pending span,
+.collapsibleBody .item .status.Pending span {
+  background-color: rgb(230 140 37);
 }
 
-.tournamentsList .entry .info{
-    grid-area: info;
-    display: flex;
-    flex-flow: row wrap;
-    width: auto;
+.tournamentsList .entry .info {
+  grid-area: info;
+  display: flex;
+  flex-flow: row wrap;
+  width: auto;
 }
 
-.tournamentsList .entry .info .about{
-    display: flex;
-    flex-flow: row;
-    width: auto;
-    font-size: 11pt;
-    margin: 5px auto 0 auto;
-    gap: 60px;
-    color: hsla(219, 40%, 95%, 1);
-    align-items: center;
+.tournamentsList .entry .info .about {
+  display: flex;
+  flex-flow: row;
+  width: auto;
+  font-size: 11pt;
+  margin: 5px auto 0 auto;
+  gap: 60px;
+  color: hsla(219, 40%, 95%, 1);
+  align-items: center;
 }
 
-.tournamentsList .entry .info .about :is(.forum, .website){
-    display: flex;
-    gap: 6px;
+.tournamentsList .entry .info .about :is(.forum, .website) {
+  display: flex;
+  gap: 6px;
 }
 
-.tournamentsList .entry .info .progressbar-container{
-    width: 90%;
-    margin: 8px auto 0 auto;
+.tournamentsList .entry .info .progressbar-container {
+  width: 90%;
+  margin: 8px auto 0 auto;
 }
 
 .progress-bar {
-    display: flex;
-    justify-content: space-between;
-    list-style: none;
-    padding: 0;
-    margin: 0 0 1rem 0;
-    font-family: 'Poppins';
-  }
-  .progress-bar li {
-    flex: 2;
-    position: relative;
-    padding: 0 0 14px 0;
-    font-size: var(--font-size-default);
-    line-height: 1.5;
-    color: var(--color-active);
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: visible;
-    min-width: 0;
-    text-align: center;
-    border-bottom: 2px solid var(--color-gray-disabled);
-  }
-  .progress-bar li:first-child,
-  .progress-bar li:last-child {
-    flex: 1;
-  }
-  .progress-bar li:last-child {
-    text-align: right;
-  }
-  .progress-bar li:before {
-    content: "";
-    display: block;
-    width: 8px;
-    height: 8px;
-    background-color: var(--color-gray-disabled);
-    border-radius: 50%;
-    border: 2px solid var(--color-inactive);
-    position: absolute;
-    left: calc(50% - 6px);
-    bottom: -7px;
-    z-index: 3;
-    transition: all .2s ease-in-out;
-  }
-  .progress-bar li:first-child:before {
-    left: 0;
-  }
-  .progress-bar li:last-child:before {
-    right: 0;
-    left: auto;
-  }
-  .progress-bar span {
-    transition: opacity .3s ease-in-out;
-  }
-  .progress-bar li:not(.is-active) span {
-    opacity: 0;
-  }
-  .progress-bar .is-complete:not(:first-child):after,
-  .progress-bar .is-active:not(:first-child):after {
-    content: "";
-    display: block;
-    width: 100%;
-    position: absolute;
-    bottom: -2px;
-    left: -50%;
-    z-index: 2;
-    border-bottom: 2px solid var(--color-active);
-  }
-  .progress-bar li:last-child span {
-    width: 200%;
-    display: inline-block;
-    position: absolute;
-    left: -100%;
-  }
-  
-  .progress-bar .is-complete:last-child:after,
-  .progress-bar .is-active:last-child:after {
-    width: 200%;
-    left: -100%;
-  }
-  
-  .progress-bar .is-complete:before {
-    background-color: var(--color-active);
-  }
-  
-  .progress-bar .is-active:before {
-    background-color: var(--color-inactive);
-    border-color: var(--color-active);
-  }
-  .progress-bar li:hover:before,
-  .progress-bar .is-hovered:before {
-    transform: scale(1.33);
-  }
-  
-  .progress-bar li:hover span,
-  .progress-bar li.is-hovered span {
-    opacity: 1;
-  }
-  
-  .progress-bar:hover li:not(:hover) span {
-    opacity: 0;
-  }
-  
-  
-  .progress-bar .has-changes {
-    opacity: 1 !important;
-  }
-  .progress-bar .has-changes:before {
-    content: "";
-    display: block;
-    width: 8px;
-    height: 8px;
-    position: absolute;
-    left: calc(50% - 4px);
-    bottom: -20px;
-    background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%208%208%22%3E%3Cpath%20fill%3D%22%23ed1c24%22%20d%3D%22M4%200l4%208H0z%22%2F%3E%3C%2Fsvg%3E');
-  }
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+  font-family: "Poppins";
+}
+.progress-bar li {
+  flex: 2;
+  position: relative;
+  padding: 0 0 14px 0;
+  font-size: var(--font-size-default);
+  line-height: 1.5;
+  color: var(--color-active);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: visible;
+  min-width: 0;
+  text-align: center;
+  border-bottom: 2px solid var(--color-gray-disabled);
+}
+.progress-bar li:first-child,
+.progress-bar li:last-child {
+  flex: 1;
+}
+.progress-bar li:last-child {
+  text-align: right;
+}
+.progress-bar li:before {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-gray-disabled);
+  border-radius: 50%;
+  border: 2px solid var(--color-inactive);
+  position: absolute;
+  left: calc(50% - 6px);
+  bottom: -7px;
+  z-index: 3;
+  transition: all 0.2s ease-in-out;
+}
+.progress-bar li:first-child:before {
+  left: 0;
+}
+.progress-bar li:last-child:before {
+  right: 0;
+  left: auto;
+}
+.progress-bar span {
+  transition: opacity 0.3s ease-in-out;
+}
+.progress-bar li:not(.is-active) span {
+  opacity: 0;
+}
+.progress-bar .is-complete:not(:first-child):after,
+.progress-bar .is-active:not(:first-child):after {
+  content: "";
+  display: block;
+  width: 100%;
+  position: absolute;
+  bottom: -2px;
+  left: -50%;
+  z-index: 2;
+  border-bottom: 2px solid var(--color-active);
+}
+.progress-bar li:last-child span {
+  width: 200%;
+  display: inline-block;
+  position: absolute;
+  left: -100%;
+}
 
+.progress-bar .is-complete:last-child:after,
+.progress-bar .is-active:last-child:after {
+  width: 200%;
+  left: -100%;
+}
+
+.progress-bar .is-complete:before {
+  background-color: var(--color-active);
+}
+
+.progress-bar .is-active:before {
+  background-color: var(--color-inactive);
+  border-color: var(--color-active);
+}
+.progress-bar li:hover:before,
+.progress-bar .is-hovered:before {
+  transform: scale(1.33);
+}
+
+.progress-bar li:hover span,
+.progress-bar li.is-hovered span {
+  opacity: 1;
+}
+
+.progress-bar:hover li:not(:hover) span {
+  opacity: 0;
+}
+
+.progress-bar .has-changes {
+  opacity: 1 !important;
+}
+.progress-bar .has-changes:before {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  left: calc(50% - 4px);
+  bottom: -20px;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%208%208%22%3E%3Cpath%20fill%3D%22%23ed1c24%22%20d%3D%22M4%200l4%208H0z%22%2F%3E%3C%2Fsvg%3E");
+}
 
 /* DOCUMENTATION PAGE */
 
 .documentationContainer {
-    padding: 4em 0em 2em 0em;
-    color: #fff;
-    font-family: 'Poppins';
-    text-align: center;
+  padding: 4em 0em 2em 0em;
+  color: #fff;
+  font-family: "Poppins";
+  text-align: center;
 }
 
 .documentationContainer .divider {
-    content: '';
-    width: 72%;
-    position: relative;
-    height: 2px;
-    background-color: rgba(255, 255, 255, 0.2);
-    margin: 0px auto 8px auto;
-    border-radius: 10px;
+  content: "";
+  width: 72%;
+  position: relative;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin: 0px auto 8px auto;
+  border-radius: 10px;
 }
 
 .documentationContainer span#header {
-    text-align: center;
-    font-weight: 700;
-    font-size: 3.8em;
+  text-align: center;
+  font-weight: 700;
+  font-size: 3.8em;
 }
 
 .documentationContainer span.string {
-    font-weight: 700;
-    background-color: rgba(0,0,0,0.3);
-    padding: 1px 5px;
-    border-radius: 20px;
+  font-weight: 700;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 1px 5px;
+  border-radius: 20px;
 }
 
 .documentationContainer span.string.link {
-    color: #70b7fd
+  color: #70b7fd;
 }
 
-.documentationContainer span.string.link span{
-    color: rgb(240, 217, 89);
+.documentationContainer span.string.link span {
+  color: rgb(240, 217, 89);
 }
 
-.documentationContainer .installation, .documentationContainer .fields, .documentationContainer .obs {
-    width: 70%;
-    margin: auto;
-    text-align: left;
+.documentationContainer .installation,
+.documentationContainer .fields,
+.documentationContainer .obs {
+  width: 70%;
+  margin: auto;
+  text-align: left;
 }
 
-.documentationContainer .installation a, .documentationContainer .fields a, .documentationContainer .obs a{
-    color: #70b7fd
+.documentationContainer .installation a,
+.documentationContainer .fields a,
+.documentationContainer .obs a {
+  color: #70b7fd;
 }
 
-.documentationContainer h1, .documentationContainer h2{
-    margin: 0px 0px -15px 0px
+.documentationContainer h1,
+.documentationContainer h2 {
+  margin: 0px 0px -15px 0px;
 }
-
 
 /* ACCOUNT PAGE */
 
-
-
 .accountContainer {
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  flex-wrap: wrap;
 }
 
-.accountContainer .profileInfo{
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    position: relative;
+.accountContainer .profileInfo {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  position: relative;
 }
 
-.accountContainer .profileInfo .userMain{
-    margin: 0 auto;
+.accountContainer .profileInfo .userMain {
+  margin: 0 auto;
 }
 
-.accountContainer .profileInfo .userSocial{
-    display: flex;
-    flex-flow: column wrap;
-    align-items: center;
-    justify-content: center;
-    width: 50%;
-    margin: 10px auto 0 auto;
-    gap: 5px;
+.accountContainer .profileInfo .userSocial {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  margin: 10px auto 0 auto;
+  gap: 5px;
 }
 
-.accountContainer .profileInfo .userSocial a{
-    background-color: var(--action-div-color);
-    color: #70b7fd;
-    padding: 4px 0px;
-    width: 100%;
-    justify-content: center;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    user-select: none;
-    cursor: pointer;
-    transition: all .4s;
+.accountContainer .profileInfo .userSocial a {
+  background-color: var(--action-div-color);
+  color: #70b7fd;
+  padding: 4px 0px;
+  width: 100%;
+  justify-content: center;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  cursor: pointer;
+  transition: all 0.4s;
 }
 
-.accountContainer .profileInfo .userSocial a:hover{
-    background-color: var(--action-div-hover-color);
+.accountContainer .profileInfo .userSocial a:hover {
+  background-color: var(--action-div-hover-color);
 }
 
-.accountContainer .profileInfo .userSocial a i{
-    padding: 0 10px 0 0
+.accountContainer .profileInfo .userSocial a i {
+  padding: 0 10px 0 0;
 }
 
-.accountContainer .profileInfo::after{
-    content: '';
-    width: 2px;
-    border-radius: 10px;
-    right: 0px;
-    height: 85vh;
-    background-color: rgba(255, 255, 255, 0.2);
-    position: absolute;
-    margin-top: 10.5vh;
+.accountContainer .profileInfo::after {
+  content: "";
+  width: 2px;
+  border-radius: 10px;
+  right: 0px;
+  height: 85vh;
+  background-color: rgba(255, 255, 255, 0.2);
+  position: absolute;
+  margin-top: 10.5vh;
 }
 
-.accountContainer .profileInfo img{
-    width: 180px;
-    border-radius: 100vh;
-    height: 180px;
-    margin: 10vh auto 0 auto;
-    border: 3px solid #c1c1c1
+.accountContainer .profileInfo img {
+  width: 180px;
+  border-radius: 100vh;
+  height: 180px;
+  margin: 10vh auto 0 auto;
+  border: 3px solid #c1c1c1;
 }
 
-.accountContainer .profileInfo .profileName{
-    color: #EEE;
-    font-family: 'Poppins';
-    font-size: 2em;
-    margin: 0 auto;
-    align-items: center;
-    display: flex;
-    justify-content: center;
+.accountContainer .profileInfo .profileName {
+  color: #eee;
+  font-family: "Poppins";
+  font-size: 2em;
+  margin: 0 auto;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 
-.accountContainer .profileInfo .profileName #role{
-    font-size: 10pt;
-    font-weight: 500;
-    padding: 3px 10px;
-    border-radius: 100vh;
-    margin-left: 5px;
+.accountContainer .profileInfo .profileName #role {
+  font-size: 10pt;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 100vh;
+  margin-left: 5px;
 }
 
-.accountContainer .profileInfo .timeProfile{
-    color: #EEE;
-    font-family: 'Poppins';
-    margin: 0 auto;
-    font-size: 1.05em;
-    text-align: center;
+.accountContainer .profileInfo .timeProfile {
+  color: #eee;
+  font-family: "Poppins";
+  margin: 0 auto;
+  font-size: 1.05em;
+  text-align: center;
 }
 
-.accountContainer .profileActions{
-    display: flex;
-    width: 75vw;
+.accountContainer .profileActions {
+  display: flex;
+  width: 75vw;
 }
 
-.accountContainer .profileActions h2{
-    text-transform: uppercase;
-    font-size: 12.5pt;
-    padding-left: 8px;
-    margin-bottom: 5px;
-    color: #EEE;
-    font-weight: 700;
+.accountContainer .profileActions h2 {
+  text-transform: uppercase;
+  font-size: 12.5pt;
+  padding-left: 8px;
+  margin-bottom: 5px;
+  color: #eee;
+  font-weight: 700;
 }
 
-.accountContainer .profileActions .actionsContainer{
-    margin: 4vh 0 0 0;
-    width: 100%;
-    padding: 2vw;
+.accountContainer .profileActions .actionsContainer {
+  margin: 4vh 0 0 0;
+  width: 100%;
+  padding: 2vw;
 }
 
 /* .accountContainer .profileActions .actionsContainer .actionCentre *{
@@ -912,73 +921,87 @@ header {
 } */
 
 .actionCategory {
-    padding-right: 2vw;
+  padding-right: 2vw;
 }
 
 .actionCentre {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.accountContainer .profileActions .actionsContainer .action{
-    background-color: var(--action-div-color);
-    height: 4em;
-    border-radius: 1.2em;
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    color: #DDD;
-    font-size: 13pt;
-    transition: 0.1s ease-out;
-    padding: 0 1em;
-    justify-content: space-between;
+.accountContainer .profileActions .actionsContainer .action {
+  background-color: var(--action-div-color);
+  height: 4em;
+  border-radius: 1.2em;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  color: #ddd;
+  font-size: 13pt;
+  transition: 0.1s ease-out;
+  padding: 0 1em;
+  justify-content: space-between;
 }
 
-.accountContainer .profileActions .actionsContainer .actionOpen{
-    background-color: var(--action-div-color);
-    height: 4em;
-    border-radius: 1.2em 1.2em 0 0;
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    color: #DDD;
-    font-size: 13pt;
-    transition: 0.1s ease-out;
-    padding: 0 1em;
-    justify-content: space-between;
-    box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.2) ;
-    
+.accountContainer .profileActions .actionsContainer .actionOpen {
+  background-color: var(--action-div-color);
+  height: 4em;
+  border-radius: 1.2em 1.2em 0 0;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  color: #ddd;
+  font-size: 13pt;
+  transition: 0.1s ease-out;
+  padding: 0 1em;
+  justify-content: space-between;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.2);
 }
 
-.accountContainer .profileActions .actionsContainer :is(.action,.actionOpen):hover{
-    background-color: var(--action-div-hover-color);
-    color: #EEE;
-    transition: 0.1s ease-in;
+.accountContainer
+  .profileActions
+  .actionsContainer
+  :is(.action, .actionOpen):hover {
+  background-color: var(--action-div-hover-color);
+  color: #eee;
+  transition: 0.1s ease-in;
 }
 
-.accountContainer .profileActions .actionsContainer :is(.action,.actionOpen, #motiondiv) .tn{
-    display: flex;
-    flex-direction: row;
-    gap: 6px;
-    position: relative;
+.accountContainer
+  .profileActions
+  .actionsContainer
+  :is(.action, .actionOpen, #motiondiv)
+  .tn {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  position: relative;
 }
 
-.accountContainer .profileActions .actionsContainer :is(.action,.actionOpen, #motiondiv) .text{
-    user-select: none;
-    cursor: default;
+.accountContainer
+  .profileActions
+  .actionsContainer
+  :is(.action, .actionOpen, #motiondiv)
+  .text {
+  user-select: none;
+  cursor: default;
 }
 
-.accountContainer .profileActions .actionsContainer :is(.action,.actionOpen, #motiondiv) .number{
-    background-color: rgba(0, 0, 0, 0.3);
-    padding: 0px 9px;
-    font-size: 12px;
-    font-weight: 500;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 100vh;
-    color: #DDD;
+.accountContainer
+  .profileActions
+  .actionsContainer
+  :is(.action, .actionOpen, #motiondiv)
+  .number {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 0px 9px;
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100vh;
+  color: #ddd;
 }
 
 /* .accountContainer .profileActions .actionsContainer .action .number::before{
@@ -992,154 +1015,161 @@ header {
 } */
 
 .collapsibleBody {
-    width: 100%;
-    background-color: var(--action-div-color2);
-    border-radius: 0 0 1.2em 1.2em;
-    flex-direction: column;
-    max-height: 275px;
-    overflow-y: auto;
+  width: 100%;
+  background-color: var(--action-div-color2);
+  border-radius: 0 0 1.2em 1.2em;
+  flex-direction: column;
+  max-height: 275px;
+  overflow-y: auto;
 }
 
 .collapsibleBody #noRequests {
-    text-align: center;
-    padding: 23px;
-    font-size: 20px;
-    color: #DDD;
+  text-align: center;
+  padding: 23px;
+  font-size: 20px;
+  color: #ddd;
 }
 
-.collapsibleBody .body #tourneyRequest{
-    display: flex;
-    flex-flow: column wrap;
-    padding: 1em;
-    gap: 5px;
+.collapsibleBody .body #tourneyRequest {
+  display: flex;
+  flex-flow: column wrap;
+  padding: 1em;
+  gap: 5px;
 }
 
-.tourneyNameInfo #tourneyName, .info #tourneyURL{
-    display: flex;
-    width: 100%;
-    height: 40px;
-    font-size: 16pt;
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.2);
-    border: 0;
-    font-family: 'Poppins';
-    color: #DDD;
-    border-radius: 12px;
-    padding: 0;
+.tourneyNameInfo #tourneyName,
+.info #tourneyURL {
+  display: flex;
+  width: 100%;
+  height: 40px;
+  font-size: 16pt;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 0;
+  font-family: "Poppins";
+  color: #ddd;
+  border-radius: 12px;
+  padding: 0;
 }
 
-.tourneyNameInfo #acronym, .info #host{
-    display: flex;
-    width: 50%;
-    height: 40px;
-    font-size: 16pt;
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.2);
-    border: 0;
-    font-family: 'Poppins';
-    color: #DDD;
-    border-radius: 12px;
-    padding: 0;
+.tourneyNameInfo #acronym,
+.info #host {
+  display: flex;
+  width: 50%;
+  height: 40px;
+  font-size: 16pt;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 0;
+  font-family: "Poppins";
+  color: #ddd;
+  border-radius: 12px;
+  padding: 0;
 }
 
-.collapsibleBody .body #tourneyRequest .tourneyNameInfo::placeholder, .collapsibleBody .body #tourneyRequest :is(.tourneyNameInfo, .info) input::placeholder{
-    color: #999
+.collapsibleBody .body #tourneyRequest .tourneyNameInfo::placeholder,
+.collapsibleBody
+  .body
+  #tourneyRequest
+  :is(.tourneyNameInfo, .info)
+  input::placeholder {
+  color: #999;
 }
 
-.collapsibleBody .body #tourneyRequest :is(input:focus-visible, input:focus){
-    outline: 0;
-    outline-offset: 0;
-    background-color: rgba(0, 0, 0, 0.3);
+.collapsibleBody .body #tourneyRequest :is(input:focus-visible, input:focus) {
+  outline: 0;
+  outline-offset: 0;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .collapsibleBody .body #tourneyRequest :is(.tourneyNameInfo, .info) {
-    display: flex;
-    flex-flow: row;
-    gap: 5px;
-    width: 100%;
+  display: flex;
+  flex-flow: row;
+  gap: 5px;
+  width: 100%;
 }
 
-.collapsibleBody .body #tourneyRequest button{
-    width: 100%;
-    height: 40px;
-    font-size: 14pt;
-    text-align: center;
-    background-color: hsla(224, 35%, 50%, 0.35);
-    border: 0;
-    font-family: 'Poppins';
-    color: #DDD;
-    border-radius: 12px;
+.collapsibleBody .body #tourneyRequest button {
+  width: 100%;
+  height: 40px;
+  font-size: 14pt;
+  text-align: center;
+  background-color: hsla(224, 35%, 50%, 0.35);
+  border: 0;
+  font-family: "Poppins";
+  color: #ddd;
+  border-radius: 12px;
 }
 
-.collapsibleBody .body #tourneyRequest button:hover{
-    background-color: hsla(224, 35%, 50%, 0.45);
+.collapsibleBody .body #tourneyRequest button:hover {
+  background-color: hsla(224, 35%, 50%, 0.45);
 }
 
-.collapsibleBody .body .formSubmitted{
-    height: 162px;
-    display: flex;
-    justify-content: center;
-    flex-flow: column wrap;
+.collapsibleBody .body .formSubmitted {
+  height: 162px;
+  display: flex;
+  justify-content: center;
+  flex-flow: column wrap;
 }
 
-.collapsibleBody .body .formSubmitted #text{
-    font-weight: 700;
-    font-size: 1.4em;
-    margin: 0 auto;
-    color:hsl(152, 50%, 50%);
+.collapsibleBody .body .formSubmitted #text {
+  font-weight: 700;
+  font-size: 1.4em;
+  margin: 0 auto;
+  color: hsl(152, 50%, 50%);
 }
 
-.collapsibleBody .body .formSubmitted #subtext{
-    margin: -4px auto 0 auto;
-    color:hsl(152, 50%, 50%);
-    font-weight: 500;
+.collapsibleBody .body .formSubmitted #subtext {
+  margin: -4px auto 0 auto;
+  color: hsl(152, 50%, 50%);
+  font-weight: 500;
 }
 
-.collapsibleBody .body .formSubmitted .formSuccessIcon{
-    width: 50px;
-    margin: 0 auto;
-    height: auto;
+.collapsibleBody .body .formSubmitted .formSuccessIcon {
+  width: 50px;
+  margin: 0 auto;
+  height: auto;
 }
 
-.collapsibleBody .item:not(:last-child){
-    height: 2.5em;
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    color: #DDD;
-    font-size: 11.5pt;
-    justify-content: space-between;
-    padding: 0 1em;
-    position: relative;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-    user-select: none;
-    transition: all 0.1s;
+.collapsibleBody .item:not(:last-child) {
+  height: 2.5em;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  color: #ddd;
+  font-size: 11.5pt;
+  justify-content: space-between;
+  padding: 0 1em;
+  position: relative;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  user-select: none;
+  transition: all 0.1s;
 }
 
-.collapsibleBody :is(.item:hover, .item:last-child):hover{
-    background-color: rgba(0, 0, 0, 0.1);
+.collapsibleBody :is(.item:hover, .item:last-child):hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
-.collapsibleBody .item:last-child{
-    height: 2.5em;
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    color: #DDD;
-    font-size: 11.5pt;
-    justify-content: space-between;
-    padding: 0 1em;
-    border-radius: 0 0 1.2em 1.2em;
-    user-select: none;
-    transition: all 0.1s;
+.collapsibleBody .item:last-child {
+  height: 2.5em;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  color: #ddd;
+  font-size: 11.5pt;
+  justify-content: space-between;
+  padding: 0 1em;
+  border-radius: 0 0 1.2em 1.2em;
+  user-select: none;
+  transition: all 0.1s;
 }
 
-.collapsibleBody .item .text{
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    gap: 20px;
-    position: relative;
+.collapsibleBody .item .text {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  gap: 20px;
+  position: relative;
 }
 
 /* .collapsibleBody .item .text::before{
@@ -1151,130 +1181,134 @@ header {
     position: absolute
 } */
 
-
-
 /* HOST TOURNAMENT EDIT */
 
 #tourneyEdit {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    gap: 8px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 8px;
 }
 
-#tourneyEdit input{
-    display: flex;
-    width: 100%;
-    height: 40px;
-    font-size: 16pt;
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.2);
-    border: 0;
-    font-family: 'Poppins';
-    color: #DDD;
-    border-radius: 12px;
-    padding: 0;
-} 
+#tourneyEdit input {
+  display: flex;
+  width: 100%;
+  height: 40px;
+  font-size: 16pt;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 0;
+  font-family: "Poppins";
+  color: #ddd;
+  border-radius: 12px;
+  padding: 0;
+}
 
 .multiplierStatus {
-    width: 100px !important;
+  width: 100px !important;
 }
 
-
-#tourneyEdit :is(input:focus-visible, input:focus){
-    outline: 0;
-    outline-offset: 0;
-    background-color: rgba(0, 0, 0, 0.3);
+#tourneyEdit :is(input:focus-visible, input:focus) {
+  outline: 0;
+  outline-offset: 0;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
-#tourneyEdit label{
-    color: #ddd;
-    margin: 0 0 2px 6px;
-    font-size: 11.2pt;
-} 
+#tourneyEdit label {
+  color: #ddd;
+  margin: 0 0 2px 6px;
+  font-size: 11.2pt;
+}
 
 #tourneyEdit label span.specialInfo {
-    font-size: 10pt;
-    color: hsla(224, 85%, 80%);
+  font-size: 10pt;
+  color: hsla(224, 85%, 80%);
 }
 
-#tourneyEdit button{
-    width: 100%;
-    height: 40px;
-    font-size: 14pt;
-    text-align: center;
-    background-color: hsla(224, 35%, 50%, 0.35);
-    border: 0;
-    font-family: 'Poppins';
-    color: #DDD;
-    border-radius: 12px;
+#tourneyEdit button {
+  width: 100%;
+  height: 40px;
+  font-size: 14pt;
+  text-align: center;
+  background-color: hsla(224, 35%, 50%, 0.35);
+  border: 0;
+  font-family: "Poppins";
+  color: #ddd;
+  border-radius: 12px;
 }
 
-#tourneyEdit button:hover{
-    background-color: hsla(224, 35%, 50%, 0.45);
+#tourneyEdit button:hover {
+  background-color: hsla(224, 35%, 50%, 0.45);
 }
 
 .settingsMultiplier {
-    display: flex;
-    flex-flow: row nowrap;
-    gap: 8px;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 8px;
 }
 
-.tourneyEditName, .editSocials, .startEndDates {
-    display: flex;
-    flex-flow: row;
-    width: 100%;
-    gap: 8px;
+.tourneyEditName,
+.editSocials,
+.startEndDates {
+  display: flex;
+  flex-flow: row;
+  width: 100%;
+  gap: 8px;
 }
 
 .multipliers {
-    display: grid;
-    grid-template-columns: auto auto;
-    gap: 8px;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 8px;
 }
 
-.tourneyEditName .acronym, .tourneyEditName .name, .editSocials .forum, .editSocials .website, .startEndDates .start, .startEndDates .end, .multipliers .multiplier {
-    display: flex;
-    flex-flow: column wrap;
-    width: 100%;
+.tourneyEditName .acronym,
+.tourneyEditName .name,
+.editSocials .forum,
+.editSocials .website,
+.startEndDates .start,
+.startEndDates .end,
+.multipliers .multiplier {
+  display: flex;
+  flex-flow: column wrap;
+  width: 100%;
 }
-
 
 /* SCROLLBAR */
 
 ::-webkit-scrollbar {
-    width: 10px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: transparent;
-    margin-top: 3.3em;
-  }
-  
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-color);
-    border-radius: 10px;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--scrollbar-color-hover);
-  }
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+  margin-top: 3.3em;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-color);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-color-hover);
+}
 
 .collapsibleBody::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 .collapsibleBody::-webkit-scrollbar-track {
-    background: transparent;
-    margin: 0 0 0.95em 0;
+  background: transparent;
+  margin: 0 0 0.95em 0;
 }
 
 .collapsibleBody::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 100vh;
 }
 
 /* ============================ SCHEDULE PAGE ================================== */
@@ -1385,172 +1419,453 @@ header {
 /* ============================== SETTINGS PAGE =================================== */
 
 .settingsPage {
-    padding: 60px 0;
-    width: 100%;
-    height: 100%;
+  padding: 60px 0;
+  width: 100vw;
+  height: 100%;
 }
 
 .settingsContainer {
-    margin: 20px auto;
-    display: flex;
-    width: calc(60em);
-    height: 200px;
-    border-radius: 20px;
-    background-color: var(--settings-container-background-color);
+  margin: 20px auto;
+  display: flex;
+  flex-flow: column;
+  width: 55em;
+  border-radius: 20px;
+  background-color: var(--action-div-color);
+  padding: 20px 30px;
 }
 
-.titleContainer {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    border-radius: 20px;
-    background-color: var(--settings-container-background-color);
-    color: #EEE;
+.settingsContainer .title {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: 20px;
+  background-color: var(--settings-container-background-color);
+  color: #eee;
+  font-size: 18pt;
+  font-weight: 500;
 }
 
-.account img {
-    width: 50px;
-    height: 50px;
-    border-radius: 100vh;
+.settingsContainer .section {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  color: #eee;
+  font-size: 18pt;
+  margin: 10px 0 0 0;
+}
+
+.settingsContainer .section:last-of-type {
+  margin: 10px 0;
+}
+
+.settingsContainer .section .subtitle {
+  font-size: 13pt;
+  color: #dadada;
+  font-weight: 400;
+  margin: 0 0 2px 0;
+}
+
+.settingsContainer .section .mintitle {
+  font-size: 12pt;
+  color: #eee;
+  font-weight: 300;
+  margin: 8px 0 4px 0;
+}
+
+.settingsContainer .section .description {
+  width: 165%;
+  font-size: 11pt;
+  color: #ddd;
+  font-weight: 300;
+  display: flex;
+  flex-direction: column;
+  padding: 5px 0 0 0;
+  gap: 4px;
+}
+
+.inviteBot {
+  font-size: 11.2pt;
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 2em;
+  border-radius: 4px;
+  color: #ddd;
+  cursor: pointer;
+  margin: 10px 0 6px 0;
+  background-color: hsl(219, 40%, 46%, 0.6);
+  transition: all 0.2s ease-out;
+}
+
+.inviteBot:hover {
+  background-color: hsl(219, 40%, 46%, 0.8);
+  transition: all 0.2s ease-in;
+}
+
+span.command {
+  background-color: #121b2b;
+  padding: 1px 8px;
+  border-radius: 6px;
+  color: #eee;
+  font-weight: 400;
+}
+
+.settingsContainer .section .field,
+.settingsContainer .section .buttons {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  gap: 4px;
+}
+
+.settingsContainer .section .field input {
+  width: 80.3%;
+  height: 1.8em;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 0;
+  color: #ddd;
+  background-color: hsl(219, 40%, 46%, 0.2);
+  font-family: "Poppins";
+  font-weight: 300;
+}
+
+.settingsContainer .section .field input::placeholder {
+  color: #ddd;
+}
+
+.settingsContainer .section .field span {
+  font-size: 12pt;
+  font-weight: 300;
+  color: #ddd;
+  padding: 0 0 0 2px;
+}
+
+.settingsContainer .section .field button {
+  width: 40px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 4px;
+  color: #dadada;
+  background-color: hsl(219, 40%, 46%, 0.6);
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+}
+
+.settingsContainer .section .field button:hover {
+  background-color: hsl(219, 40%, 46%, 0.8);
+  color: #eee;
+  transition: all 0.2s ease-in;
+}
+
+.settingsContainer .section .buttons button {
+  width: 100%;
+  height: 2.2em;
+  margin: 4px 0 0 0;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: 4px;
+  color: #dadada;
+  font-family: "Poppins";
+  transition: all 0.2s ease-out;
+  cursor: pointer;
+}
+
+.settingsContainer .section .buttons button:first-of-type {
+  background-color: hsl(219, 40%, 46%, 0.6);
+  font-weight: 400;
+}
+
+.settingsContainer .section .buttons button:first-of-type:hover {
+  background-color: hsl(219, 40%, 46%, 0.8);
+  color: #eee;
+  transition: all 0.2s ease-in;
+}
+
+.settingsContainer .section .buttons button:last-of-type {
+  background-color: rgba(164, 70, 70, 0.6);
+  font-weight: 400;
+}
+
+.settingsContainer .section .buttons button:last-of-type:hover {
+  background-color: rgba(164, 70, 70, 0.8);
+  font-weight: 400;
+  transition: all 0.2s ease-in;
+}
+
+.settingsContainer .section .list {
+  display: flex;
+  flex-flow: column;
+  gap: 4px;
+}
+
+.settingsContainer .section .list .item {
+  height: 2em;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  gap: 8px;
+  border-radius: 6px;
+  background-color: hsl(219, 40%, 36%, 0.35);
+  padding: 2px 12px;
+  font-size: 13.5pt;
+  color: #dedede;
+  user-select: none;
+  cursor: pointer;
+  transition: all 0.15s ease-out;
+}
+
+.settingsContainer .section .list .item:hover {
+  background-color: hsl(219, 40%, 36%, 0.5);
+  transition: all 0.15s ease-in;
+}
+
+.settingsContainer .section .list .item span {
+  color: rgba(255, 255, 255, 0.1);
+  font-weight: 100;
+}
+
+.settingsContainer .section .list .item .server {
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 60%;
+}
+
+.settingsContainer .section .list .item .channel {
+  font-size: 11.5pt;
+  font-weight: 300;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* SWITCH THING */
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22.4px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--site-background-color);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 15px;
+  width: 15px;
+  left: 3.5px;
+  bottom: 4px;
+  background-color: var(--action-div-color);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: hsl(219, 40%, 46%, 0.6);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px transparent;
+}
+
+input:checked + .slider:before {
+  background-color: hsl(219, 40%, 60%);
+  -webkit-transform: translateX(18px);
+  -ms-transform: translateX(18px);
+  transform: translateX(18px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }
 
 /* ============================ RESPONSIVE ================================== */
 
 /* PHONE */
 @media only screen and (max-width: 655px) {
-
-    html, body {
-        overflow: hidden scroll;
-    }
-
-    header .logoNavbar {
-        margin: auto;
-    }
-    
-    header .navbar, header .userInfo {
-        display: none;
-    }
-
-    .mobileNav {
-        display: block;
-    }
-
-    .homeContent {
-        padding-bottom: 3em;
-    }
-
-    ::-webkit-scrollbar {
-        width: 10px;
-      }
-      
-      /* Track */
-      ::-webkit-scrollbar-track {
-        display: none;
-      }
-      
-      /* Handle */
-      ::-webkit-scrollbar-thumb {
-        display: none;
-      }
-      
-      /* Handle on hover */
-      ::-webkit-scrollbar-thumb:hover {
-        display: none;
-      }
-
-
+  html,
+  body {
+    overflow: hidden scroll;
   }
 
+  header .logoNavbar {
+    margin: auto;
+  }
+
+  header .navbar,
+  header .userInfo {
+    display: none;
+  }
+
+  .mobileNav {
+    display: block;
+  }
+
+  .homeContent {
+    padding-bottom: 3em;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    display: none;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    display: none;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    display: none;
+  }
+}
 
 /* TABLET */
 @media only screen and (max-width: 792px) {
-
-    .appHeader .logoAppHeader {
-        width: 35%;
-    }
-
-    .appText {
-        font-size: 1.2em;
-    }
-
-    .accountContainer .profileInfo::after{
-        display: none;
-    }
-
-    .accountContainer .profileActions{
-        display: flex;
-        width: 100%;
-    }
-
-    .actionCategory {
-        padding-right: 0;
-    }
-
-    .tournamentsContainer #header {
-        font-size: 2.8em;
-    }
-
-    .tournamentsContainer #text {
-        font-size: 1.1em;
-    }
-
-    .tournamentsList .entry {
-        width: 85%;
-        grid-template-columns: 100%;
-        grid-template-areas:
-        "acronym"
-        "name"
-        "status"
-        "info";
-        gap: 5px;
-        font-size: 1.1em;
-    }
-    
-    .tournamentsList .entry :is(.acronym, .name, .status){
-        margin: auto;
-        padding: 0 2px;
-        text-align: center;
-    }
-
-    .tournamentsList .entry .name::before {
-        display: none;
-    }
-
-    .tournamentsList .entry .name .request {
-        margin: auto;
-    }
-
-    .tournamentsList .entry .info .about{
-        font-size: 9.8pt;
-    }
-
-    #subtext_requests {
-        font-size: 11pt;
-    }
-
-    .documentationContainer span#header {
-        font-size: 2.4em;
-    }
-
-    .documentationContainer p, li{
-        font-size: 0.9em;
-    }
-    
-    .documentationContainer img{
-        width: 100% !important;
-    }
-
-    .documentationContainer h1 {
-        font-size: 1.6em;
-    }
-
-    .documentationContainer h2 {
-        font-size: 1.3em;
-    }
-
-    .documentationContainer .installation, .documentationContainer .fields, .documentationContainer .obs {
-        width: 90%;
-    }
-
+  .appHeader .logoAppHeader {
+    width: 35%;
   }
+
+  .appText {
+    font-size: 1.2em;
+  }
+
+  .accountContainer .profileInfo::after {
+    display: none;
+  }
+
+  .accountContainer .profileActions {
+    display: flex;
+    width: 100%;
+  }
+
+  .actionCategory {
+    padding-right: 0;
+  }
+
+  .tournamentsContainer #header {
+    font-size: 2.8em;
+  }
+
+  .tournamentsContainer #text {
+    font-size: 1.1em;
+  }
+
+  .tournamentsList .entry {
+    width: 85%;
+    grid-template-columns: 100%;
+    grid-template-areas:
+      "acronym"
+      "name"
+      "status"
+      "info";
+    gap: 5px;
+    font-size: 1.1em;
+  }
+
+  .tournamentsList .entry :is(.acronym, .name, .status) {
+    margin: auto;
+    padding: 0 2px;
+    text-align: center;
+  }
+
+  .tournamentsList .entry .name::before {
+    display: none;
+  }
+
+  .tournamentsList .entry .name .request {
+    margin: auto;
+  }
+
+  .tournamentsList .entry .info .about {
+    font-size: 9.8pt;
+  }
+
+  #subtext_requests {
+    font-size: 11pt;
+  }
+
+  .documentationContainer span#header {
+    font-size: 2.4em;
+  }
+
+  .documentationContainer p,
+  li {
+    font-size: 0.9em;
+  }
+
+  .documentationContainer img {
+    width: 100% !important;
+  }
+
+  .documentationContainer h1 {
+    font-size: 1.6em;
+  }
+
+  .documentationContainer h2 {
+    font-size: 1.3em;
+  }
+
+  .documentationContainer .installation,
+  .documentationContainer .fields,
+  .documentationContainer .obs {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .settingsContainer {
+    width: 80vw;
+  }
+
+  .settingsContainer .section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: #eee;
+    font-size: 18pt;
+    margin: 10px 0 0 0;
+  }
+
+  .settingsContainer .section .description {
+    width: 100%;
+  }
+}

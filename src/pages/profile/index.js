@@ -16,6 +16,7 @@ export default function Account({
     Server: "rgb(197, 56, 56)",
     "Tourney Manager": "rgb(48, 164, 226)",
     "Tournaments Host": "rgb(226, 168, 48)",
+    Tester: "hsl(276, 30%, 60%)",
     User: "rgb(20,20,20)",
   };
 
