@@ -26,7 +26,8 @@ export default async function handler(req, res) {
 
   if (req.method === "POST") {
     const body = JSON.parse(req.body);
-    base("Users")
+    return res.status(200).json(body);
+    /* base("Users")
       .select({
         filterByFormula: `IF({Apikey} = '${body.webapikey}' , TRUE())`,
         view: "Grid view",
@@ -60,7 +61,7 @@ export default async function handler(req, res) {
               }
             );
 
-            /* var { SendMatchesDiscord, DiscordChannelsMatch } =
+            var { SendMatchesDiscord, DiscordChannelsMatch } =
               records[0].fields;
             DiscordChannelsMatch = JSON.parse(DiscordChannelsMatch);
 
@@ -76,7 +77,7 @@ export default async function handler(req, res) {
               return res
                 .status(404)
                 .send({ error: "You haven't enabled the Discord Webhooks" });
-            } */
+            }
           } else {
             return res.status(404).json({ message: "Wrong apikey!" });
           }
@@ -86,7 +87,7 @@ export default async function handler(req, res) {
             console.error(err);
           }
         }
-      );
+      ); */
   }
 }
 
