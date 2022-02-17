@@ -48,8 +48,11 @@ export default async function handler(req, res) {
                     Warmups: body.warmups,
                     Tournament: JSON.stringify(body.tournament),
                     Players: JSON.stringify(body.players),
+                    Player: JSON.stringify(body.player),
                     Teams: JSON.stringify(body.teams),
                     Scores: JSON.stringify(body.scores),
+                    TotalMaps: totalMaps,
+                    StartTime: body.matchStart,
                   },
                 },
               ],
@@ -58,6 +61,7 @@ export default async function handler(req, res) {
                   console.error(err);
                   return res.status(404).json({ error: err });
                 }
+                return res.status(200).json({ success: true });
               }
             );
 
