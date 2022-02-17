@@ -186,7 +186,7 @@ const match = async (body, channel) => {
         })`, */
           url: `https://osu.ppy.sh/community/matches/${body.matchID}`,
           description: `${results}\n\n${body.matchType} - ${body.stage} - BO${body.bestOF} - ${body.warmups} warmups - [MP Link](https://osu.ppy.sh/community/matches/${body.matchID})`,
-          color: 0x4876b6,
+          color: body.scores.winner === 1 ? 0xff4c4c : 0x4876b6,
         },
       ],
     };
@@ -231,13 +231,11 @@ const match = async (body, channel) => {
     };
   }
 
-  if (body.stage !== "Qualifiers") {
-    await fetch(channel.WebhookURL, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(Data),
-    });
-  }
+  await fetch(channel.WebhookURL, {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(Data),
+  });
 };
