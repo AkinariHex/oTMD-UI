@@ -36,34 +36,61 @@ export default async function handler(req, res) {
         function page(records, fetchNextPage) {
           if (records.length !== 0) {
             try {
-              base("Matches").create(
-                [
-                  {
-                    fields: {
-                      UUID: uuidv4(),
-                      Owner: body.me,
-                      MatchID: body.matchID,
-                      MatchType: body.matchType,
-                      Stage: body.stage,
-                      BestOF: body.bestOF,
-                      Warmups: body.warmups,
-                      Tournament: JSON.stringify(body?.tournament),
-                      Players: JSON.stringify(body?.players),
-                      Teams: JSON.stringify(body?.teams),
-                      Scores: JSON.stringify(body?.scores),
-                      StartTime: body.matchStart,
+              if (body.matchType === "Qualifiers") {
+                base("Matches").create(
+                  [
+                    {
+                      fields: {
+                        UUID: uuidv4(),
+                        Owner: body.me,
+                        MatchID: body.matchID,
+                        MatchType: body.matchType,
+                        Stage: body.stage,
+                        Tournament: JSON.stringify(body?.tournament),
+                        Player: JSON.stringify(body?.player),
+                        Scores: JSON.stringify(body?.scores),
+                        TotalMaps: body.totalMaps,
+                        StartTime: body.matchStart,
+                      },
                     },
-                  },
-                ],
-                function (err, records) {
-                  if (err) {
-                    console.error(err);
-                    return res.status(404).json({ error: err });
+                  ],
+                  function (err, records) {
+                    if (err) {
+                      console.error(err);
+                      return res.status(404).json({ error: err });
+                    }
                   }
-                }
-              );
+                );
+              } else {
+                base("Matches").create(
+                  [
+                    {
+                      fields: {
+                        UUID: uuidv4(),
+                        Owner: body.me,
+                        MatchID: body.matchID,
+                        MatchType: body.matchType,
+                        Stage: body.stage,
+                        BestOF: body.bestOF,
+                        Warmups: body.warmups,
+                        Tournament: JSON.stringify(body?.tournament),
+                        Players: JSON.stringify(body?.players),
+                        Teams: JSON.stringify(body?.teams),
+                        Scores: JSON.stringify(body?.scores),
+                        StartTime: body.matchStart,
+                      },
+                    },
+                  ],
+                  function (err, records) {
+                    if (err) {
+                      console.error(err);
+                      return res.status(404).json({ error: err });
+                    }
+                  }
+                );
+              }
 
-              /* var { SendMatchesDiscord, DiscordChannelsMatch } =
+              var { SendMatchesDiscord, DiscordChannelsMatch } =
                 records[0].fields;
               DiscordChannelsMatch = JSON.parse(DiscordChannelsMatch);
 
@@ -72,14 +99,16 @@ export default async function handler(req, res) {
                 JSON.parse(DiscordChannelsMatch).length > 0
               ) {
                 JSON.parse(DiscordChannelsMatch).forEach(async (channel) => {
-                  await match(body, channel);
+                  if (body.matchType !== "Qualifiers") {
+                    await match(body, channel);
+                  }
                 });
                 return res.status(200).json({ status: "done" });
               } else {
                 return res
                   .status(404)
                   .send({ error: "You haven't enabled the Discord Webhooks" });
-              } */
+              }
             } catch (error) {
               return res.status(404).json({ error: error });
             }
