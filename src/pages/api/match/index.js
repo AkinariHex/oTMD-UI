@@ -34,7 +34,7 @@ export default async function handler(req, res) {
       })
       .eachPage(
         function page(records, fetchNextPage) {
-          console.log(records[0]);
+          console.log(records[0].fields);
           if (records.length > 0) {
             base("Matches").create(
               [
@@ -74,12 +74,10 @@ export default async function handler(req, res) {
 
             if (
               SendMatchesDiscord === "true" &&
-              DiscordChannelsMatch.length > 0
+              JSON.parse(DiscordChannelsMatch).length > 0
             ) {
-              DiscordChannelsMatch.forEach(async (channel) => {
-                if (body.stage !== "Qualifiers") {
-                  await match(body, channel);
-                }
+              JSON.parse(DiscordChannelsMatch).forEach(async (channel) => {
+                await match(body, channel);
               });
               return res.status(200).json({ status: "done" });
             } else {
