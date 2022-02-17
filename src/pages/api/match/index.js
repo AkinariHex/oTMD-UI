@@ -36,7 +36,7 @@ export default async function handler(req, res) {
         function page(records, fetchNextPage) {
           if (records.length !== 0) {
             try {
-              if (body.matchType === "Qualifiers") {
+              if (body.stage === "Qualifiers") {
                 base("Matches").create(
                   [
                     {
@@ -99,7 +99,7 @@ export default async function handler(req, res) {
                 JSON.parse(DiscordChannelsMatch).length > 0
               ) {
                 JSON.parse(DiscordChannelsMatch).forEach(async (channel) => {
-                  if (body.matchType !== "Qualifiers") {
+                  if (body.stage !== "Qualifiers") {
                     await match(body, channel);
                   }
                 });
