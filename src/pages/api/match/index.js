@@ -58,12 +58,10 @@ export default async function handler(req, res) {
                   console.error(err);
                   return res.status(404).json({ error: err });
                 }
-
-                return res.status(200).json({ status: "success" });
               }
             );
 
-            /* var { SendMatchesDiscord, DiscordChannelsMatch } =
+            var { SendMatchesDiscord, DiscordChannelsMatch } =
               records[0].fields;
             DiscordChannelsMatch = JSON.parse(DiscordChannelsMatch);
 
@@ -72,14 +70,14 @@ export default async function handler(req, res) {
               DiscordChannelsMatch.length > 0
             ) {
               DiscordChannelsMatch.forEach(async (channel) => {
-                await soloMatch(body, channel);
+                await match(body, channel);
               });
               return res.status(200).json({ status: "done" });
             } else {
               return res
                 .status(404)
                 .send({ error: "You haven't enabled the Discord Webhooks" });
-            } */
+            }
           } else {
             return res.status(404).json({ message: "Wrong apikey!" });
           }
@@ -93,19 +91,45 @@ export default async function handler(req, res) {
   }
 }
 
-const soloMatch = async (body, channel) => {
-  let testData = {
+const match = async (body, channel) => {
+  let results =
+    body.scores.winner === 1
+      ? `:first_place: :red_circle: **${
+          body.matchType === "1vs1"
+            ? `${body.players[0].username} | ${body.scores.player1}`
+            : `${body.teams[0]} | ${body.scores.team1}`
+        }** - ${
+          body.matchType === "1vs1"
+            ? `${body.scores.player2} | ${body.players[1].username}`
+            : `${body.scores.team2} | ${body.teams[1]}`
+        } :blue_circle:`
+      : `:red_circle: ${
+          body.matchType === "1vs1"
+            ? `${body.players[0].username} | ${body.scores.player1}`
+            : `${body.teams[0]} | ${body.scores.team1}`
+        } - **${
+          body.matchType === "1vs1"
+            ? `${body.scores.player2} | ${body.players[1].username}`
+            : `${body.scores.team2} | ${body.teams[1]}`
+        }** :blue_circle: :first_place:`;
+
+  let Data = {
     embeds: [
       {
         author: {
-          name: "o!TMD",
-          url: "https://google.com",
-          icon_url: "https://akinariosu.s-ul.eu/f72xTlsv",
+          name: `${body.tournament.acronym} ${
+            body.tournament.name !== "" ? `- ${body.tournament.name}` : ""
+          }}`,
+          url: `https://osu.ppy.sh/community/matches/${body.matchID}`,
+          icon_url: `https://akinariosu.s-ul.eu/f72xTlsv`,
         },
-        title: "Webhook Test",
-        url: "https://google.com",
-        description:
-          "The Webhook works correctly, your matches will be displayed in this channel!",
+        title: `(${
+          body.matchType === "1vs1" ? body.players[0].username : body.teams[0]
+        }) vs (${
+          body.matchType === "1vs1" ? body.players[1].username : body.teams[1]
+        })`,
+        url: `https://osu.ppy.sh/community/matches/${body.matchID}`,
+        description: `${results}\n\n${body.matchType} - ${body.stage} - BO${body.bestOF} - ${body.warmups} warmups`,
         color: 0x4876b6,
       },
     ],
@@ -116,6 +140,6 @@ const soloMatch = async (body, channel) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(testData),
+    body: JSON.stringify(Data),
   });
 };
