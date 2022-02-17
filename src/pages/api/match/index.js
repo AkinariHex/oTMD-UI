@@ -36,7 +36,6 @@ export default async function handler(req, res) {
         function page(records, fetchNextPage) {
           if (records.length !== 0) {
             try {
-              console.log(body);
               base("Matches").create(
                 [
                   {
@@ -48,14 +47,10 @@ export default async function handler(req, res) {
                       Stage: body.stage,
                       BestOF: body.bestOF,
                       Warmups: body.warmups,
-                      Tournament: body.tournament
-                        ? JSON.stringify(body.tournament)
-                        : "",
-                      Player: body.player ? JSON.stringify(body.player) : "",
-                      Players: body.players ? JSON.stringify(body.players) : "",
-                      Teams: body.teams ? JSON.stringify(body.teams) : "",
-                      Scores: body.scores ? JSON.stringify(body.scores) : "",
-                      TotalMaps: totalMaps ? totalMaps : "",
+                      Tournament: JSON.stringify(body?.tournament),
+                      Players: JSON.stringify(body?.players),
+                      Teams: JSON.stringify(body?.teams),
+                      Scores: JSON.stringify(body?.scores),
                       StartTime: body.matchStart,
                     },
                   },
