@@ -36,54 +36,58 @@ export default async function handler(req, res) {
         function page(records, fetchNextPage) {
           console.log(records[0].fields);
           if (records.length > 0) {
-            base("Matches").create(
-              [
-                {
-                  fields: {
-                    UUID: uuidv4(),
-                    Owner: body.me,
-                    MatchID: body.matchID,
-                    MatchType: body.matchType,
-                    Stage: body.stage,
-                    BestOF: body.bestOF,
-                    Warmups: body.warmups,
-                    Tournament: body.tournament
-                      ? JSON.stringify(body.tournament)
-                      : "",
-                    Player: body.player ? JSON.stringify(body.player) : "",
-                    Players: body.players ? JSON.stringify(body.players) : "",
-                    Teams: body.teams ? JSON.stringify(body.teams) : "",
-                    Scores: body.scores ? JSON.stringify(body.scores) : "",
-                    TotalMaps: totalMaps ? totalMaps : "",
-                    StartTime: body.matchStart,
+            try {
+              base("Matches").create(
+                [
+                  {
+                    fields: {
+                      UUID: uuidv4(),
+                      Owner: body.me,
+                      MatchID: body.matchID,
+                      MatchType: body.matchType,
+                      Stage: body.stage,
+                      BestOF: body.bestOF,
+                      Warmups: body.warmups,
+                      Tournament: body.tournament
+                        ? JSON.stringify(body.tournament)
+                        : "",
+                      Player: body.player ? JSON.stringify(body.player) : "",
+                      Players: body.players ? JSON.stringify(body.players) : "",
+                      Teams: body.teams ? JSON.stringify(body.teams) : "",
+                      Scores: body.scores ? JSON.stringify(body.scores) : "",
+                      TotalMaps: totalMaps ? totalMaps : "",
+                      StartTime: body.matchStart,
+                    },
                   },
-                },
-              ],
-              function (err, records) {
-                if (err) {
-                  console.error(err);
-                  return res.status(404).json({ error: err });
+                ],
+                function (err, records) {
+                  if (err) {
+                    console.error(err);
+                    return res.status(404).json({ error: err });
+                  }
+                  return res.status(200).json({ success: true });
                 }
-                return res.status(200).json({ success: true });
+              );
+
+              var { SendMatchesDiscord, DiscordChannelsMatch } =
+                records[0].fields;
+              DiscordChannelsMatch = JSON.parse(DiscordChannelsMatch);
+
+              if (
+                SendMatchesDiscord === "true" &&
+                JSON.parse(DiscordChannelsMatch).length > 0
+              ) {
+                JSON.parse(DiscordChannelsMatch).forEach(async (channel) => {
+                  await match(body, channel);
+                });
+                return res.status(200).json({ status: "done" });
+              } else {
+                return res
+                  .status(404)
+                  .send({ error: "You haven't enabled the Discord Webhooks" });
               }
-            );
-
-            var { SendMatchesDiscord, DiscordChannelsMatch } =
-              records[0].fields;
-            DiscordChannelsMatch = JSON.parse(DiscordChannelsMatch);
-
-            if (
-              SendMatchesDiscord === "true" &&
-              JSON.parse(DiscordChannelsMatch).length > 0
-            ) {
-              JSON.parse(DiscordChannelsMatch).forEach(async (channel) => {
-                await match(body, channel);
-              });
-              return res.status(200).json({ status: "done" });
-            } else {
-              return res
-                .status(404)
-                .send({ error: "You haven't enabled the Discord Webhooks" });
+            } catch (error) {
+              return res.status(404).json({ error: error });
             }
           } else {
             return res.status(404).json({ message: "Wrong apikey!" });
