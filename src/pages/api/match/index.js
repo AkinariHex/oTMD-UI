@@ -70,7 +70,9 @@ export default async function handler(req, res) {
               DiscordChannelsMatch.length > 0
             ) {
               DiscordChannelsMatch.forEach(async (channel) => {
-                await match(body, channel);
+                if (body.stage !== "Qualifiers") {
+                  await match(body, channel);
+                }
               });
               return res.status(200).json({ status: "done" });
             } else {
@@ -90,6 +92,34 @@ export default async function handler(req, res) {
       );
   }
 }
+
+const qualifiers = async (body, channel) => {
+  let Data = {
+    embeds: [
+      {
+        author: {
+          name: `${body.tournament.acronym} ${
+            body.tournament.name !== "" ? `- ${body.tournament.name}` : ""
+          }`,
+          url: `https://osu.ppy.sh/community/matches/${body.matchID}`,
+          icon_url: `https://akinariosu.s-ul.eu/f72xTlsv`,
+        },
+        title: ``,
+        url: `https://osu.ppy.sh/community/matches/${body.matchID}`,
+        description: `${results}\n\n${body.matchType} - ${body.stage} - BO${body.bestOF} - ${body.warmups} warmups`,
+        color: 0x4876b6,
+      },
+    ],
+  };
+
+  await fetch(channel.WebhookURL, {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(Data),
+  });
+};
 
 const match = async (body, channel) => {
   let results =
@@ -119,18 +149,18 @@ const match = async (body, channel) => {
         author: {
           name: `${body.tournament.acronym} ${
             body.tournament.name !== "" ? `- ${body.tournament.name}` : ""
-          }}`,
+          }`,
           url: `https://osu.ppy.sh/community/matches/${body.matchID}`,
           icon_url: `https://akinariosu.s-ul.eu/f72xTlsv`,
         },
-        title: `(${
+        /* title: `(${
           body.matchType === "1vs1" ? body.players[0].username : body.teams[0]
         }) vs (${
           body.matchType === "1vs1" ? body.players[1].username : body.teams[1]
-        })`,
+        })`, */
         url: `https://osu.ppy.sh/community/matches/${body.matchID}`,
-        description: `${results}\n\n${body.matchType} - ${body.stage} - BO${body.bestOF} - ${body.warmups} warmups`,
-        color: 0x4876b6,
+        description: `${results}\n\n${body.matchType} - ${body.stage} - BO${body.bestOF} - ${body.warmups} warmups - [MP Link](https://osu.ppy.sh/community/matches/${body.matchID})`,
+        color: body.scores.winner === 1 ? 0xff4c4c : 0x4876b6,
       },
     ],
   };
