@@ -239,7 +239,7 @@ const match = async (body, channel) => {
           },
           title: `${body.player.username}'s Qualifier`,
           url: `https://osu.ppy.sh/community/matches/${body.matchID}`,
-          description: `${results}**Average: ${body.scores.average}** - ${body.totalMaps} maps - [MP Link](https://osu.ppy.sh/community/matches/${body.matchID})`,
+          description: `${results}\n**Average: ${body.scores.average}** - Played Maps: ${body.scores.list.length} - Total maps: ${body.totalMaps} - [MP Link](https://osu.ppy.sh/community/matches/${body.matchID})`,
           color: 0x4876b6,
           thumbnail: {
             url: `http://s.ppy.sh/a/${body.me}`,
@@ -259,4 +259,5 @@ const match = async (body, channel) => {
     },
     body: JSON.stringify(Data),
   });
+  return;
 };
