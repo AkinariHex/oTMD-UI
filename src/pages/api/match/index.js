@@ -34,9 +34,9 @@ export default async function handler(req, res) {
       })
       .eachPage(
         function page(records, fetchNextPage) {
-          console.log(records[0].fields);
-          if (records.length > 0) {
+          if (records.length !== 0) {
             try {
+              console.log(body);
               base("Matches").create(
                 [
                   {
@@ -65,11 +65,10 @@ export default async function handler(req, res) {
                     console.error(err);
                     return res.status(404).json({ error: err });
                   }
-                  return res.status(200).json({ success: true });
                 }
               );
 
-              var { SendMatchesDiscord, DiscordChannelsMatch } =
+              /* var { SendMatchesDiscord, DiscordChannelsMatch } =
                 records[0].fields;
               DiscordChannelsMatch = JSON.parse(DiscordChannelsMatch);
 
@@ -85,7 +84,7 @@ export default async function handler(req, res) {
                 return res
                   .status(404)
                   .send({ error: "You haven't enabled the Discord Webhooks" });
-              }
+              } */
             } catch (error) {
               return res.status(404).json({ error: error });
             }
