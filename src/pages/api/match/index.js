@@ -33,6 +33,7 @@ export default async function handler(req, res) {
       })
       .eachPage(
         function page(records, fetchNextPage) {
+          console.log(records.length);
           if (records.length > 0) {
             base("Matches").create(
               [
@@ -57,10 +58,10 @@ export default async function handler(req, res) {
                   console.error(err);
                   return res.status(404).json({ error: err });
                 }
+
+                return res.status(200).json({ status: "success" });
               }
             );
-
-            return res.status(200).json({ status: "success" });
 
             /* var { SendMatchesDiscord, DiscordChannelsMatch } =
               records[0].fields;
