@@ -95,14 +95,10 @@ export default async function handler(req, res) {
 
             if (
               SendMatchesDiscord === "true" &&
-              JSON.parse(DiscordChannelsMatch).length > 0
+              DiscordChannelsMatch.length > 0
             ) {
-              JSON.parse(DiscordChannelsMatch).forEach(async (channel) => {
-                if (body.stage !== "Qualifiers") {
-                  await match(body, channel);
-                } else {
-                  await qualifiers(body, channel);
-                }
+              DiscordChannelsMatch.forEach(async (channel) => {
+                await match(body, channel);
               });
               return res.status(200).json({ status: "done" });
             } else {
@@ -123,7 +119,7 @@ export default async function handler(req, res) {
   }
 }
 
-const qualifiers = async (body, channel) => {
+/* const qualifiers = async (body, channel) => {
   let Data = {
     embeds: [
       {
@@ -149,7 +145,7 @@ const qualifiers = async (body, channel) => {
     },
     body: JSON.stringify(Data),
   });
-};
+}; */
 
 const match = async (body, channel) => {
   let results =
@@ -195,11 +191,13 @@ const match = async (body, channel) => {
     ],
   };
 
-  await fetch(channel.WebhookURL, {
-    method: "post",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(Data),
-  });
+  if (body.stage !== "Qualifiers") {
+    await fetch(channel.WebhookURL, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(Data),
+    });
+  }
 };
