@@ -35,82 +35,80 @@ export default async function handler(req, res) {
       .eachPage(
         function page(records, fetchNextPage) {
           if (records.length !== 0) {
-            try {
-              if (body.stage === "Qualifiers") {
-                base("Matches").create(
-                  [
-                    {
-                      fields: {
-                        UUID: uuidv4(),
-                        Owner: body.me,
-                        MatchID: body.matchID,
-                        MatchType: body.matchType,
-                        Stage: body.stage,
-                        Tournament: JSON.stringify(body?.tournament),
-                        Player: JSON.stringify(body?.player),
-                        Scores: JSON.stringify(body?.scores),
-                        TotalMaps: body.totalMaps,
-                        StartTime: body.matchStart,
-                      },
+            if (body.stage === "Qualifiers") {
+              base("Matches").create(
+                [
+                  {
+                    fields: {
+                      UUID: uuidv4(),
+                      Owner: body.me,
+                      MatchID: body.matchID,
+                      MatchType: body.matchType,
+                      Stage: body.stage,
+                      Tournament: JSON.stringify(body?.tournament),
+                      Player: JSON.stringify(body?.player),
+                      Scores: JSON.stringify(body?.scores),
+                      TotalMaps: body.totalMaps,
+                      StartTime: body.matchStart,
                     },
-                  ],
-                  function (err, records) {
-                    if (err) {
-                      console.error(err);
-                      return res.status(404).json({ error: err });
-                    }
+                  },
+                ],
+                function (err, records) {
+                  if (err) {
+                    console.error(err);
+                    return res.status(404).json({ error: err });
                   }
-                );
-              } else {
-                base("Matches").create(
-                  [
-                    {
-                      fields: {
-                        UUID: uuidv4(),
-                        Owner: body.me,
-                        MatchID: body.matchID,
-                        MatchType: body.matchType,
-                        Stage: body.stage,
-                        BestOF: body.bestOF,
-                        Warmups: body.warmups,
-                        Tournament: JSON.stringify(body?.tournament),
-                        Players: JSON.stringify(body?.players),
-                        Teams: JSON.stringify(body?.teams),
-                        Scores: JSON.stringify(body?.scores),
-                        StartTime: body.matchStart,
-                      },
+                }
+              );
+            } else {
+              base("Matches").create(
+                [
+                  {
+                    fields: {
+                      UUID: uuidv4(),
+                      Owner: body.me,
+                      MatchID: body.matchID,
+                      MatchType: body.matchType,
+                      Stage: body.stage,
+                      BestOF: body.bestOF,
+                      Warmups: body.warmups,
+                      Tournament: JSON.stringify(body?.tournament),
+                      Players: JSON.stringify(body?.players),
+                      Teams: JSON.stringify(body?.teams),
+                      Scores: JSON.stringify(body?.scores),
+                      StartTime: body.matchStart,
                     },
-                  ],
-                  function (err, records) {
-                    if (err) {
-                      console.error(err);
-                      return res.status(404).json({ error: err });
-                    }
+                  },
+                ],
+                function (err, records) {
+                  if (err) {
+                    console.error(err);
+                    return res.status(404).json({ error: err });
                   }
-                );
-              }
+                }
+              );
+            }
 
-              var { SendMatchesDiscord, DiscordChannelsMatch } =
-                records[0].fields;
-              DiscordChannelsMatch = JSON.parse(DiscordChannelsMatch);
+            var { SendMatchesDiscord, DiscordChannelsMatch } =
+              records[0].fields;
+            DiscordChannelsMatch = JSON.parse(DiscordChannelsMatch);
 
-              if (
-                SendMatchesDiscord === "true" &&
-                JSON.parse(DiscordChannelsMatch).length > 0
-              ) {
-                JSON.parse(DiscordChannelsMatch).forEach(async (channel) => {
-                  if (body.stage !== "Qualifiers") {
-                    await match(body, channel);
-                  }
-                });
-                return res.status(200).json({ status: "done" });
-              } else {
-                return res
-                  .status(404)
-                  .send({ error: "You haven't enabled the Discord Webhooks" });
-              }
-            } catch (error) {
-              return res.status(404).json({ error: error });
+            if (
+              SendMatchesDiscord === "true" &&
+              JSON.parse(DiscordChannelsMatch).length > 0
+            ) {
+              JSON.parse(DiscordChannelsMatch).forEach(async (channel) => {
+                if (body.stage !== "Qualifiers") {
+                  await match(body, channel);
+                } else {
+                  await qualifiers(body, channel);
+                }
+              });
+              return res.status(200).json({ status: "done" });
+            } else {
+              return res
+                .status(404)
+                .send({ error: "You haven't enabled the Discord Webhooks" });
             }
           } else {
             return res.status(404).json({ message: "Wrong apikey!" });
@@ -192,7 +190,7 @@ const match = async (body, channel) => {
         })`, */
         url: `https://osu.ppy.sh/community/matches/${body.matchID}`,
         description: `${results}\n\n${body.matchType} - ${body.stage} - BO${body.bestOF} - ${body.warmups} warmups - [MP Link](https://osu.ppy.sh/community/matches/${body.matchID})`,
-        color: body.scores.winner === 1 ? 0xff4c4c : 0x4876b6,
+        color: 0x4876b6,
       },
     ],
   };
