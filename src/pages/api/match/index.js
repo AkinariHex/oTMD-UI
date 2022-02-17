@@ -143,10 +143,21 @@ export default async function handler(req, res) {
   });
 }; */
 
+const getTimeSpent = (startTime) => {
+  let startMatch = new Date(startTime);
+  let finishMatch = new Date(Date.now());
+  var diffMs = finishMatch.getTime() - startMatch.getTime();
+  var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+  var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+
+  return `Match duration: ${diffHrs}h ${diffMins}m`;
+};
+
 const match = async (body, channel) => {
   var results = "";
   var Data = "";
 
+  /* If match is 1vs1 or teamVS */
   if (body.stage !== "Qualifiers") {
     results =
       body.scores.winner === 1
@@ -187,11 +198,15 @@ const match = async (body, channel) => {
           url: `https://osu.ppy.sh/community/matches/${body.matchID}`,
           description: `${results}\n\n${body.matchType} - ${body.stage} - BO${body.bestOF} - ${body.warmups} warmups - [MP Link](https://osu.ppy.sh/community/matches/${body.matchID})`,
           color: body.scores.winner === 1 ? 0xff4c4c : 0x4876b6,
+          footer: {
+            text: getTimeSpent(body.matchStart),
+          },
         },
       ],
     };
   }
 
+  /* If match is Qualifiers */
   if (body.stage === "Qualifiers") {
     var mods = {
       NM: "<:nomod:868095234217750558>",
@@ -226,6 +241,12 @@ const match = async (body, channel) => {
           url: `https://osu.ppy.sh/community/matches/${body.matchID}`,
           description: `${results}**Average: ${body.scores.average}** - ${body.totalMaps} maps - [MP Link](https://osu.ppy.sh/community/matches/${body.matchID})`,
           color: 0x4876b6,
+          thumbnail: {
+            url: `http://s.ppy.sh/a/${body.me}`,
+          },
+          footer: {
+            text: getTimeSpent(body.matchStart),
+          },
         },
       ],
     };
