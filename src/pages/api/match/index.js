@@ -35,7 +35,7 @@ export default async function handler(req, res) {
       .eachPage(
         function page(records, fetchNextPage) {
           if (records.length !== 0) {
-            if (body.stage === "Qualifiers") {
+            if (body.stage == "Qualifiers") {
               base("Matches").create(
                 [
                   {
