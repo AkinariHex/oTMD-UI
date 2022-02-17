@@ -30,10 +30,11 @@ export default async function handler(req, res) {
       .select({
         filterByFormula: `IF({Apikey} = '${body.webapikey}' , TRUE())`,
         view: "Grid view",
+        pageSize: 1,
       })
       .eachPage(
         function page(records, fetchNextPage) {
-          console.log(records.length);
+          console.log(records[0]);
           if (records.length > 0) {
             base("Matches").create(
               [
