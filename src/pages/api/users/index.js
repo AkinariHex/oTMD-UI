@@ -19,6 +19,7 @@ export default function handler(req, res) {
                 {
                   ID: records[0].get("ID"),
                   Username: records[0].get("Username"),
+                  UUID: records[0].get("UUID"),
                   Permissions: records[0].get("Permissions"),
                   Discord: records[0].get("Discord"),
                   Twitter: records[0].get("Twitter"),
