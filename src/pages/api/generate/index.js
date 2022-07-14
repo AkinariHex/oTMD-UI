@@ -1,4 +1,4 @@
-import { getSession } from "next-auth/client";
+import { getSession } from "next-auth/react";
 import Airtable from "airtable";
 const generateApiKey = require("generate-api-key");
 

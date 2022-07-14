@@ -89,13 +89,14 @@ export default NextAuth({
       id: "osu",
       name: "Osu!",
       type: "oauth",
-      version: "2.0",
-      scope: "identify public",
-      params: { grant_type: "authorization_code" },
-      accessTokenUrl: "https://osu.ppy.sh/oauth/token",
-      requestTokenUrl: "https://osu.ppy.sh/oauth/token",
-      authorizationUrl: "https://osu.ppy.sh/oauth/authorize?response_type=code",
-      profileUrl: "https://osu.ppy.sh/api/v2/me",
+      token: "https://osu.ppy.sh/oauth/token",
+      authorization: {
+        url: "https://osu.ppy.sh/oauth/authorize",
+        params: {
+          scope: "identify public",
+        },
+      },
+      userinfo: "https://osu.ppy.sh/api/v2/me",
       profile(profile) {
         return {
           id: profile.id,
@@ -110,36 +111,34 @@ export default NextAuth({
   ],
 
   session: {
-    jwt: true,
+    strategy: "jwt",
   },
 
   callbacks: {
-    async session(session, user) {
+    async session({ session, user, token }) {
       // Get data from OSU API
-      const userData = await (
-        await fetch(`https://osu.ppy.sh/api/v2/me`, {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        })
-      ).json();
+      const userData = await fetch(`https://osu.ppy.sh/api/v2/me`, {
+        headers: {
+          Authorization: `Bearer ${token?.access_token}`,
+        },
+      }).then((res) => res.json());
 
       if (userData.authentication === "basic") return {};
 
-      userData.access_token = user.accessToken;
+      userData.access_token = token?.access_token;
 
       return userData;
     },
-    async jwt(token, user, account, profile, isNewUser) {
-      if (account?.accessToken) {
-        token.accessToken = account.accessToken;
+    async jwt({ token, account, profile }) {
+      if (account?.access_token) {
+        token.access_token = account.access_token;
         token.refresh_token = account.refresh_token;
 
-        //Write user in database
+        // Write user in database
         checkUserDB(profile);
       }
 
-      return Promise.resolve(token);
+      return token;
     },
   },
 });
