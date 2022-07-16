@@ -1,5 +1,5 @@
 import Airtable from "airtable";
-import { getSession } from "next-auth/client"
+import { getSession } from "next-auth/react"
 import { version as uuidVersion } from 'uuid';
 import { validate as uuidValidate } from 'uuid';
 import { v4 as uuidv4 } from 'uuid';

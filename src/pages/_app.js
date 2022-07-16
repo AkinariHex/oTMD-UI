@@ -1,4 +1,4 @@
-import { getSession, Provider } from "next-auth/client";
+import { getSession } from "next-auth/react";
 import "../styles/styles.css";
 import Navbar from "../components/Navbar/Navbar";
 import Head from "next/head";

@@ -1,4 +1,4 @@
-import { signIn, signOut } from "next-auth/client";
+import { signIn, signOut } from "next-auth/react";
 import NavLink from "../NavLink/NavLink";
 import Link from "next/link";
 import { useState } from "react";
@@ -65,7 +65,7 @@ export default function Navbar({ session, userStatus }) {
           </ul>
         </nav>
         <div className="userInfo">
-          {session !== null ? (
+          {session ? (
             <div className="userInfoContent">
               <div
                 href="/profile"
@@ -195,7 +195,7 @@ export default function Navbar({ session, userStatus }) {
               <TableDocument color="#d9e3f0" />
             </div>
           </NavLink>
-          {session !== null ? (
+          {session ? (
             <Link href="/profile" passHref>
               <div className="item">
                 <img src={session.avatar_url} alt="user propic" />

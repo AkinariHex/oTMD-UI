@@ -1,4 +1,4 @@
-import { getSession } from "next-auth/client";
+import { getSession } from "next-auth/react";
 import TournamentRequest from "../../components/Forms/TournamentRequest";
 import EditTournament from "../../components/Forms/EditTournament";
 import { useState } from "react";
