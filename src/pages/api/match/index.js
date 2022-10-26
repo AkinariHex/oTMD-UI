@@ -18,6 +18,8 @@ function runMiddleware(req, res, fn) {
 }
 
 export default async function handler(req, res) {
+  await runMiddleware(req, res, cors);
+
   const match = async (body, channel) => {
     var results = "";
     var Data = "";
@@ -127,8 +129,6 @@ export default async function handler(req, res) {
     return;
   };
 
-  await runMiddleware(req, res, cors);
-
   if (req.method === "POST") {
     const body = JSON.parse(req.body);
 
@@ -146,7 +146,7 @@ export default async function handler(req, res) {
     }
 
     if (body.stage === "Qualifiers") {
-      supabase.from("matches").insert({
+      await supabase.from("matches").insert({
         owner: body.me,
         matchID: body.matchID,
         matchType: body.matchType,
@@ -158,7 +158,7 @@ export default async function handler(req, res) {
         startTime: body.matchStart,
       });
     } else {
-      supabase.from("matches").insert({
+      await supabase.from("matches").insert({
         owner: body.me,
         matchID: body.matchID,
         matchType: body.matchType,
@@ -176,7 +176,7 @@ export default async function handler(req, res) {
     data.discordChannelsMatch = JSON.parse(data.discordChannelsMatch);
 
     if (
-      data.sendMatchesDiscord === "true" &&
+      data.sendMatchesDiscord === true &&
       data.discordChannelsMatch.length > 0
     ) {
       data.discordChannelsMatch.forEach(async (channel) => {
