@@ -20,20 +20,18 @@ function runMiddleware(req, res, fn) {
 export default async function handler(req, res) {
   await runMiddleware(req, res, cors);
 
-  if (req.method === "POST") {
-    const body = JSON.parse(req.body);
-
+  if (req.method === "GET" && req.query.api) {
     const { data, err } = await supabase
       .from("users")
       .select("ID")
-      .eq("api_key", body.webapikey);
+      .eq("api_key", req.query.api);
 
     if (err) return res.status(404).json({ error: "Wrong apikey!" });
 
     if (data.length < 1)
       return res.status(404).json({ error: "Wrong apikey!" });
 
-    return res.status(200).json(data[0]);
+    return res.status(200).json({ user: data[0].ID });
   }
 
   return res.status(404).json({ error: "invalid method" });
