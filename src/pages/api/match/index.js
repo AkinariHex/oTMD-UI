@@ -173,11 +173,13 @@ export default async function handler(req, res) {
       });
     }
 
-    var { sendMatchesDiscord, discordChannelsMatch } = data;
-    discordChannelsMatch = JSON.parse(discordChannelsMatch);
+    data.discordChannelsMatch = JSON.parse(data.discordChannelsMatch);
 
-    if (sendMatchesDiscord === "true" && discordChannelsMatch.length > 0) {
-      discordChannelsMatch.forEach(async (channel) => {
+    if (
+      data.sendMatchesDiscord === "true" &&
+      data.discordChannelsMatch.length > 0
+    ) {
+      data.discordChannelsMatch.forEach(async (channel) => {
         await match(body, channel);
       });
       return res.status(200).json({ status: "done" });
