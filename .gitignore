@@ -37,3 +37,5 @@ yarn-error.log*
 # folder
 src/pages/schedule/
 JSON Examples/
+src/pages/api/socketio/
+src/pages/api/osu/

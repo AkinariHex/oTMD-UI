@@ -1,6 +1,5 @@
-import Airtable from "airtable";
 import Cors from "cors";
-import { v4 as uuidv4 } from "uuid";
+import supabase from "../../../config/supabaseClient";
 
 const cors = Cors({
   methods: ["POST"],
@@ -129,128 +128,67 @@ export default async function handler(req, res) {
   };
 
   await runMiddleware(req, res, cors);
-  const base = new Airtable({ apiKey: process.env.AIRTABLE_APIKEY }).base(
-    process.env.AIRTABLE_BASE
-  );
 
   if (req.method === "POST") {
     const body = JSON.parse(req.body);
-    base("Users")
-      .select({
-        filterByFormula: `IF({Apikey} = '${body.webapikey}' , TRUE())`,
-        view: "Grid view",
-        pageSize: 1,
-      })
-      .firstPage(function page(err, records) {
-        if (err) {
-          console.error(err);
-          return;
-        }
-        if (records.length !== 0) {
-          if (body.stage == "Qualifiers") {
-            base("Matches").create(
-              [
-                {
-                  fields: {
-                    UUID: uuidv4(),
-                    Owner: body.me,
-                    MatchID: body.matchID,
-                    MatchType: body.matchType,
-                    Stage: body.stage,
-                    Tournament: JSON.stringify(body?.tournament),
-                    Player: JSON.stringify(body?.player),
-                    Scores: JSON.stringify(body?.scores),
-                    TotalMaps: body.totalMaps,
-                    StartTime: body.matchStart,
-                  },
-                },
-              ],
-              function (err, records) {
-                if (err) {
-                  console.error(err);
-                  return res.status(404).json({ error: err });
-                }
-              }
-            );
-          } else {
-            base("Matches").create(
-              [
-                {
-                  fields: {
-                    UUID: uuidv4(),
-                    Owner: body.me,
-                    MatchID: body.matchID,
-                    MatchType: body.matchType,
-                    Stage: body.stage,
-                    BestOF: body.bestOF,
-                    Warmups: body.warmups,
-                    Tournament: JSON.stringify(body?.tournament),
-                    Players: JSON.stringify(body?.players),
-                    Teams: JSON.stringify(body?.teams),
-                    Scores: JSON.stringify(body?.scores),
-                    StartTime: body.matchStart,
-                  },
-                },
-              ],
-              function (err, records) {
-                if (err) {
-                  console.error(err);
-                  return res.status(404).json({ error: err });
-                }
-              }
-            );
-          }
 
-          var { SendMatchesDiscord, DiscordChannelsMatch } = records[0].fields;
-          DiscordChannelsMatch = JSON.parse(DiscordChannelsMatch);
+    const { data, err } = await supabase
+      .from("users")
+      .select("sendMatchesDiscord,discordChannelsMatch")
+      .eq("api_key", body.webapikey);
 
-          if (
-            SendMatchesDiscord === "true" &&
-            DiscordChannelsMatch.length > 0
-          ) {
-            DiscordChannelsMatch.forEach(async (channel) => {
-              await match(body, channel);
-            });
-            return res.status(200).json({ status: "done" });
-          } else {
-            return res
-              .status(404)
-              .send({ error: "You haven't enabled the Discord Webhooks" });
-          }
-        } else {
-          return res.status(404).json({ message: "Wrong apikey!" });
-        }
+    if (err) {
+      return res.status(404).send(err);
+    }
+
+    if (data.length < 1) {
+      return res.status(404).json({ message: "Wrong apikey!" });
+    }
+
+    if (body.stage === "Qualifiers") {
+      supabase.from("matches").insert({
+        owner: body.me,
+        matchID: body.matchID,
+        matchType: body.matchType,
+        stage: body.stage,
+        tournament: JSON.stringify(body?.tournament),
+        player: JSON.stringify(body?.player),
+        scores: JSON.stringify(body?.scores),
+        totalMaps: body.totalMaps,
+        startTime: body.matchStart,
       });
+    } else {
+      supabase.from("matches").insert({
+        owner: body.me,
+        matchID: body.matchID,
+        matchType: body.matchType,
+        stage: body.stage,
+        bestOF: body.bestOF,
+        warmups: body.warmups,
+        tournament: JSON.stringify(body?.tournament),
+        players: JSON.stringify(body?.players),
+        teams: JSON.stringify(body?.teams),
+        scores: JSON.stringify(body?.scores),
+        startTime: body.matchStart,
+      });
+    }
+
+    var { sendMatchesDiscord, discordChannelsMatch } = data;
+    discordChannelsMatch = JSON.parse(discordChannelsMatch);
+
+    if (sendMatchesDiscord === "true" && discordChannelsMatch.length > 0) {
+      discordChannelsMatch.forEach(async (channel) => {
+        await match(body, channel);
+      });
+      return res.status(200).json({ status: "done" });
+    } else {
+      return res
+        .status(404)
+        .send({ error: "You haven't enabled the Discord Webhooks" });
+    }
   }
+  return res.status(404).json({ error: "invalid method" });
 }
-
-/* const qualifiers = async (body, channel) => {
-  let Data = {
-    embeds: [
-      {
-        author: {
-          name: `${body.tournament.acronym} ${
-            body.tournament.name !== "" ? `- ${body.tournament.name}` : ""
-          }`,
-          url: `https://osu.ppy.sh/community/matches/${body.matchID}`,
-          icon_url: `https://akinariosu.s-ul.eu/f72xTlsv`,
-        },
-        title: ``,
-        url: `https://osu.ppy.sh/community/matches/${body.matchID}`,
-        description: `${results}\n\n${body.matchType} - ${body.stage} - BO${body.bestOF} - ${body.warmups} warmups`,
-        color: 0x4876b6,
-      },
-    ],
-  };
-
-  await fetch(channel.WebhookURL, {
-    method: "post",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(Data),
-  });
-}; */
 
 const getTimeSpent = (startTime) => {
   let startMatch = new Date(startTime);

@@ -1,5 +1,5 @@
-import Airtable from "airtable";
 import Cors from "cors";
+import supabase from "../../../config/supabaseClient";
 
 const cors = Cors({
   methods: ["POST", "GET"],
@@ -19,50 +19,22 @@ function runMiddleware(req, res, fn) {
 
 export default async function handler(req, res) {
   await runMiddleware(req, res, cors);
-  const base = new Airtable({ apiKey: process.env.AIRTABLE_APIKEY }).base(
-    process.env.AIRTABLE_BASE
-  );
 
   if (req.method === "POST") {
     const body = JSON.parse(req.body);
-    base("Users")
-      .select({
-        filterByFormula: `IF({Apikey} = '${body.webapikey}' , TRUE())`,
-        view: "Grid view",
-      })
-      .eachPage(
-        function page(records, fetchNextPage) {
-          if (records.length > 0) {
-            return res.status(200).json({ user: records[0].get("ID") });
-          } else {
-            return res.status(404).json({ error: "Wrong apikey!" });
-          }
-        },
-        function done(err) {
-          if (err) {
-            console.error(err);
-          }
-        }
-      );
-  } else if (req.method === "GET") {
-    base("Users")
-      .select({
-        filterByFormula: `IF({Apikey} = '${req.query.api}' , TRUE())`,
-        view: "Grid view",
-      })
-      .eachPage(
-        function page(records, fetchNextPage) {
-          if (records.length > 0) {
-            return res.status(200).json({ user: records[0].get("ID") });
-          } else {
-            return res.status(404).json({ error: "Wrong apikey!" });
-          }
-        },
-        function done(err) {
-          if (err) {
-            console.error(err);
-          }
-        }
-      );
+
+    const { data, err } = await supabase
+      .from("users")
+      .select("ID")
+      .eq("api_key", body.webapikey);
+
+    if (err) return res.status(404).json({ error: "Wrong apikey!" });
+
+    if (data.length < 1)
+      return res.status(404).json({ error: "Wrong apikey!" });
+
+    return res.status(200).json(data[0]);
   }
+
+  return res.status(404).json({ error: "invalid method" });
 }
