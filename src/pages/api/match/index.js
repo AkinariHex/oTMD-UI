@@ -173,13 +173,11 @@ export default async function handler(req, res) {
       });
     }
 
-    data.discordChannelsMatch = JSON.parse(data.discordChannelsMatch);
+    let sendMatches = data[0].sendMatchesDiscord;
+    let channels = JSON.parse(data[0].discordChannelsMatch);
 
-    if (
-      data.sendMatchesDiscord === true &&
-      data.discordChannelsMatch.length > 0
-    ) {
-      data.discordChannelsMatch.forEach(async (channel) => {
+    if (sendMatches === true && channels.length > 0) {
+      channels.forEach(async (channel) => {
         await match(body, channel);
       });
       return res.status(200).json({ status: "done" });
@@ -189,6 +187,7 @@ export default async function handler(req, res) {
         .send({ error: "You haven't enabled the Discord Webhooks" });
     }
   }
+
   return res.status(404).json({ error: "invalid method" });
 }
 
