@@ -37,31 +37,35 @@ export default async function handler(req, res) {
     }
 
     if (body.stage === "Qualifiers") {
-      await supabase.from("matches").insert({
-        owner: body.me,
-        matchID: body.matchID,
-        matchType: body.matchType,
-        stage: body.stage,
-        tournament: JSON.stringify(body?.tournament),
-        player: JSON.stringify(body?.player),
-        scores: JSON.stringify(body?.scores),
-        totalMaps: body.totalMaps,
-        startTime: body.matchStart,
-      });
+      await supabase.from("matches").insert([
+        {
+          owner: body.me,
+          matchID: body.matchID,
+          matchType: body.matchType,
+          stage: body.stage,
+          tournament: JSON.stringify(body?.tournament),
+          player: JSON.stringify(body?.player),
+          scores: JSON.stringify(body?.scores),
+          totalMaps: body.totalMaps,
+          startTime: body.matchStart,
+        },
+      ]);
     } else {
-      await supabase.from("matches").insert({
-        owner: body.me,
-        matchID: body.matchID,
-        matchType: body.matchType,
-        stage: body.stage,
-        bestOF: body.bestOF,
-        warmups: body.warmups,
-        tournament: JSON.stringify(body?.tournament),
-        players: JSON.stringify(body?.players),
-        teams: JSON.stringify(body?.teams),
-        scores: JSON.stringify(body?.scores),
-        startTime: body.matchStart,
-      });
+      await supabase.from("matches").insert([
+        {
+          owner: body.me,
+          matchID: body.matchID,
+          matchType: body.matchType,
+          stage: body.stage,
+          bestOF: body.bestOF,
+          warmups: body.warmups,
+          tournament: JSON.stringify(body?.tournament),
+          players: JSON.stringify(body?.players),
+          teams: JSON.stringify(body?.teams),
+          scores: JSON.stringify(body?.scores),
+          startTime: body.matchStart,
+        },
+      ]);
     }
 
     let sendMatches = data[0].sendMatchesDiscord;
@@ -69,7 +73,7 @@ export default async function handler(req, res) {
 
     if (sendMatches === true && channels.length > 0) {
       var results = "";
-      var Data = "";
+      var dataWebhook = "";
 
       /* If match is 1vs1 or teamVS */
       if (body.stage !== "Qualifiers") {
@@ -94,7 +98,7 @@ export default async function handler(req, res) {
                   : `${body.scores.team2} | ${body.teams[1]}`
               }** :blue_circle: :first_place:`;
 
-        Data = {
+        dataWebhook = {
           embeds: [
             {
               author: {
@@ -139,7 +143,7 @@ export default async function handler(req, res) {
           results += `${modstring} ${object.score}\n`;
         });
 
-        Data = {
+        dataWebhook = {
           embeds: [
             {
               author: {
@@ -164,26 +168,22 @@ export default async function handler(req, res) {
         };
       }
 
-      try {
-        await channels.forEach(async (channel) => {
+      await channels.forEach(async (channel) => {
+        try {
           await fetch(channel.WebhookURL, {
-            method: "post",
+            method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(Data),
+            body: JSON.stringify(dataWebhook),
           });
-        });
-      } catch (error) {
-        return console.log(error);
-      }
-
-      return res.status(200).json({ status: "done" });
-    } else {
-      return res
-        .status(404)
-        .send({ error: "You haven't enabled the Discord Webhooks" });
+        } catch (error) {
+          if (error) return res.status(404).json({ error });
+        }
+      });
     }
+
+    return res.status(200).json({ message: "saved in DB" });
   }
 
   return res.status(404).json({ error: "invalid method" });
