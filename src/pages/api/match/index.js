@@ -118,10 +118,8 @@ export default async function handler(req, res) {
             },
           ],
         };
-      }
-
-      /* If match is Qualifiers */
-      if (body.stage === "Qualifiers") {
+      } else {
+        /* If match is Qualifiers */
         var mods = {
           NM: "<:nomod:868095234217750558>",
           NF: "<:nofail:868095234230353960>",
@@ -166,15 +164,20 @@ export default async function handler(req, res) {
         };
       }
 
-      await channels.forEach(async (channel) => {
-        await fetch(channel.WebhookURL, {
-          method: "post",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(Data),
+      try {
+        await channels.forEach(async (channel) => {
+          await fetch(channel.WebhookURL, {
+            method: "post",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(Data),
+          });
         });
-      });
+      } catch (error) {
+        return console.log(error);
+      }
+
       return res.status(200).json({ status: "done" });
     } else {
       return res
