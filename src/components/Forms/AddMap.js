@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Field, Form } from "formik";
 import supabase from "../../config/supabaseClient";
 
@@ -6,6 +6,7 @@ function AddMap({
   token,
   teamID,
   activeStage,
+  setActiveStage,
   mappools,
   setNMList,
   NMList,
@@ -20,6 +21,19 @@ function AddMap({
   setTBList,
   TBList,
 }) {
+  const submitChangeStage = async (value) => {
+    const { data, err } = await supabase
+      .from("teams")
+      .update({
+        active_round: value,
+      })
+      .eq("UUID", teamID);
+
+    if (err) return console.log(err);
+
+    return setActiveStage(value);
+  };
+
   return (
     <Formik
       initialValues={{
@@ -105,6 +119,7 @@ function AddMap({
             break;
           }
         }
+        values.mapID = "";
       }}
     >
       <Form className="addMap">
@@ -116,6 +131,10 @@ function AddMap({
             className="stageDropdown"
             as="select"
             placeholder="Stage"
+            value={activeStage}
+            onChange={(e) => {
+              submitChangeStage(e.target.value);
+            }}
             required
           >
             <option value="qualifiers">Qualifiers</option>

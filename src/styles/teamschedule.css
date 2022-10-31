@@ -32,15 +32,16 @@
 
 .teamOverview .teamOverview_Members {
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: row wrap;
   width: auto;
   height: 100%;
   justify-content: center;
+  align-items: center;
 }
 
 .teamOverview .teamOverview_Members .teamOverview_Members_List {
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: row wrap;
   width: auto;
   height: 70%;
   gap: 5px;
@@ -49,16 +50,16 @@
 
 .teamOverview .teamOverview_Members .teamOverview_Members_List .item {
   display: flex;
-  flex-flow: row;
+  flex-flow: column;
   background-color: var(--team-member-bg-color);
-  padding: 5px 10px 5px 5px;
-  border-radius: 100vh;
-  gap: 6px;
-  font-weight: 300;
-  width: 115px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+  padding: 4px;
+  border-radius: 20px;
+  gap: 10px;
+  font-weight: 400;
+  width: 140px;
+  height: 140px;
+  align-items: center;
+  justify-content: center;
 }
 
 .teamOverview .teamOverview_Members .teamOverview_Members_List .item.captain {
@@ -66,9 +67,9 @@
 }
 
 .teamOverview .teamOverview_Members .teamOverview_Members_List .item img {
-  width: 25px;
-  height: 25px;
-  border-radius: 100vh;
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
 }
 
 .teamTabs .teamTabsBar {
@@ -98,6 +99,11 @@
 .teamTabs .teamTabsBar .teamTabsBarItem.react-tabs__tab--selected {
   background-color: var(--navbar-link-active-background-color);
   transition: 0.2s ease-in;
+}
+
+.teamTabs .teamTabsBar .teamTabsBarItem:focus-visible {
+  border: 0 transparent;
+  outline: 0;
 }
 
 .teamTabsContent .scoresTab {
@@ -203,10 +209,13 @@
 .teamTabsContent .scoresTab .mappool .item .image .mod {
   width: 100%;
   text-align: center;
-  border-radius: 0px 12px 0 0;
   font-weight: 500;
   font-size: 11pt;
   color: var(--mods-text-dark);
+}
+
+.teamTabsContent .scoresTab .mappool .item:nth-child(2) > .image .mod {
+  border-radius: 0px 12px 0 0 !important;
 }
 
 .teamTabsContent .scoresTab .mappool .item .image .mod.nm {
@@ -413,8 +422,9 @@
 .mappoolTab :is(input, select, button) {
   background-color: var(--navbar-color);
   padding: 10px 10px;
-  font-size: 12pt;
+  font-size: 11pt;
   font-weight: 500;
+  font-family: "Poppins";
   border-radius: 10px;
   align-self: center;
   cursor: pointer;

@@ -19,24 +19,14 @@ export default function Team({
   const [playerChange, setPlayerChange] = useState("");
   const [mapChange, setMapChange] = useState("");
 
-  const [mappoolNMList, setMappoolNMList] = useState(
-    mappools[team.active_round].nm
-  );
-  const [mappoolHDList, setMappoolHDList] = useState(
-    mappools[team.active_round].hd
-  );
-  const [mappoolHRList, setMappoolHRList] = useState(
-    mappools[team.active_round].hr
-  );
-  const [mappoolDTList, setMappoolDTList] = useState(
-    mappools[team.active_round].dt
-  );
-  const [mappoolFMList, setMappoolFMList] = useState(
-    mappools[team.active_round].fm
-  );
-  const [mappoolTBList, setMappoolTBList] = useState(
-    mappools[team.active_round].tb
-  );
+  const [activeStage, setActiveStage] = useState(team.active_round);
+
+  const [mappoolNMList, setMappoolNMList] = useState(mappools[activeStage].nm);
+  const [mappoolHDList, setMappoolHDList] = useState(mappools[activeStage].hd);
+  const [mappoolHRList, setMappoolHRList] = useState(mappools[activeStage].hr);
+  const [mappoolDTList, setMappoolDTList] = useState(mappools[activeStage].dt);
+  const [mappoolFMList, setMappoolFMList] = useState(mappools[activeStage].fm);
+  const [mappoolTBList, setMappoolTBList] = useState(mappools[activeStage].tb);
 
   async function submitScore(UUID, index, player, map) {
     let newScores = await scores;
@@ -66,6 +56,15 @@ export default function Team({
       return () => clearTimeout(timeOutId);
     }
   }, [value]);
+
+  useEffect(() => {
+    setMappoolNMList(mappools[activeStage].nm);
+    setMappoolHDList(mappools[activeStage].hd);
+    setMappoolHRList(mappools[activeStage].hr);
+    setMappoolDTList(mappools[activeStage].dt);
+    setMappoolFMList(mappools[activeStage].fm);
+    setMappoolTBList(mappools[activeStage].tb);
+  }, [activeStage]);
 
   function emptyScoresInput(index, player, map) {
     let scoreInput = {
@@ -281,7 +280,7 @@ export default function Team({
       </div>
       <Tabs className="teamTabs">
         <TabList className="teamTabsBar">
-          <Tab className="teamTabsBarItem">{team.active_round}</Tab>
+          <Tab className="teamTabsBarItem">{activeStage}</Tab>
           <Tab className="teamTabsBarItem">Availability</Tab>
           <Tab className="teamTabsBarItem">Players</Tab>
           <Tab className="teamTabsBarItem">Mappool</Tab>
@@ -1177,7 +1176,8 @@ export default function Team({
             <AddMap
               token={token}
               teamID={teamID}
-              activeStage={team.active_round}
+              activeStage={activeStage}
+              setActiveStage={setActiveStage}
               mappools={mappools}
               NMList={mappoolNMList}
               setNMList={setMappoolNMList}
