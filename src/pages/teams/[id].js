@@ -269,7 +269,9 @@ export default function Team({
                     src={`http://s.ppy.sh/a/${player.id}`}
                     alt="player image"
                   />
-                  <div className="teamOverview_Members_List_Item_Name">
+                  <div
+                    className={`teamOverview_Members_List_Item_Name ${player.status}`}
+                  >
                     {player.name}
                   </div>
                 </div>
@@ -629,7 +631,9 @@ export default function Team({
                                 )}`}
                                 type="text"
                                 placeholder="Average"
-                                value={Math.round(average)}
+                                value={Math.round(average).toLocaleString(
+                                  "en-US"
+                                )}
                                 readOnly
                               />
                             </div>

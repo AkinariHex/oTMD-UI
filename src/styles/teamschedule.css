@@ -64,6 +64,7 @@
 
 .teamOverview .teamOverview_Members .teamOverview_Members_List .item.captain {
   background-color: hsl(46, 53%, 50%, 0.3);
+  color: #eee6c8;
 }
 
 .teamOverview .teamOverview_Members .teamOverview_Members_List .item img {
@@ -344,6 +345,11 @@
   display: flex;
 }
 
+.teamTabsContent .scoresTab .players .player .scores .score :is(input, button) {
+  text-align: left;
+  font-size: 9pt;
+}
+
 .teamTabsContent .scoresTab .players .player .vote.me {
   display: grid;
   grid-template-columns: 48.5% 48.5%;
@@ -363,6 +369,7 @@
   :is(.average, .scores .score, .vote)
   input::placeholder {
   color: var(--team-mappool-input-placeholder-color);
+  text-align: center;
 }
 
 .teamTabsContent
