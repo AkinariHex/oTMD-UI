@@ -1,5 +1,6 @@
 import { getSession } from "next-auth/react";
 import "../styles/styles.css";
+import "../styles/teamschedule.css";
 import Navbar from "../components/Navbar/Navbar";
 import Head from "next/head";
 
