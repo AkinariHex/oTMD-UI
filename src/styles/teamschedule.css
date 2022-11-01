@@ -111,8 +111,8 @@
   max-height: 38em;
   width: 95vw;
   display: grid;
-  grid-template-areas: "mappool players";
-  grid-template-columns: 600px auto;
+  grid-template-areas: "mappool players lineup";
+  grid-template-columns: 600px auto minmax(300px, 500px);
   margin: 15px auto 15px auto;
   background-color: var(--team-mappool-bg-color);
   border-radius: 15px;
@@ -132,10 +132,137 @@
   border-right: 1px solid var(--team-member-bg-color);
 }
 
+.teamTabsContent .scoresTab .lineup {
+  min-width: 300px;
+  width: 100%;
+  height: 100%;
+  grid-area: lineup;
+  display: flex;
+  flex-flow: column;
+  position: relative;
+  grid-column: auto;
+}
+
+.teamTabsContent .scoresTab .lineup .item {
+  display: grid;
+  grid-template-areas:
+    "suggested"
+    "definitive";
+  gap: 4px;
+  padding: 4px;
+  height: 122px;
+  border-bottom: 1px solid var(--team-member-bg-color);
+}
+
+.teamTabsContent .scoresTab .lineup .item :is(.suggested, .definitive) {
+  display: flex;
+  flex-flow: column;
+  background-color: var(--team-mappool-header-color);
+}
+
+.teamTabsContent .scoresTab .lineup .item :is(.suggested, .definitive) .header {
+  display: flex;
+  height: 25px;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #161d2b;
+  font-size: 8.5pt;
+  font-weight: 500;
+  padding: 4px 0;
+  cursor: default;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.teamTabsContent
+  .scoresTab
+  .lineup
+  .item
+  :is(.suggested, .definitive)
+  .players {
+  width: 100%;
+  height: 34px;
+  text-align: center;
+  background-color: transparent;
+  color: #c5cdd8;
+  font-family: "Poppins";
+  font-size: 8.2pt;
+  font-weight: 400;
+  justify-content: center;
+  align-items: center;
+  flex-flow: row;
+  display: flex;
+  cursor: default;
+  box-sizing: border-box;
+  gap: 0 4px;
+}
+
+.teamTabsContent
+  .scoresTab
+  .lineup
+  .item
+  :is(.suggested, .definitive)
+  .players
+  .player {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  gap: 0 4px;
+  height: auto;
+  background-color: #161d2b;
+  padding: 4px 6px;
+  border-radius: 50vh;
+}
+
+.players .player img {
+  height: 16px;
+  width: 16px;
+  border-radius: 50vh;
+}
+
+.teamTabsContent .scoresTab .lineup .item :is(.suggested, .definitive) input {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  text-align: center;
+  background-color: transparent;
+  color: var(--team-mappool-input-color);
+  font-family: "Poppins";
+  font-weight: 400;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  cursor: auto;
+}
+
+.teamTabsContent
+  .scoresTab
+  .lineup
+  .item
+  :is(.suggested, .definitive)
+  input:read-only {
+  cursor: default;
+}
+
+.teamTabsContent
+  .scoresTab
+  .lineup
+  .item
+  :is(.suggested, .definitive)
+  input:is(:focus, :focus-visible) {
+  outline: 0;
+  border: 0;
+}
+
 .teamTabsContent .scoresTab .players {
+  width: min-content;
   grid-area: players;
   display: grid;
-  grid-template-columns: repeat(8, minmax(140px, auto));
   grid-auto-columns: column;
 }
 
@@ -149,7 +276,7 @@
   overflow: hidden;
 }
 
-.teamTabsContent .scoresTab :is(.mappool, .players .player) .header {
+.teamTabsContent .scoresTab :is(.mappool, .players .player, .lineup) .header {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -158,9 +285,10 @@
   color: var(--navbar-text-color);
   padding: 5px 0;
   border-radius: 15px 0 0 0;
+  cursor: default;
 }
 
-.teamTabsContent .scoresTab .players .player .header {
+.teamTabsContent .scoresTab :is(.players .player, .lineup) .header {
   border-radius: 0 0 0 0;
 }
 

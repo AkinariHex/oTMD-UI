@@ -49,6 +49,7 @@ export default function Team({
     return;
   }
 
+  /* Delay 1.5s before saving a score */
   useEffect(() => {
     if (playerChange !== "" && mapChange !== "") {
       const timeOutId = setTimeout(() => {
@@ -59,6 +60,7 @@ export default function Team({
     }
   }, [value]);
 
+  /* Change active pool */
   useEffect(() => {
     setMappoolNMList(mappools[activeStage].nm);
     setMappoolHDList(mappools[activeStage].hd);
@@ -69,7 +71,7 @@ export default function Team({
   }, [activeStage]);
 
   /* DETECT CHANGES FROM DB */
-  useEffect(() => {
+  /* useEffect(() => {
     const channel = supabase.channel(`${team.UUID}`);
 
     channel.on(
@@ -92,7 +94,7 @@ export default function Team({
     });
 
     return () => channel.unsubscribe();
-  }, []);
+  }, []); */
 
   function emptyScoresInput(index, player, map) {
     let scoreInput = {
@@ -626,7 +628,12 @@ export default function Team({
                 }
               })}
             </div>
-            <div className="players">
+            <div
+              className="players"
+              style={{
+                gridTemplateColumns: `repeat(${players.length}, minmax(160px, 160px)`,
+              }}
+            >
               {players.map((player, index) => {
                 return (
                   <div className="player" key={index}>
@@ -1199,6 +1206,381 @@ export default function Team({
                     })}
                   </div>
                 );
+              })}
+            </div>
+            <div className="lineup">
+              <div className="header">Lineup</div>
+              {mappoolNMList.map((map, index) => {
+                if (map != undefined || map != null) {
+                  let order = [];
+
+                  Object.keys(scores).forEach((p) => {
+                    if (scores[p][map.beatmap_id] === undefined) {
+                      return order.push({ player: p, average: 0 });
+                    }
+
+                    let average = 0;
+                    let scoreSum = 0;
+
+                    scores[p][map.beatmap_id].map((score, index) => {
+                      score !== "" && (scoreSum += parseInt(score));
+                    });
+
+                    average = scoreSum / scores[p][map.beatmap_id].length;
+                    return order.push({
+                      player: players.find(({ id }) => id === Number(p)),
+                      average: average,
+                    });
+                  });
+                  order.sort((a, b) => b.average - a.average);
+                  order.length = 3;
+                  return (
+                    <div className="item" key={index}>
+                      <div className="suggested">
+                        <div className="header">Suggested</div>
+                        <div className="players">
+                          {order.map((p, index) => {
+                            if (p.average !== 0) {
+                              return (
+                                <div className="player" key={index}>
+                                  <img
+                                    src={`http://s.ppy.sh/a/${p.player.id}`}
+                                    alt=""
+                                  />
+                                  <span>{p.player.name}</span>
+                                </div>
+                              );
+                            }
+                          })}
+                        </div>
+                      </div>
+                      <div className="definitive">
+                        <div className="header">Definitive</div>
+                        <div className="players">
+                          {/* {map.lineup !== undefined && (
+                            <div className="player">
+                              <img
+                                src={`http://s.ppy.sh/a/${order[0].player.id}`}
+                                alt=""
+                              />
+                              <span>{order[0].player.name}</span>
+                            </div>
+                          )} */}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              })}
+              {mappoolHDList.map((map, index) => {
+                if (map != undefined || map != null) {
+                  let order = [];
+
+                  Object.keys(scores).forEach((p) => {
+                    if (scores[p][map.beatmap_id] === undefined) {
+                      return order.push({ player: p, average: 0 });
+                    }
+
+                    let average = 0;
+                    let scoreSum = 0;
+
+                    scores[p][map.beatmap_id].map((score, index) => {
+                      score !== "" && (scoreSum += parseInt(score));
+                    });
+
+                    average = scoreSum / scores[p][map.beatmap_id].length;
+                    return order.push({
+                      player: players.find(({ id }) => id === Number(p)),
+                      average: average,
+                    });
+                  });
+                  order.sort((a, b) => b.average - a.average);
+                  order.length = 3;
+                  return (
+                    <div className="item" key={index}>
+                      <div className="suggested">
+                        <div className="header">Suggested</div>
+                        <div className="players">
+                          {order.map((p, index) => {
+                            if (p.average !== 0) {
+                              return (
+                                <div className="player" key={index}>
+                                  <img
+                                    src={`http://s.ppy.sh/a/${p.player.id}`}
+                                    alt=""
+                                  />
+                                  <span>{p.player.name}</span>
+                                </div>
+                              );
+                            }
+                          })}
+                        </div>
+                      </div>
+                      <div className="definitive">
+                        <div className="header">Definitive</div>
+                        <div className="players">
+                          {/* {map.lineup !== undefined && (
+                            <div className="player">
+                              <img
+                                src={`http://s.ppy.sh/a/${order[0].player.id}`}
+                                alt=""
+                              />
+                              <span>{order[0].player.name}</span>
+                            </div>
+                          )} */}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              })}
+              {mappoolHRList.map((map, index) => {
+                if (map != undefined || map != null) {
+                  let order = [];
+
+                  Object.keys(scores).forEach((p) => {
+                    if (scores[p][map.beatmap_id] === undefined) {
+                      return order.push({ player: p, average: 0 });
+                    }
+
+                    let average = 0;
+                    let scoreSum = 0;
+
+                    scores[p][map.beatmap_id].map((score, index) => {
+                      score !== "" && (scoreSum += parseInt(score));
+                    });
+
+                    average = scoreSum / scores[p][map.beatmap_id].length;
+                    return order.push({
+                      player: players.find(({ id }) => id === Number(p)),
+                      average: average,
+                    });
+                  });
+                  order.sort((a, b) => b.average - a.average);
+                  order.length = 3;
+                  return (
+                    <div className="item" key={index}>
+                      <div className="suggested">
+                        <div className="header">Suggested</div>
+                        <div className="players">
+                          {order.map((p, index) => {
+                            if (p.average !== 0) {
+                              return (
+                                <div className="player" key={index}>
+                                  <img
+                                    src={`http://s.ppy.sh/a/${p.player.id}`}
+                                    alt=""
+                                  />
+                                  <span>{p.player.name}</span>
+                                </div>
+                              );
+                            }
+                          })}
+                        </div>
+                      </div>
+                      <div className="definitive">
+                        <div className="header">Definitive</div>
+                        <div className="players">
+                          {/* {map.lineup !== undefined && (
+                            <div className="player">
+                              <img
+                                src={`http://s.ppy.sh/a/${order[0].player.id}`}
+                                alt=""
+                              />
+                              <span>{order[0].player.name}</span>
+                            </div>
+                          )} */}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              })}
+              {mappoolDTList.map((map, index) => {
+                if (map != undefined || map != null) {
+                  let order = [];
+
+                  Object.keys(scores).forEach((p) => {
+                    if (scores[p][map.beatmap_id] === undefined) {
+                      return order.push({ player: p, average: 0 });
+                    }
+
+                    let average = 0;
+                    let scoreSum = 0;
+
+                    scores[p][map.beatmap_id].map((score, index) => {
+                      score !== "" && (scoreSum += parseInt(score));
+                    });
+
+                    average = scoreSum / scores[p][map.beatmap_id].length;
+                    return order.push({
+                      player: players.find(({ id }) => id === Number(p)),
+                      average: average,
+                    });
+                  });
+                  order.sort((a, b) => b.average - a.average);
+                  order.length = 3;
+                  return (
+                    <div className="item" key={index}>
+                      <div className="suggested">
+                        <div className="header">Suggested</div>
+                        <div className="players">
+                          {order.map((p, index) => {
+                            if (p.average !== 0) {
+                              return (
+                                <div className="player" key={index}>
+                                  <img
+                                    src={`http://s.ppy.sh/a/${p.player.id}`}
+                                    alt=""
+                                  />
+                                  <span>{p.player.name}</span>
+                                </div>
+                              );
+                            }
+                          })}
+                        </div>
+                      </div>
+                      <div className="definitive">
+                        <div className="header">Definitive</div>
+                        <div className="players">
+                          {/* {map.lineup !== undefined && (
+                            <div className="player">
+                              <img
+                                src={`http://s.ppy.sh/a/${order[0].player.id}`}
+                                alt=""
+                              />
+                              <span>{order[0].player.name}</span>
+                            </div>
+                          )} */}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              })}
+              {mappoolFMList.map((map, index) => {
+                if (map != undefined || map != null) {
+                  let order = [];
+
+                  Object.keys(scores).forEach((p) => {
+                    if (scores[p][map.beatmap_id] === undefined) {
+                      return order.push({ player: p, average: 0 });
+                    }
+
+                    let average = 0;
+                    let scoreSum = 0;
+
+                    scores[p][map.beatmap_id].map((score, index) => {
+                      score !== "" && (scoreSum += parseInt(score));
+                    });
+
+                    average = scoreSum / scores[p][map.beatmap_id].length;
+                    return order.push({
+                      player: players.find(({ id }) => id === Number(p)),
+                      average: average,
+                    });
+                  });
+                  order.sort((a, b) => b.average - a.average);
+                  order.length = 3;
+                  return (
+                    <div className="item" key={index}>
+                      <div className="suggested">
+                        <div className="header">Suggested</div>
+                        <div className="players">
+                          {order.map((p, index) => {
+                            if (p.average !== 0) {
+                              return (
+                                <div className="player" key={index}>
+                                  <img
+                                    src={`http://s.ppy.sh/a/${p.player.id}`}
+                                    alt=""
+                                  />
+                                  <span>{p.player.name}</span>
+                                </div>
+                              );
+                            }
+                          })}
+                        </div>
+                      </div>
+                      <div className="definitive">
+                        <div className="header">Definitive</div>
+                        <div className="players">
+                          {/* {map.lineup !== undefined && (
+                            <div className="player">
+                              <img
+                                src={`http://s.ppy.sh/a/${order[0].player.id}`}
+                                alt=""
+                              />
+                              <span>{order[0].player.name}</span>
+                            </div>
+                          )} */}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              })}
+              {mappoolTBList.map((map, index) => {
+                if (map != undefined || map != null) {
+                  let order = [];
+
+                  Object.keys(scores).forEach((p) => {
+                    if (scores[p][map.beatmap_id] === undefined) {
+                      return order.push({ player: p, average: 0 });
+                    }
+
+                    let average = 0;
+                    let scoreSum = 0;
+
+                    scores[p][map.beatmap_id].map((score, index) => {
+                      score !== "" && (scoreSum += parseInt(score));
+                    });
+
+                    average = scoreSum / scores[p][map.beatmap_id].length;
+                    return order.push({
+                      player: players.find(({ id }) => id === Number(p)),
+                      average: average,
+                    });
+                  });
+                  order.sort((a, b) => b.average - a.average);
+                  order.length = 3;
+                  return (
+                    <div className="item" key={index}>
+                      <div className="suggested">
+                        <div className="header">Suggested</div>
+                        <div className="players">
+                          {order.map((p, index) => {
+                            if (p.average !== 0) {
+                              return (
+                                <div className="player" key={index}>
+                                  <img
+                                    src={`http://s.ppy.sh/a/${p.player.id}`}
+                                    alt=""
+                                  />
+                                  <span>{p.player.name}</span>
+                                </div>
+                              );
+                            }
+                          })}
+                        </div>
+                      </div>
+                      <div className="definitive">
+                        <div className="header">Definitive</div>
+                        <div className="players">
+                          {/* {map.lineup !== undefined && (
+                            <div className="player">
+                              <img
+                                src={`http://s.ppy.sh/a/${order[0].player.id}`}
+                                alt=""
+                              />
+                              <span>{order[0].player.name}</span>
+                            </div>
+                          )} */}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
               })}
             </div>
           </TabPanel>
