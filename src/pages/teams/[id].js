@@ -11,7 +11,7 @@ export default function Team({
   team,
   players,
   mappools,
-  scores,
+  scoresData,
   teamID,
 }) {
   const [value, setValue] = useState(0);
@@ -28,8 +28,10 @@ export default function Team({
   const [mappoolFMList, setMappoolFMList] = useState(mappools[activeStage].fm);
   const [mappoolTBList, setMappoolTBList] = useState(mappools[activeStage].tb);
 
+  const [scores, setScores] = useState(scoresData);
+
   async function submitScore(UUID, index, player, map) {
-    let newScores = await scores;
+    let newScores = await scoresData;
     if (newScores[player][map] === undefined) {
       newScores[player][map] = [];
     }
@@ -52,7 +54,7 @@ export default function Team({
       const timeOutId = setTimeout(() => {
         console.log("before 1 second");
         return submitScore(team.UUID, indexToChange, playerChange, mapChange);
-      }, 1000);
+      }, 1500);
       return () => clearTimeout(timeOutId);
     }
   }, [value]);
@@ -65,6 +67,32 @@ export default function Team({
     setMappoolFMList(mappools[activeStage].fm);
     setMappoolTBList(mappools[activeStage].tb);
   }, [activeStage]);
+
+  /* DETECT CHANGES FROM DB */
+  useEffect(() => {
+    const channel = supabase.channel(`${team.UUID}`);
+
+    channel.on(
+      "postgres_changes",
+      {
+        event: "*",
+        schema: "public",
+        table: "teams",
+        filter: `UUID=eq.${team.UUID}`,
+      },
+      async (payload) => {
+        setScores(payload.new.scores.scores);
+      }
+    );
+
+    channel.subscribe(async (status) => {
+      if (status === "SUBSCRIBED") {
+        console.log(status);
+      }
+    });
+
+    return () => channel.unsubscribe();
+  }, []);
 
   function emptyScoresInput(index, player, map) {
     let scoreInput = {
@@ -82,6 +110,7 @@ export default function Team({
                 setIndexToChange(0);
                 setValue(e.target.value);
               }}
+              autoComplete={false}
             />
           </div>
           <div className="score">
@@ -96,6 +125,7 @@ export default function Team({
                 setIndexToChange(1);
                 setValue(e.target.value);
               }}
+              autoComplete={false}
             />
           </div>
           <div className="score">
@@ -110,6 +140,7 @@ export default function Team({
                 setIndexToChange(2);
                 setValue(e.target.value);
               }}
+              autoComplete={false}
             />
           </div>
           <div className="score">
@@ -124,6 +155,7 @@ export default function Team({
                 setIndexToChange(3);
                 setValue(e.target.value);
               }}
+              autoComplete={false}
             />
           </div>
         </>
@@ -142,6 +174,7 @@ export default function Team({
                 setIndexToChange(1);
                 setValue(e.target.value);
               }}
+              autoComplete={false}
             />
           </div>
           <div className="score">
@@ -156,6 +189,7 @@ export default function Team({
                 setIndexToChange(2);
                 setValue(e.target.value);
               }}
+              autoComplete={false}
             />
           </div>
           <div className="score">
@@ -170,6 +204,7 @@ export default function Team({
                 setIndexToChange(3);
                 setValue(e.target.value);
               }}
+              autoComplete={false}
             />
           </div>
         </>
@@ -188,6 +223,7 @@ export default function Team({
                 setIndexToChange(2);
                 setValue(e.target.value);
               }}
+              autoComplete={false}
             />
           </div>
           <div className="score">
@@ -202,6 +238,7 @@ export default function Team({
                 setIndexToChange(3);
                 setValue(e.target.value);
               }}
+              autoComplete={false}
             />
           </div>
         </>
@@ -220,6 +257,7 @@ export default function Team({
                 setIndexToChange(3);
                 setValue(e.target.value);
               }}
+              autoComplete={false}
             />
           </div>
         </>
@@ -1384,7 +1422,7 @@ export async function getServerSideProps(context) {
             team: teamData,
             players: newPlayers,
             mappools: newMappools,
-            scores: newScores,
+            scoresData: newScores,
             teamID: context.params.id,
           },
         };
