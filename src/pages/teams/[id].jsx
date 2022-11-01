@@ -71,7 +71,7 @@ export default function Team({
   }, [activeStage]);
 
   /* DETECT CHANGES FROM DB */
-  /* useEffect(() => {
+  useEffect(() => {
     const channel = supabase.channel(`${team.UUID}`);
 
     channel.on(
@@ -94,7 +94,7 @@ export default function Team({
     });
 
     return () => channel.unsubscribe();
-  }, []); */
+  }, []);
 
   function emptyScoresInput(index, player, map) {
     let scoreInput = {
@@ -327,7 +327,16 @@ export default function Team({
                   let seconds = map.total_length % 60;
 
                   return (
-                    <div className="item nm" key={index}>
+                    <div
+                      className="item nm"
+                      key={index}
+                      onClick={() =>
+                        window.open(
+                          `https://osu.ppy.sh/beatmapsets/${map.beatmapset_id}#osu/${map.beatmap_id}`,
+                          "MapWindow"
+                        )
+                      }
+                    >
                       <div className="image">
                         <div className="mod nm">NM{index + 1}</div>
                         <img
@@ -378,7 +387,16 @@ export default function Team({
                   let seconds = map.total_length % 60;
 
                   return (
-                    <div className="item hd" key={index}>
+                    <div
+                      className="item hd"
+                      key={index}
+                      onClick={() =>
+                        window.open(
+                          `https://osu.ppy.sh/beatmapsets/${map.beatmapset_id}#osu/${map.beatmap_id}`,
+                          "MapWindow"
+                        )
+                      }
+                    >
                       <div className="image">
                         <div className="mod hd">HD{index + 1}</div>
                         <img
@@ -429,7 +447,16 @@ export default function Team({
                   let seconds = map.total_length % 60;
 
                   return (
-                    <div className="item hr" key={index}>
+                    <div
+                      className="item hr"
+                      key={index}
+                      onClick={() =>
+                        window.open(
+                          `https://osu.ppy.sh/beatmapsets/${map.beatmapset_id}#osu/${map.beatmap_id}`,
+                          "MapWindow"
+                        )
+                      }
+                    >
                       <div className="image">
                         <div className="mod hr">HR{index + 1}</div>
                         <img
@@ -480,7 +507,16 @@ export default function Team({
                   let seconds = map.total_length % 60;
 
                   return (
-                    <div className="item dt" key={index}>
+                    <div
+                      className="item dt"
+                      key={index}
+                      onClick={() =>
+                        window.open(
+                          `https://osu.ppy.sh/beatmapsets/${map.beatmapset_id}#osu/${map.beatmap_id}`,
+                          "MapWindow"
+                        )
+                      }
+                    >
                       <div className="image">
                         <div className="mod dt">DT{index + 1}</div>
                         <img
@@ -531,7 +567,16 @@ export default function Team({
                   let seconds = map.total_length % 60;
 
                   return (
-                    <div className="item fm" key={index}>
+                    <div
+                      className="item fm"
+                      key={index}
+                      onClick={() =>
+                        window.open(
+                          `https://osu.ppy.sh/beatmapsets/${map.beatmapset_id}#osu/${map.beatmap_id}`,
+                          "MapWindow"
+                        )
+                      }
+                    >
                       <div className="image">
                         <div className="mod fm">FM{index + 1}</div>
                         <img
@@ -582,7 +627,16 @@ export default function Team({
                   let seconds = map.total_length % 60;
 
                   return (
-                    <div className="item tb" key={index}>
+                    <div
+                      className="item tb"
+                      key={index}
+                      onClick={() =>
+                        window.open(
+                          `https://osu.ppy.sh/beatmapsets/${map.beatmapset_id}#osu/${map.beatmap_id}`,
+                          "MapWindow"
+                        )
+                      }
+                    >
                       <div className="image">
                         <div className="mod tb">TB{index + 1}</div>
                         <img

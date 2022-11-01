@@ -298,6 +298,7 @@
   height: 130px;
   width: 100%;
   align-items: center;
+  cursor: default;
 }
 
 .teamTabsContent .scoresTab .mappool .item:not(:last-child) {
@@ -333,6 +334,7 @@
 .teamTabsContent .scoresTab .mappool .item .image {
   display: flex;
   flex-flow: column;
+  cursor: pointer;
 }
 
 .teamTabsContent .scoresTab .mappool .item .image .mod {
@@ -406,7 +408,7 @@
   flex-flow: column;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 21px 0 0 10px;
+  padding: 21px 0 0 6px;
   color: var(--navbar-text-color);
 }
 
