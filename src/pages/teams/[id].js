@@ -110,7 +110,6 @@ export default function Team({
                 setIndexToChange(0);
                 setValue(e.target.value);
               }}
-              autoComplete={false}
             />
           </div>
           <div className="score">
@@ -125,7 +124,6 @@ export default function Team({
                 setIndexToChange(1);
                 setValue(e.target.value);
               }}
-              autoComplete={false}
             />
           </div>
           <div className="score">
@@ -140,7 +138,6 @@ export default function Team({
                 setIndexToChange(2);
                 setValue(e.target.value);
               }}
-              autoComplete={false}
             />
           </div>
           <div className="score">
@@ -155,7 +152,6 @@ export default function Team({
                 setIndexToChange(3);
                 setValue(e.target.value);
               }}
-              autoComplete={false}
             />
           </div>
         </>
@@ -174,7 +170,6 @@ export default function Team({
                 setIndexToChange(1);
                 setValue(e.target.value);
               }}
-              autoComplete={false}
             />
           </div>
           <div className="score">
@@ -189,7 +184,6 @@ export default function Team({
                 setIndexToChange(2);
                 setValue(e.target.value);
               }}
-              autoComplete={false}
             />
           </div>
           <div className="score">
@@ -204,7 +198,6 @@ export default function Team({
                 setIndexToChange(3);
                 setValue(e.target.value);
               }}
-              autoComplete={false}
             />
           </div>
         </>
@@ -223,7 +216,6 @@ export default function Team({
                 setIndexToChange(2);
                 setValue(e.target.value);
               }}
-              autoComplete={false}
             />
           </div>
           <div className="score">
@@ -238,7 +230,6 @@ export default function Team({
                 setIndexToChange(3);
                 setValue(e.target.value);
               }}
-              autoComplete={false}
             />
           </div>
         </>
@@ -257,7 +248,6 @@ export default function Team({
                 setIndexToChange(3);
                 setValue(e.target.value);
               }}
-              autoComplete={false}
             />
           </div>
         </>
