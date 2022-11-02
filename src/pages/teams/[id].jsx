@@ -12,6 +12,7 @@ export default function Team({
   players,
   mappools,
   scoresData,
+  votes,
   teamID,
 }) {
   const [value, setValue] = useState(0);
@@ -21,17 +22,34 @@ export default function Team({
 
   const [activeStage, setActiveStage] = useState(team.active_round);
 
-  const [mappoolNMList, setMappoolNMList] = useState(mappools[activeStage].nm);
-  const [mappoolHDList, setMappoolHDList] = useState(mappools[activeStage].hd);
-  const [mappoolHRList, setMappoolHRList] = useState(mappools[activeStage].hr);
-  const [mappoolDTList, setMappoolDTList] = useState(mappools[activeStage].dt);
-  const [mappoolFMList, setMappoolFMList] = useState(mappools[activeStage].fm);
-  const [mappoolTBList, setMappoolTBList] = useState(mappools[activeStage].tb);
+  const [latestPools, setLatestPools] = useState(mappools);
+
+  const [mappoolNMList, setMappoolNMList] = useState(
+    latestPools[activeStage].nm
+  );
+  const [mappoolHDList, setMappoolHDList] = useState(
+    latestPools[activeStage].hd
+  );
+  const [mappoolHRList, setMappoolHRList] = useState(
+    latestPools[activeStage].hr
+  );
+  const [mappoolDTList, setMappoolDTList] = useState(
+    latestPools[activeStage].dt
+  );
+  const [mappoolFMList, setMappoolFMList] = useState(
+    latestPools[activeStage].fm
+  );
+  const [mappoolTBList, setMappoolTBList] = useState(
+    latestPools[activeStage].tb
+  );
 
   const [scores, setScores] = useState(scoresData);
+  const [nVotes, setNvotes] = useState(votes);
+
+  const [latestVote, setLatestVote] = useState(0);
 
   async function submitScore(UUID, index, player, map) {
-    let newScores = await scoresData;
+    let newScores = await scores;
     if (newScores[player][map] === undefined) {
       newScores[player][map] = [];
     }
@@ -49,25 +67,51 @@ export default function Team({
     return;
   }
 
+  async function submitVote(UUID, player, map) {
+    let newVotes = await nVotes;
+    if (newVotes[player][map] === undefined) {
+      newVotes[player][map] = [];
+    }
+    newVotes[player][map] = await latestVote;
+
+    const { data, err } = await supabase
+      .from("teams")
+      .update({
+        votes: JSON.stringify(newVotes),
+      })
+      .eq("UUID", UUID);
+
+    if (err) console.log(err);
+
+    return;
+  }
+
   /* Delay 1.5s before saving a score */
   useEffect(() => {
     if (playerChange !== "" && mapChange !== "") {
       const timeOutId = setTimeout(() => {
-        console.log("before 1 second");
         return submitScore(team.UUID, indexToChange, playerChange, mapChange);
       }, 1500);
       return () => clearTimeout(timeOutId);
     }
   }, [value]);
 
+  /* Delay 0.7s before saving a vote */
+  useEffect(() => {
+    const timeOutId = setTimeout(() => {
+      return submitVote(team.UUID, session.id, mapChange);
+    }, 700);
+    return () => clearTimeout(timeOutId);
+  }, [latestVote]);
+
   /* Change active pool */
   useEffect(() => {
-    setMappoolNMList(mappools[activeStage].nm);
-    setMappoolHDList(mappools[activeStage].hd);
-    setMappoolHRList(mappools[activeStage].hr);
-    setMappoolDTList(mappools[activeStage].dt);
-    setMappoolFMList(mappools[activeStage].fm);
-    setMappoolTBList(mappools[activeStage].tb);
+    setMappoolNMList(latestPools[activeStage].nm);
+    setMappoolHDList(latestPools[activeStage].hd);
+    setMappoolHRList(latestPools[activeStage].hr);
+    setMappoolDTList(latestPools[activeStage].dt);
+    setMappoolFMList(latestPools[activeStage].fm);
+    setMappoolTBList(latestPools[activeStage].tb);
   }, [activeStage]);
 
   /* DETECT CHANGES FROM DB */
@@ -83,7 +127,12 @@ export default function Team({
         filter: `UUID=eq.${team.UUID}`,
       },
       async (payload) => {
+        setActiveStage(payload.new.active_round);
+        if (payload.new.mappools) {
+          setLatestPools(payload.new.mappools);
+        }
         setScores(payload.new.scores.scores);
+        setNvotes(payload.new.votes);
       }
     );
 
@@ -282,6 +331,29 @@ export default function Team({
     return colorClass;
   };
 
+  const setVoteColor = (value) => {
+    let colorClass = "";
+    if (value < 2 && value) {
+      colorClass = "score-1";
+    }
+    if (value >= 4) {
+      colorClass = "score-2";
+    }
+    if (value >= 5) {
+      colorClass = "score-3";
+    }
+    if (value >= 6) {
+      colorClass = "score-4";
+    }
+    if (value >= 8) {
+      colorClass = "score-5";
+    }
+    if (value >= 9) {
+      colorClass = "score-6";
+    }
+    return colorClass;
+  };
+
   return (
     <>
       <div className="teamOverview">
@@ -294,7 +366,16 @@ export default function Team({
           <div className="teamOverview_Members_List">
             {players.map((player, index) => {
               return (
-                <div className={`item ${player.status}`} key={index}>
+                <div
+                  className={`item ${player.status}`}
+                  key={index}
+                  onClick={() =>
+                    window.open(
+                      `https://osu.ppy.sh/users/${player.id}`,
+                      "NewUserTab"
+                    )
+                  }
+                >
                   <img
                     src={`http://s.ppy.sh/a/${player.id}`}
                     alt="player image"
@@ -738,17 +819,12 @@ export default function Team({
                                           type="number"
                                           placeholder={`#${index + 1}`}
                                           defaultValue={score}
-                                          readOnly={
-                                            player.id === session.id
-                                              ? false
-                                              : true
-                                          }
+                                          readOnly={player.id !== session.id}
                                           onChange={(e) => {
                                             setMapChange(map.beatmap_id);
                                             setPlayerChange(player.id);
                                             setIndexToChange(index);
                                             setValue(e.target.value);
-                                            console.log(e.target.value);
                                           }}
                                         />
                                       </div>
@@ -771,18 +847,34 @@ export default function Team({
                             </div>
                             <div
                               className={`vote ${
-                                player.id === session.id ? "me" : ""
+                                player.id === session.id ? /* "me" */ "" : ""
                               }`}
                             >
-                              {player.id == session.id && (
+                              {/* {player.id == session.id && (
                                 <button id="scoreSubmit">
                                   <ImportCircle
                                     size="18"
                                     color="var(--team-mappool-input-placeholder-color)"
                                   />
                                 </button>
-                              )}
-                              <input type="text" placeholder="Vote" />
+                              )} */}
+                              <input
+                                className={`${setVoteColor(
+                                  nVotes[`${player.id}`][`${map.beatmap_id}`]
+                                )}`}
+                                type="number"
+                                placeholder="Vote"
+                                defaultValue={
+                                  nVotes[`${player.id}`][`${map.beatmap_id}`] ??
+                                  null
+                                }
+                                pattern={"^[0-9]+$"}
+                                readOnly={player.id !== session.id}
+                                onChange={(e) => {
+                                  setMapChange(map.beatmap_id);
+                                  setLatestVote(e.target.value);
+                                }}
+                              />
                             </div>
                           </div>
                         );
@@ -863,20 +955,24 @@ export default function Team({
                                     map.beatmap_id
                                   )}
                             </div>
-                            <div
-                              className={`vote ${
-                                player.id == session.id ? "me" : ""
-                              }`}
-                            >
-                              {player.id == session.id && (
-                                <button id="scoreSubmit">
-                                  <ImportCircle
-                                    size="18"
-                                    color="var(--team-mappool-input-placeholder-color)"
-                                  />
-                                </button>
-                              )}
-                              <input type="text" placeholder="Vote" />
+                            <div className={`vote`}>
+                              <input
+                                className={`${setVoteColor(
+                                  nVotes[`${player.id}`][`${map.beatmap_id}`]
+                                )}`}
+                                type="number"
+                                placeholder="Vote"
+                                defaultValue={
+                                  nVotes[`${player.id}`][`${map.beatmap_id}`] ??
+                                  null
+                                }
+                                pattern={"^[0-9]+$"}
+                                readOnly={player.id !== session.id}
+                                onChange={(e) => {
+                                  setMapChange(map.beatmap_id);
+                                  setLatestVote(e.target.value);
+                                }}
+                              />
                             </div>
                           </div>
                         );
@@ -957,20 +1053,24 @@ export default function Team({
                                     map.beatmap_id
                                   )}
                             </div>
-                            <div
-                              className={`vote ${
-                                player.id == session.id ? "me" : ""
-                              }`}
-                            >
-                              {player.id == session.id && (
-                                <button id="scoreSubmit">
-                                  <ImportCircle
-                                    size="18"
-                                    color="var(--team-mappool-input-placeholder-color)"
-                                  />
-                                </button>
-                              )}
-                              <input type="text" placeholder="Vote" />
+                            <div className={`vote`}>
+                              <input
+                                className={`${setVoteColor(
+                                  nVotes[`${player.id}`][`${map.beatmap_id}`]
+                                )}`}
+                                type="number"
+                                placeholder="Vote"
+                                defaultValue={
+                                  nVotes[`${player.id}`][`${map.beatmap_id}`] ??
+                                  null
+                                }
+                                pattern={"^[0-9]+$"}
+                                readOnly={player.id !== session.id}
+                                onChange={(e) => {
+                                  setMapChange(map.beatmap_id);
+                                  setLatestVote(e.target.value);
+                                }}
+                              />
                             </div>
                           </div>
                         );
@@ -1051,20 +1151,24 @@ export default function Team({
                                     map.beatmap_id
                                   )}
                             </div>
-                            <div
-                              className={`vote ${
-                                player.id == session.id ? "me" : ""
-                              }`}
-                            >
-                              {player.id == session.id && (
-                                <button id="scoreSubmit">
-                                  <ImportCircle
-                                    size="18"
-                                    color="var(--team-mappool-input-placeholder-color)"
-                                  />
-                                </button>
-                              )}
-                              <input type="text" placeholder="Vote" />
+                            <div className={`vote`}>
+                              <input
+                                className={`${setVoteColor(
+                                  nVotes[`${player.id}`][`${map.beatmap_id}`]
+                                )}`}
+                                type="number"
+                                placeholder="Vote"
+                                defaultValue={
+                                  nVotes[`${player.id}`][`${map.beatmap_id}`] ??
+                                  null
+                                }
+                                pattern={"^[0-9]+$"}
+                                readOnly={player.id !== session.id}
+                                onChange={(e) => {
+                                  setMapChange(map.beatmap_id);
+                                  setLatestVote(e.target.value);
+                                }}
+                              />
                             </div>
                           </div>
                         );
@@ -1147,18 +1251,34 @@ export default function Team({
                             </div>
                             <div
                               className={`vote ${
-                                player.id == session.id ? "me" : ""
+                                player.id === session.id ? /* "me" */ "" : ""
                               }`}
                             >
-                              {player.id == session.id && (
+                              {/* {player.id == session.id && (
                                 <button id="scoreSubmit">
                                   <ImportCircle
                                     size="18"
                                     color="var(--team-mappool-input-placeholder-color)"
                                   />
                                 </button>
-                              )}
-                              <input type="text" placeholder="Vote" />
+                              )} */}
+                              <input
+                                className={`${setVoteColor(
+                                  nVotes[`${player.id}`][`${map.beatmap_id}`]
+                                )}`}
+                                type="number"
+                                placeholder="Vote"
+                                defaultValue={
+                                  nVotes[`${player.id}`][`${map.beatmap_id}`] ??
+                                  null
+                                }
+                                pattern={"^[0-9]+$"}
+                                readOnly={player.id !== session.id}
+                                onChange={(e) => {
+                                  setMapChange(map.beatmap_id);
+                                  setLatestVote(e.target.value);
+                                }}
+                              />
                             </div>
                           </div>
                         );
@@ -1239,20 +1359,24 @@ export default function Team({
                                     map.beatmap_id
                                   )}
                             </div>
-                            <div
-                              className={`vote ${
-                                player.id == session.id ? "me" : ""
-                              }`}
-                            >
-                              {player.id == session.id && (
-                                <button id="scoreSubmit">
-                                  <ImportCircle
-                                    size="18"
-                                    color="var(--team-mappool-input-placeholder-color)"
-                                  />
-                                </button>
-                              )}
-                              <input type="text" placeholder="Vote" />
+                            <div className={`vote`}>
+                              <input
+                                className={`${setVoteColor(
+                                  nVotes[`${player.id}`][`${map.beatmap_id}`]
+                                )}`}
+                                type="number"
+                                placeholder="Vote"
+                                defaultValue={
+                                  nVotes[`${player.id}`][`${map.beatmap_id}`] ??
+                                  null
+                                }
+                                pattern={"^[0-9]+$"}
+                                readOnly={player.id !== session.id}
+                                onChange={(e) => {
+                                  setMapChange(map.beatmap_id);
+                                  setLatestVote(e.target.value);
+                                }}
+                              />
                             </div>
                           </div>
                         );
@@ -1646,7 +1770,7 @@ export default function Team({
               teamID={teamID}
               activeStage={activeStage}
               setActiveStage={setActiveStage}
-              mappools={mappools}
+              mappools={latestPools}
               NMList={mappoolNMList}
               setNMList={setMappoolNMList}
               HDList={mappoolHDList}
@@ -1808,7 +1932,7 @@ export async function getServerSideProps(context) {
           await supabase
             .from("teams")
             .select(
-              "UUID,image,name,tournament,players,mappools,scores,active_round"
+              "UUID,image,name,tournament,players,mappools,scores,active_round,votes"
             )
             .eq("UUID", id)
         ).data[0]
@@ -1831,6 +1955,8 @@ export async function getServerSideProps(context) {
   let newScores =
     session !== null ? await JSON.parse(teamData.scores).scores : [{}];
 
+  let newVotes = session !== null ? await JSON.parse(teamData.votes) : [{}];
+
   const returnProps =
     session === null ||
     teamData.id === null ||
@@ -1849,6 +1975,7 @@ export async function getServerSideProps(context) {
             players: newPlayers,
             mappools: newMappools,
             scoresData: newScores,
+            votes: newVotes,
             teamID: context.params.id,
           },
         };

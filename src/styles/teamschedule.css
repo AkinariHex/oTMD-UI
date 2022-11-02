@@ -477,7 +477,7 @@
 }
 
 .teamTabsContent .scoresTab .players .player .scores .score :is(input, button) {
-  text-align: left;
+  text-align: center;
   font-size: 9pt;
 }
 
