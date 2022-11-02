@@ -217,10 +217,73 @@
   border-radius: 50vh;
 }
 
-.players .player img {
+.teamTabsContent
+  .scoresTab
+  .lineup
+  .item
+  :is(.suggested, .definitive)
+  .players
+  .player
+  img {
   height: 16px;
   width: 16px;
   border-radius: 50vh;
+}
+
+.teamTabsContent
+  .scoresTab
+  .lineup
+  .item
+  :is(.suggested, .definitive)
+  .players
+  .player
+  span.mod {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.teamTabsContent
+  .scoresTab
+  .lineup
+  .item
+  :is(.suggested, .definitive)
+  .players
+  .player
+  span.mod.nm {
+  color: var(--mods-nm-bg);
+}
+
+.teamTabsContent
+  .scoresTab
+  .lineup
+  .item
+  :is(.suggested, .definitive)
+  .players
+  .player
+  span.mod.hd {
+  color: var(--mods-hd-bg);
+}
+
+.teamTabsContent
+  .scoresTab
+  .lineup
+  .item
+  :is(.suggested, .definitive)
+  .players
+  .player
+  span.mod.hr {
+  color: var(--mods-hr-bg);
+}
+
+.teamTabsContent
+  .scoresTab
+  .lineup
+  .item
+  :is(.suggested, .definitive)
+  .players
+  .player
+  span.mod.ez {
+  color: var(--mods-ez-bg);
 }
 
 .teamTabsContent .scoresTab .lineup .item :is(.suggested, .definitive) input {
@@ -460,7 +523,7 @@
   .players
   .player
   :is(.average, .scores .score, .vote)
-  :is(input, button) {
+  :is(input, button, select) {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -481,13 +544,43 @@
   font-size: 9pt;
 }
 
-.teamTabsContent .scoresTab .players .player .vote.me {
-  display: grid;
-  grid-template-columns: 48.5% 48.5%;
+.teamTabsContent .scoresTab .players .player .vote.freemod {
+  display: flex;
+  flex-flow: row;
   gap: 4px;
 }
 
-.teamTabsContent .scoresTab .players .player .vote.me button:hover {
+.teamTabsContent .scoresTab .players .player .vote.freemod select:disabled {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+.teamTabsContent
+  .scoresTab
+  .players
+  .player
+  .vote.freemod
+  select:disabled::-ms-expand {
+  display: none;
+}
+
+.vote.freemod select.hd {
+  background-color: var(--mods-hd-bg) !important;
+  color: rgba(0, 0, 0, 0.7) !important;
+  font-weight: 500 !important;
+}
+.vote.freemod select.hr {
+  background-color: var(--mods-hr-bg) !important;
+  color: rgba(0, 0, 0, 0.7) !important;
+  font-weight: 500 !important;
+}
+.vote.freemod select.ez {
+  background-color: var(--mods-ez-bg) !important;
+  color: rgba(0, 0, 0, 0.7) !important;
+  font-weight: 500 !important;
+}
+
+.teamTabsContent .scoresTab .players .player .vote.freemod button:hover {
   cursor: pointer;
   background-color: hsla(219, 40%, 8%);
   transition: all 0.2s ease-in-out;

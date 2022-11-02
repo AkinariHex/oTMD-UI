@@ -13,6 +13,7 @@ export default function Team({
   mappools,
   scoresData,
   votes,
+  map_mods,
   teamID,
 }) {
   const [value, setValue] = useState(0);
@@ -45,6 +46,7 @@ export default function Team({
 
   const [scores, setScores] = useState(scoresData);
   const [nVotes, setNvotes] = useState(votes);
+  const [nMapMods, setNmapMods] = useState(map_mods);
 
   const [latestVote, setLatestVote] = useState(0);
 
@@ -78,6 +80,25 @@ export default function Team({
       .from("teams")
       .update({
         votes: JSON.stringify(newVotes),
+      })
+      .eq("UUID", UUID);
+
+    if (err) console.log(err);
+
+    return;
+  }
+
+  async function submitMapMods(UUID, player, map, value) {
+    let newMapMods = await nMapMods;
+    if (newMapMods[player][map] === undefined) {
+      newMapMods[player][map] = [];
+    }
+    newMapMods[player][map] = value;
+
+    const { data, err } = await supabase
+      .from("teams")
+      .update({
+        map_mods: JSON.stringify(newMapMods),
       })
       .eq("UUID", UUID);
 
@@ -133,6 +154,7 @@ export default function Team({
         }
         setScores(payload.new.scores.scores);
         setNvotes(payload.new.votes);
+        setNmapMods(payload.new.map_mods);
       }
     );
 
@@ -168,7 +190,7 @@ export default function Team({
               type="number"
               placeholder="#2"
               defaultValue={""}
-              readOnly={player === session.id ? false : true}
+              readOnly
               onChange={(e) => {
                 setMapChange(map);
                 setPlayerChange(player);
@@ -182,7 +204,7 @@ export default function Team({
               type="number"
               placeholder="#3"
               defaultValue={""}
-              readOnly={player === session.id ? false : true}
+              readOnly
               onChange={(e) => {
                 setMapChange(map);
                 setPlayerChange(player);
@@ -196,7 +218,7 @@ export default function Team({
               type="number"
               placeholder="#4"
               defaultValue={""}
-              readOnly={player === session.id ? false : true}
+              readOnly
               onChange={(e) => {
                 setMapChange(map);
                 setPlayerChange(player);
@@ -228,7 +250,7 @@ export default function Team({
               type="number"
               placeholder="#3"
               defaultValue={""}
-              readOnly={player === session.id ? false : true}
+              readOnly
               onChange={(e) => {
                 setMapChange(map);
                 setPlayerChange(player);
@@ -242,7 +264,7 @@ export default function Team({
               type="number"
               placeholder="#4"
               defaultValue={""}
-              readOnly={player === session.id ? false : true}
+              readOnly
               onChange={(e) => {
                 setMapChange(map);
                 setPlayerChange(player);
@@ -274,7 +296,7 @@ export default function Team({
               type="number"
               placeholder="#4"
               defaultValue={""}
-              readOnly={player === session.id ? false : true}
+              readOnly
               onChange={(e) => {
                 setMapChange(map);
                 setPlayerChange(player);
@@ -1249,19 +1271,32 @@ export default function Team({
                                     map.beatmap_id
                                   )}
                             </div>
-                            <div
-                              className={`vote ${
-                                player.id === session.id ? /* "me" */ "" : ""
-                              }`}
-                            >
-                              {/* {player.id == session.id && (
-                                <button id="scoreSubmit">
-                                  <ImportCircle
-                                    size="18"
-                                    color="var(--team-mappool-input-placeholder-color)"
-                                  />
-                                </button>
-                              )} */}
+                            <div className={`vote freemod`}>
+                              <select
+                                className={`${
+                                  nMapMods[`${player.id}`][`${map.beatmap_id}`]
+                                }`}
+                                name="mapMods"
+                                id={`mapMods${index}`}
+                                defaultValue={
+                                  nMapMods[`${player.id}`][`${map.beatmap_id}`]
+                                }
+                                placeholder="mod"
+                                disabled={player.id !== session.id}
+                                onChange={(e) => {
+                                  submitMapMods(
+                                    team.UUID,
+                                    player.id,
+                                    map.beatmap_id,
+                                    e.target.value
+                                  );
+                                }}
+                              >
+                                <option value="nm">NM</option>
+                                <option value="hd">HD</option>
+                                <option value="hr">HR</option>
+                                <option value="ez">EZ</option>
+                              </select>
                               <input
                                 className={`${setVoteColor(
                                   nVotes[`${player.id}`][`${map.beatmap_id}`]
@@ -1674,6 +1709,17 @@ export default function Team({
                                     alt=""
                                   />
                                   <span>{p.player.name}</span>
+                                  <span
+                                    className={`mod ${
+                                      nMapMods[`${p.player.id}`][
+                                        `${map.beatmap_id}`
+                                      ] ?? "nm"
+                                    }`}
+                                  >
+                                    {nMapMods[`${p.player.id}`][
+                                      `${map.beatmap_id}`
+                                    ] ?? "nm"}
+                                  </span>
                                 </div>
                               );
                             }
@@ -1932,7 +1978,7 @@ export async function getServerSideProps(context) {
           await supabase
             .from("teams")
             .select(
-              "UUID,image,name,tournament,players,mappools,scores,active_round,votes"
+              "UUID,image,name,tournament,players,mappools,scores,active_round,votes,map_mods"
             )
             .eq("UUID", id)
         ).data[0]
@@ -1957,6 +2003,9 @@ export async function getServerSideProps(context) {
 
   let newVotes = session !== null ? await JSON.parse(teamData.votes) : [{}];
 
+  let newMapMods =
+    session !== null ? await JSON.parse(teamData.map_mods) : [{}];
+
   const returnProps =
     session === null ||
     teamData.id === null ||
@@ -1976,6 +2025,7 @@ export async function getServerSideProps(context) {
             mappools: newMappools,
             scoresData: newScores,
             votes: newVotes,
+            map_mods: newMapMods,
             teamID: context.params.id,
           },
         };
