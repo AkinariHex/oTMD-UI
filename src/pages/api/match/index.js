@@ -99,6 +99,9 @@ export default async function handler(req, res) {
               }** :blue_circle: :first_place:`;
 
         dataWebhook = {
+          username: "osu! Tourney Match Scores",
+          avatar_url:
+            "https://cdn.discordapp.com/app-icons/802887045638651974/74dad70534bda1a1c2c13006680d9ff7.png",
           embeds: [
             {
               author: {
@@ -144,6 +147,9 @@ export default async function handler(req, res) {
         });
 
         dataWebhook = {
+          username: "osu! Tourney Match Scores",
+          avatar_url:
+            "https://cdn.discordapp.com/app-icons/802887045638651974/74dad70534bda1a1c2c13006680d9ff7.png",
           embeds: [
             {
               author: {
@@ -173,7 +179,7 @@ export default async function handler(req, res) {
           await fetch(channel.WebhookURL, {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
+              "Content-type": "application/json",
             },
             body: JSON.stringify(dataWebhook),
           });
