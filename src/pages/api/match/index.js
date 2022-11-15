@@ -20,7 +20,7 @@ function runMiddleware(req, res, fn) {
 export default async function handler(req, res) {
   await runMiddleware(req, res, cors);
 
-  if (req.method === "POST") {
+  if (req.method === "POST" && req.query.m === "db") {
     const body = JSON.parse(req.body);
 
     const { data, err } = await supabase
@@ -67,6 +67,16 @@ export default async function handler(req, res) {
         },
       ]);
     }
+    return res.status(200).json({ message: "saved in DB" });
+  }
+
+  if (req.method === "POST" && req.query.m === "discordWebhook") {
+    const body = JSON.parse(req.body);
+
+    const { data, err } = await supabase
+      .from("users")
+      .select("sendMatchesDiscord,discordChannelsMatch")
+      .eq("api_key", body.webapikey);
 
     let sendMatches = data[0].sendMatchesDiscord;
     let channels = JSON.parse(data[0].discordChannelsMatch);
@@ -99,9 +109,7 @@ export default async function handler(req, res) {
               }** :blue_circle: :first_place:`;
 
         dataWebhook = {
-          username: "osu! Tourney Match Scores",
-          avatar_url:
-            "https://cdn.discordapp.com/app-icons/802887045638651974/74dad70534bda1a1c2c13006680d9ff7.png",
+          content: "",
           embeds: [
             {
               author: {
@@ -111,22 +119,26 @@ export default async function handler(req, res) {
                 url: `https://osu.ppy.sh/community/matches/${body.matchID}`,
                 icon_url: `https://akinariosu.s-ul.eu/f72xTlsv`,
               },
-              /* title: `(${
-              body.matchType === "1vs1" ? body.players[0].username : body.teams[0]
-            }) vs (${
-              body.matchType === "1vs1" ? body.players[1].username : body.teams[1]
-            })`, */
+              title: `${body.tournament.acronym}: (${
+                body.matchType === "1vs1"
+                  ? body.players[0].username
+                  : body.teams[0]
+              }) vs (${
+                body.matchType === "1vs1"
+                  ? body.players[1].username
+                  : body.teams[1]
+              })`,
               url: `https://osu.ppy.sh/community/matches/${body.matchID}`,
               description: `${results}\n\n${body.matchType} - ${body.stage} - BO${body.bestOF} - ${body.warmups} warmups - [MP Link](https://osu.ppy.sh/community/matches/${body.matchID})`,
-              color: body.scores.winner === 1 ? 0xff4c4c : 0x4876b6,
+              color: body.scores.winner === 1 ? "16731212" : "4748982",
               footer: {
-                text: await getTimeSpent(body.matchStart),
+                text: getTimeSpent(body.matchStart),
               },
             },
           ],
+          attachments: [],
         };
-      } else {
-        /* If match is Qualifiers */
+      } else if (body.stage === "Qualifiers") {
         var mods = {
           NM: "<:nomod:868095234217750558>",
           NF: "<:nofail:868095234230353960>",
@@ -138,18 +150,15 @@ export default async function handler(req, res) {
           FL: "<:flashlight:868095233932533781>",
         };
 
-        await body.scores.list.forEach((object) => {
+        await body?.scores?.list.forEach((object) => {
           let modstring = "";
-          object.mods.forEach((mod) => {
+          object?.mods.forEach((mod) => {
             modstring += mods[mod];
           });
           results += `${modstring} ${object.score}\n`;
         });
 
         dataWebhook = {
-          username: "osu! Tourney Match Scores",
-          avatar_url:
-            "https://cdn.discordapp.com/app-icons/802887045638651974/74dad70534bda1a1c2c13006680d9ff7.png",
           embeds: [
             {
               author: {
@@ -162,34 +171,41 @@ export default async function handler(req, res) {
               title: `${body.player.username}'s Qualifier`,
               url: `https://osu.ppy.sh/community/matches/${body.matchID}`,
               description: `${results}\n**Average: ${body.scores.average}** - Played Maps: ${body.scores.list.length} - Total maps: ${body.totalMaps} - [MP Link](https://osu.ppy.sh/community/matches/${body.matchID})`,
-              color: 0x4876b6,
+              color: "4748982",
               thumbnail: {
                 url: `http://s.ppy.sh/a/${body.me}`,
               },
               footer: {
-                text: await getTimeSpent(body.matchStart),
+                text: getTimeSpent(body.matchStart),
               },
             },
           ],
+          attachments: [],
         };
       }
 
       await channels.forEach(async (channel) => {
-        try {
-          await fetch(channel.WebhookURL, {
-            method: "POST",
-            headers: {
-              "Content-type": "application/json",
-            },
-            body: JSON.stringify(dataWebhook),
+        await fetch(channel.WebhookURL, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataWebhook),
+        })
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error(); // Will take you to the `catch` below
+            }
+          })
+          .catch((error) => {
+            console.log(error);
           });
-        } catch (error) {
-          if (error) return res.status(404).json({ error });
-        }
       });
-    }
 
-    return res.status(200).json({ message: "saved in DB" });
+      return res.status(200).json({ message: "posted on Discord!" });
+    }
+    return res.status(404).json({ error: "no discord post" });
   }
 
   return res.status(404).json({ error: "invalid method" });
