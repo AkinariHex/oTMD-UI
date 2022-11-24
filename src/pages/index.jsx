@@ -200,8 +200,8 @@ export default function Event({ session, playersList }) {
         <div className="section">
           <div className="buttons">
             {session ? (
-              playersList.filter((player) => player.ID !== session.id).length >
-              0 ? (
+              playersList.filter((player) => player.users.ID === session.id)
+                .length > 0 ? (
                 <div className="button leave" onClick={leaveEvent}>
                   Leave the event
                 </div>
