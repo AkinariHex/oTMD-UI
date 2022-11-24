@@ -1,15 +1,8 @@
 import { getSession } from "next-auth/react";
 import "../styles/styles.css";
-import "../styles/exampleApp.css";
-import "../styles/tournaments.css";
-import "../styles/documentation.css";
-import "../styles/profile.css";
-import "../styles/settings.css";
 import "../styles/event.css";
-import "../styles/teamslist.css";
 import "../styles/teamschedule.css";
 import Navbar from "../components/Navbar/Navbar";
-import Footer from "../components/Footer/Footer";
 import Head from "next/head";
 import supabase from "../config/supabaseClient";
 
@@ -22,7 +15,6 @@ function MyApp({ Component, pageProps, session, userStatus }) {
       </Head>
       <Navbar session={session} userStatus={userStatus} />
       <Component {...pageProps} />
-      <Footer />
     </>
   );
 }
