@@ -1,86 +1,51 @@
 import NextAuth from "next-auth";
-import Airtable from "airtable";
+import supabase from "../../../config/supabaseClient";
 import { v4 as uuidv4 } from "uuid";
 
-const postUserDB = (profile) => {
-  const base = new Airtable({ apiKey: process.env.AIRTABLE_APIKEY }).base(
-    process.env.AIRTABLE_BASE
-  );
+const postUserDBsupabase = async (profile) => {
+  const { data, error } = await supabase.from("users").insert([
+    {
+      ID: profile.id,
+      username: profile.username,
+      UUID: uuidv4(),
+      permissions: "User",
+      discord: profile.discord,
+      twitter: profile.twitter,
+      country: JSON.stringify(profile.country),
+      discordChannelsMatch: "[]",
+      dateJoin: Math.floor(new Date().getTime() / 1000.0),
+    },
+  ]);
 
-  base("Users").create(
-    [
-      {
-        fields: {
-          ID: profile.id,
-          Username: profile.username,
-          UUID: uuidv4(),
-          Permissions: "User",
-          Discord: profile.discord,
-          Twitter: profile.twitter,
-          DiscordChannelsMatch: "[]",
-          DateJoin: Math.floor(new Date().getTime() / 1000.0),
-        },
-      },
-    ],
-    function (err, records) {
-      if (err) {
-        console.error(err);
-        return;
-      }
-    }
-  );
+  if (error) {
+    console.log(error);
+    return;
+  }
+  return;
 };
 
-const checkUserDB = (profile) => {
-  const base = new Airtable({ apiKey: process.env.AIRTABLE_APIKEY }).base(
-    process.env.AIRTABLE_BASE
-  );
+const checkUserDBsupabase = async (profile) => {
+  const player = await supabase.from("users").select("*").eq("ID", profile.id);
 
-  var mapped = "";
+  if (player.data && player.data.length > 0) {
+    const { data, error } = await supabase
+      .from("users")
+      .update({
+        username: profile.username,
+        UUID: player.data.UUID ?? uuidv4(),
+        country: JSON.stringify(profile.country),
+      })
+      .eq("ID", profile.id);
 
-  base("Users")
-    .select({
-      filterByFormula: `IF({ID} = '${profile.id}' , TRUE())`,
-      view: "Grid view",
-    })
-    .eachPage(
-      function page(records, fetchNextPage) {
-        mapped = records.map((record) => {
-          return record.fields;
-        });
-
-        if (mapped[0] === undefined || mapped === undefined) {
-          postUserDB(profile);
-        } else if (
-          mapped[0].UUID == "" ||
-          mapped[0].UUID == null ||
-          mapped[0].UUID == undefined
-        ) {
-          base("Users").update(
-            [
-              {
-                id: mapped[0].RecordID,
-                fields: {
-                  UUID: uuidv4(),
-                },
-              },
-            ],
-            function (err) {
-              if (err) {
-                console.error(err);
-                return;
-              }
-            }
-          );
-        }
-      },
-      function done(err) {
-        if (err) {
-          console.error(err);
-          return;
-        }
-      }
-    );
+    if (error) {
+      console.log(error);
+      return;
+    }
+    return;
+  }
+  if (!player.data.length) {
+    return postUserDBsupabase(profile);
+  }
 };
 
 export default NextAuth({
@@ -135,7 +100,7 @@ export default NextAuth({
         token.refresh_token = account.refresh_token;
 
         // Write user in database
-        checkUserDB(profile);
+        checkUserDBsupabase(profile);
       }
 
       return token;
