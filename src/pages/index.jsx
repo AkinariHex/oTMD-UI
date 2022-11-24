@@ -131,38 +131,10 @@ export default function Event({ session, playersList }) {
             </div>
             <div className="card">
               <div className="title">
-                <span>1vs1</span>
+                <span>TeamVS</span>
                 <span>19:00UTC</span>
               </div>
               <ul>
-                <li>
-                  <b>Top 1</b> will match against <b>Top 2</b>
-                </li>
-                <li>Best of 9</li>
-                <li>1 Ban</li>
-              </ul>
-              <div className="prize">
-                <span>Winner get:</span>
-                <img
-                  src="/img/badges/otmd_event_winner.png"
-                  alt="Winner badge"
-                />
-              </div>
-              <span className="infoMess">
-                Badge will be displayed on o!TMD profile and Akinari Website
-                profile
-              </span>
-            </div>
-            <div className="card">
-              <div className="title">
-                <span>TeamVS</span>
-                <span>20:00UTC</span>
-              </div>
-              <ul>
-                <li>
-                  The winner of <b>1v1</b> Match will start the draft for the
-                  TeamVS match
-                </li>
                 <li>
                   <b>Top 1</b> and <b>Top 2</b> will be the captains
                 </li>
@@ -187,6 +159,30 @@ export default function Event({ session, playersList }) {
               <span className="infoMess">
                 Badges will be displayed on o!TMD profiles and Akinari Website
                 profiles
+              </span>
+            </div>
+            <div className="card">
+              <div className="title">
+                <span>1vs1</span>
+                <span>20:00UTC</span>
+              </div>
+              <ul>
+                <li>
+                  <b>Top 1</b> will match against <b>Top 2</b>
+                </li>
+                <li>Best of 9</li>
+                <li>1 Ban</li>
+              </ul>
+              <div className="prize">
+                <span>Winner get:</span>
+                <img
+                  src="/img/badges/otmd_event_winner.png"
+                  alt="Winner badge"
+                />
+              </div>
+              <span className="infoMess">
+                Badge will be displayed on o!TMD profile and Akinari Website
+                profile
               </span>
             </div>
           </div>
@@ -289,7 +285,8 @@ export async function getServerSideProps(context) {
 
   let { data: playersList, error } = await supabase
     .from("event_players")
-    .select("users(ID,username,country),rank,points,average");
+    .select("users(ID,username,country),rank,points,average")
+    .order("rank", { ascending: true });
 
   return {
     props: {
