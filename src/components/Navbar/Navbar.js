@@ -85,7 +85,7 @@ export default function Navbar({ session, userStatus }) {
                         <span
                           style={{
                             backgroundColor:
-                              statusColor[userStatus.Permissions],
+                              statusColor[userStatus.permissions],
                           }}
                           id="userPermissions"
                         ></span>
@@ -115,18 +115,15 @@ export default function Navbar({ session, userStatus }) {
                     Profile
                   </div>
                 </Link>
-                {(userStatus.Permissions === "Tester" ||
-                  userStatus.Permissions === "Server") && (
-                  <Link href="/settings">
-                    <div
-                      className="item"
-                      onClick={() => setIsDropdownOpen(false)}
-                    >
-                      <Setting2 size="16" color="#d9e3f0" />
-                      Settings
-                    </div>
-                  </Link>
-                )}
+                <Link href="/settings">
+                  <div
+                    className="item"
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    <Setting2 size="16" color="#d9e3f0" />
+                    Settings
+                  </div>
+                </Link>
                 <div
                   className="item"
                   onClick={() => {
