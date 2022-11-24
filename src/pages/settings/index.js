@@ -3,32 +3,70 @@ import { getSession } from "next-auth/react";
 import { Copy, Eye, EyeSlash } from "iconsax-react";
 import { Tooltip } from "react-tippy";
 import "react-tippy/dist/tippy.css";
+import supabase from "../../config/supabaseClient";
+const generateApiKey = require("generate-api-key");
 
 export default function Settings({ session, userStatus }) {
   const [hideAPI, setHideAPI] = useState(true);
-  const [apikey, setApikey] = useState(userStatus.Apikey);
+  const [apikey, setApikey] = useState(userStatus.api_key);
 
   const [discordWebhook, setDiscordWebhook] = useState(
-    userStatus.SendMatchesDiscord === "false" ? false : true
+    userStatus.sendMatchesDiscord
   );
 
   function copyToClipboard() {
     navigator.clipboard.writeText(apikey);
   }
 
-  async function createApikey() {
-    let data = await fetch(`/api/generate`).then((res) => res.json());
-    if (data.status === "success") {
-      setApikey(data.apikey);
+  async function createApikey(id, uuid) {
+    /* Random string to generate a different key */
+    const randomString = (length = 32) => {
+      let chars =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:<>?,./";
+
+      let str = "";
+      for (let i = 0; i < length; i++) {
+        str += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+
+      return str;
+    };
+
+    let newAPI = generateApiKey({
+      method: "uuidv5",
+      name: randomString(),
+      namespace: uuid,
+      prefix: id,
+    });
+
+    const { data, err } = await supabase
+      .from("users")
+      .update({
+        api_key: newAPI,
+      })
+      .eq("ID", id);
+
+    if (err) {
+      return console.log(err);
     }
+
+    setApikey(newAPI);
   }
 
-  async function destroyApikey() {
-    let data = await fetch(`/api/destroy`).then((res) => res.json());
-    if (data.status === "success") {
-      setApikey("You haven't generated any apikey!");
-      setHideAPI(false);
+  async function destroyApikey(id) {
+    const { data, err } = await supabase
+      .from("users")
+      .update({
+        api_key: null,
+      })
+      .eq("ID", id);
+
+    if (err) {
+      return console.log("Error deleting apikey!");
     }
+
+    setApikey("You haven't generated any apikey!");
+    setHideAPI(false);
   }
 
   async function saveSendMatches(value) {
@@ -46,13 +84,14 @@ export default function Settings({ session, userStatus }) {
               type="text"
               placeholder="You haven't generated any apikey!"
               value={
-                apikey !== undefined && hideAPI
+                apikey !== undefined && apikey !== null && hideAPI
                   ? "*********************************************"
                   : apikey
               }
               disabled
             />
             {apikey !== undefined &&
+            apikey !== null &&
             apikey !== "You haven't generated any apikey!" ? (
               hideAPI ? (
                 <>
@@ -96,8 +135,12 @@ export default function Settings({ session, userStatus }) {
             )}
           </div>
           <div className="buttons">
-            <button onClick={() => createApikey()}>Generate Apikey</button>
-            <button onClick={() => destroyApikey()}>Destroy Apikey</button>
+            <button onClick={() => createApikey(session.id, userStatus.UUID)}>
+              Generate Apikey
+            </button>
+            <button onClick={() => destroyApikey(session.id)}>
+              Destroy Apikey
+            </button>
           </div>
         </div>
         <div className="section">
@@ -154,7 +197,7 @@ export default function Settings({ session, userStatus }) {
           </div>
           <div className="mintitle">Discord Channels</div>
           <div className="list">
-            {JSON.parse(userStatus.DiscordChannelsMatch).map(
+            {JSON.parse(userStatus.discordChannelsMatch).map(
               (channel, index) => {
                 return (
                   <div
@@ -187,14 +230,16 @@ export async function getServerSideProps(context) {
 
   const statusData =
     session !== null
-      ? await fetch(`${process.env.NEXTAUTH_URL}/api/users?u=${session.id}`)
-          .then((res) => res.json())
-          .then((res) => res[0])
+      ? await (
+          await supabase
+            .from("users")
+            .select("UUID,api_key,sendMatchesDiscord,discordChannelsMatch")
+            .eq("ID", session.id)
+        ).data[0]
       : [{}];
 
   const returnProps =
-    session === null ||
-    (statusData.Permissions !== "Server" && statusData.Permissions !== "Tester")
+    session === null
       ? {
           redirect: {
             destination: "/",

@@ -5,6 +5,7 @@ import { useState } from "react";
 import Collapsible from "react-collapsible";
 import { ExternalLink } from "react-external-link";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import supabase from "../../config/supabaseClient";
 
 export default function Account({
   session,
@@ -20,7 +21,7 @@ export default function Account({
     User: "rgb(20,20,20)",
   };
 
-  let joinDate = new Date(userStatus.DateJoin * 1000);
+  let joinDate = new Date(userStatus.dateJoin * 1000);
   let nowDate = new Date();
   var DateDiff = {
     inDays: function (d1, d2) {
@@ -57,10 +58,10 @@ export default function Account({
             <div className="profileName">
               {session.username}
               <span
-                style={{ backgroundColor: statusColor[userStatus.Permissions] }}
+                style={{ backgroundColor: statusColor[userStatus.permissions] }}
                 id="role"
               >
-                {userStatus.Permissions}
+                {userStatus.permissions}
               </span>
             </div>
             <div className="timeProfile">
@@ -68,20 +69,20 @@ export default function Account({
             </div>
           </div>
           <div className="userSocial">
-            {userStatus.Twitter && (
+            {userStatus.twitter && (
               <ExternalLink
                 id="twitter"
-                href={`https://twitter.com/${userStatus.Twitter}`}
+                href={`https://twitter.com/${userStatus.twitter}`}
               >
                 <i className="bx bxl-twitter"></i>
-                {userStatus.Twitter}
+                {userStatus.twitter}
               </ExternalLink>
             )}
-            {userStatus.Discord && (
-              <CopyToClipboard text={userStatus.Discord}>
+            {userStatus.discord && (
+              <CopyToClipboard text={userStatus.discord}>
                 <ExternalLink id="discord">
                   <i className="bx bxl-discord-alt"></i>
-                  {userStatus.Discord}
+                  {userStatus.discord}
                 </ExternalLink>
               </CopyToClipboard>
             )}
@@ -94,9 +95,9 @@ export default function Account({
                 <h2>Your Active Tournaments</h2>
                 <div className="actionCentre">
                   {mytournaments.map((tournament, index) => {
-                    if (tournament.Tourney_End) {
+                    if (tournament.tourney_end) {
                       let todayDate = new Date();
-                      let tDate = tournament.Tourney_End.split("/");
+                      let tDate = tournament.tourney_end.split("/");
                       let endDate = new Date(tDate[2], tDate[0] - 1, tDate[1]);
                       return (
                         todayDate < endDate && (
@@ -122,8 +123,8 @@ export default function Account({
                 </div>
               </div>
             )}
-            {(userStatus.Permissions === "Server" ||
-              userStatus.Permissions === "Tourney Manager") && (
+            {(userStatus.permissions === "Server" ||
+              userStatus.permissions === "Tourney Manager") && (
               <div className="actionCategory">
                 <h2>Tournaments Management</h2>
                 <div className="actionCentre">
@@ -172,11 +173,11 @@ export default function Account({
                             key={index}
                           >
                             <div className="text">
-                              <div id="acronym">{item.Acronym}</div>
-                              <div id="name">{item.Name}</div>
+                              <div id="acronym">{item.acronym}</div>
+                              <div id="name">{item.name}</div>
                             </div>
-                            <span className={`status ${item.Status}`}>
-                              <span>{item.Status}</span>
+                            <span className={`status ${item.status}`}>
+                              <span>{item.status}</span>
                             </span>
                           </ExternalLink>
                         );
@@ -221,23 +222,32 @@ export async function getServerSideProps(context) {
 
   const statusData =
     session !== null
-      ? await fetch(`${process.env.NEXTAUTH_URL}/api/users?u=${session.id}`)
-          .then((res) => res.json())
-          .then((res) => res[0])
+      ? await (
+          await supabase
+            .from("users")
+            .select("ID,UUID,permissions,twitter,discord,dateJoin")
+            .eq("ID", session.id)
+        ).data[0]
       : [{}];
 
   var requests =
     session !== null
-      ? await fetch(
-          `${process.env.NEXTAUTH_URL}/api/tournaments?u=${session.id}`
-        ).then((res) => res.json())
+      ? await (
+          await supabase
+            .from(`${process.env.NEXT_PUBLIC_DB_TOURNEY_REQUESTS}`)
+            .select("*")
+            .eq("requester", session.id)
+        ).data
       : [{}];
 
   var mytournaments =
     session !== null
-      ? await fetch(
-          `${process.env.NEXTAUTH_URL}/api/tournaments/me?u=${session.id}`
-        ).then((res) => res.json())
+      ? await (
+          await supabase
+            .from(`${process.env.NEXT_PUBLIC_DB_TOURNAMENTS}`)
+            .select("*")
+            .eq("host", session.id)
+        ).data
       : [{}];
 
   const returnProps =
