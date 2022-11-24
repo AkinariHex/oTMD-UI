@@ -8,6 +8,7 @@ import "../styles/event.css";
 import "../styles/teamschedule.css";
 import Navbar from "../components/Navbar/Navbar";
 import Head from "next/head";
+import Footer from "../components/Footer/Footer";
 import supabase from "../config/supabaseClient";
 
 function MyApp({ Component, pageProps, session, userStatus }) {
@@ -19,6 +20,7 @@ function MyApp({ Component, pageProps, session, userStatus }) {
       </Head>
       <Navbar session={session} userStatus={userStatus} />
       <Component {...pageProps} />
+      <Footer />
     </>
   );
 }
