@@ -1,5 +1,9 @@
 import { getSession } from "next-auth/react";
 import "../styles/styles.css";
+import "../styles/documentation.css";
+import "../styles/settings.css";
+import "../styles/tournaments.css";
+import "../styles/profile.css";
 import "../styles/event.css";
 import "../styles/teamschedule.css";
 import Navbar from "../components/Navbar/Navbar";

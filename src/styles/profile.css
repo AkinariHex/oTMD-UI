@@ -1,0 +1,474 @@
+/* ACCOUNT PAGE */
+
+.accountContainer {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  flex-wrap: wrap;
+}
+
+.accountContainer .profileInfo {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  position: relative;
+}
+
+.accountContainer .profileInfo .userMain {
+  margin: 0 auto;
+}
+
+.accountContainer .profileInfo .userSocial {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  margin: 10px auto 0 auto;
+  gap: 5px;
+}
+
+.accountContainer .profileInfo .userSocial a {
+  background-color: var(--action-div-color);
+  color: #70b7fd;
+  padding: 4px 0px;
+  width: 100%;
+  justify-content: center;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+
+.accountContainer .profileInfo .userSocial a:hover {
+  background-color: var(--action-div-hover-color);
+}
+
+.accountContainer .profileInfo .userSocial a i {
+  padding: 0 10px 0 0;
+}
+
+.accountContainer .profileInfo::after {
+  content: "";
+  width: 2px;
+  border-radius: 10px;
+  right: 0px;
+  height: 85vh;
+  background-color: rgba(255, 255, 255, 0.2);
+  position: absolute;
+  margin-top: 10.5vh;
+}
+
+.accountContainer .profileInfo img {
+  width: 180px;
+  border-radius: 100vh;
+  height: 180px;
+  margin: 10vh auto 0 auto;
+  border: 3px solid #c1c1c1;
+}
+
+.accountContainer .profileInfo .profileName {
+  color: #eee;
+  font-family: "Poppins";
+  font-size: 2em;
+  margin: 0 auto;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.accountContainer .profileInfo .profileName #role {
+  font-size: 10pt;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 100vh;
+  margin-left: 5px;
+}
+
+.accountContainer .profileInfo .timeProfile {
+  color: #eee;
+  font-family: "Poppins";
+  margin: 0 auto;
+  font-size: 1.05em;
+  text-align: center;
+}
+
+.accountContainer .profileActions {
+  display: flex;
+  width: 75vw;
+}
+
+.accountContainer .profileActions h2 {
+  text-transform: uppercase;
+  font-size: 12.5pt;
+  padding-left: 8px;
+  margin-bottom: 5px;
+  color: #eee;
+  font-weight: 700;
+}
+
+.accountContainer .profileActions .actionsContainer {
+  margin: 4vh 0 0 0;
+  width: 100%;
+  padding: 2vw;
+}
+
+/* .accountContainer .profileActions .actionsContainer .actionCentre *{
+      margin: 5px 0;
+  } */
+
+.actionCategory {
+  padding-right: 2vw;
+}
+
+.actionCentre {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.accountContainer .profileActions .actionsContainer .action {
+  background-color: var(--action-div-color);
+  height: 4em;
+  border-radius: 1.2em;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  color: #ddd;
+  font-size: 13pt;
+  transition: 0.1s ease-out;
+  padding: 0 1em;
+  justify-content: space-between;
+}
+
+.accountContainer .profileActions .actionsContainer .actionOpen {
+  background-color: var(--action-div-color);
+  height: 4em;
+  border-radius: 1.2em 1.2em 0 0;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  color: #ddd;
+  font-size: 13pt;
+  transition: 0.1s ease-out;
+  padding: 0 1em;
+  justify-content: space-between;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.2);
+}
+
+.accountContainer
+  .profileActions
+  .actionsContainer
+  :is(.action, .actionOpen):hover {
+  background-color: var(--action-div-hover-color);
+  color: #eee;
+  transition: 0.1s ease-in;
+}
+
+.accountContainer
+  .profileActions
+  .actionsContainer
+  :is(.action, .actionOpen, #motiondiv)
+  .tn {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  position: relative;
+}
+
+.accountContainer
+  .profileActions
+  .actionsContainer
+  :is(.action, .actionOpen, #motiondiv)
+  .text {
+  user-select: none;
+  cursor: default;
+}
+
+.accountContainer
+  .profileActions
+  .actionsContainer
+  :is(.action, .actionOpen, #motiondiv)
+  .number {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 0px 9px;
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100vh;
+  color: #ddd;
+}
+
+/* .accountContainer .profileActions .actionsContainer .action .number::before{
+      content: '';
+      width: 1.5px;
+      border-radius: 100vh;
+      height: 100%;
+      right: 2.1em;
+      background-color: #aaa;
+      position: absolute
+  } */
+
+.collapsibleBody {
+  width: 100%;
+  background-color: var(--action-div-color2);
+  border-radius: 0 0 1.2em 1.2em;
+  flex-direction: column;
+  max-height: 275px;
+  overflow-y: auto;
+}
+
+.collapsibleBody #noRequests {
+  text-align: center;
+  padding: 23px;
+  font-size: 20px;
+  color: #ddd;
+}
+
+.collapsibleBody .body #tourneyRequest {
+  display: flex;
+  flex-flow: column wrap;
+  padding: 1em;
+  gap: 5px;
+}
+
+.tourneyNameInfo #tourneyName,
+.info #tourneyURL {
+  display: flex;
+  width: 100%;
+  height: 40px;
+  font-size: 16pt;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 0;
+  font-family: "Poppins";
+  color: #ddd;
+  border-radius: 12px;
+  padding: 0;
+}
+
+.tourneyNameInfo #acronym,
+.info #host {
+  display: flex;
+  width: 50%;
+  height: 40px;
+  font-size: 16pt;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 0;
+  font-family: "Poppins";
+  color: #ddd;
+  border-radius: 12px;
+  padding: 0;
+}
+
+.collapsibleBody .body #tourneyRequest .tourneyNameInfo::placeholder,
+.collapsibleBody
+  .body
+  #tourneyRequest
+  :is(.tourneyNameInfo, .info)
+  input::placeholder {
+  color: #999;
+}
+
+.collapsibleBody .body #tourneyRequest :is(input:focus-visible, input:focus) {
+  outline: 0;
+  outline-offset: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.collapsibleBody .body #tourneyRequest :is(.tourneyNameInfo, .info) {
+  display: flex;
+  flex-flow: row;
+  gap: 5px;
+  width: 100%;
+}
+
+.collapsibleBody .body #tourneyRequest button {
+  width: 100%;
+  height: 40px;
+  font-size: 14pt;
+  text-align: center;
+  background-color: hsla(224, 35%, 50%, 0.35);
+  border: 0;
+  font-family: "Poppins";
+  color: #ddd;
+  border-radius: 12px;
+}
+
+.collapsibleBody .body #tourneyRequest button:hover {
+  background-color: hsla(224, 35%, 50%, 0.45);
+}
+
+.collapsibleBody .body .formSubmitted {
+  height: 162px;
+  display: flex;
+  justify-content: center;
+  flex-flow: column wrap;
+}
+
+.collapsibleBody .body .formSubmitted #text {
+  font-weight: 700;
+  font-size: 1.4em;
+  margin: 0 auto;
+  color: hsl(152, 50%, 50%);
+}
+
+.collapsibleBody .body .formSubmitted #subtext {
+  margin: -4px auto 0 auto;
+  color: hsl(152, 50%, 50%);
+  font-weight: 500;
+}
+
+.collapsibleBody .body .formSubmitted .formSuccessIcon {
+  width: 50px;
+  margin: 0 auto;
+  height: auto;
+}
+
+.collapsibleBody .item:not(:last-child) {
+  height: 2.5em;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  color: #ddd;
+  font-size: 11.5pt;
+  justify-content: space-between;
+  padding: 0 1em;
+  position: relative;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  user-select: none;
+  transition: all 0.1s;
+}
+
+.collapsibleBody :is(.item:hover, .item:last-child):hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.collapsibleBody .item:last-child {
+  height: 2.5em;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  color: #ddd;
+  font-size: 11.5pt;
+  justify-content: space-between;
+  padding: 0 1em;
+  border-radius: 0 0 1.2em 1.2em;
+  user-select: none;
+  transition: all 0.1s;
+}
+
+.collapsibleBody .item .text {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+}
+
+/* .collapsibleBody .item .text::before{
+      content: '';
+      width: 1px;
+      border-radius: 100vh;
+      height: 100%;
+      background-color: #aaa;
+      position: absolute
+  } */
+
+/* HOST TOURNAMENT EDIT */
+
+#tourneyEdit {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 8px;
+}
+
+#tourneyEdit input {
+  display: flex;
+  width: 100%;
+  height: 40px;
+  font-size: 16pt;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 0;
+  font-family: "Poppins";
+  color: #ddd;
+  border-radius: 12px;
+  padding: 0;
+}
+
+.multiplierStatus {
+  width: 100px !important;
+}
+
+#tourneyEdit :is(input:focus-visible, input:focus) {
+  outline: 0;
+  outline-offset: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+#tourneyEdit label {
+  color: #ddd;
+  margin: 0 0 2px 6px;
+  font-size: 11.2pt;
+}
+
+#tourneyEdit label span.specialInfo {
+  font-size: 10pt;
+  color: hsla(224, 85%, 80%);
+}
+
+#tourneyEdit button {
+  width: 100%;
+  height: 40px;
+  font-size: 14pt;
+  text-align: center;
+  background-color: hsla(224, 35%, 50%, 0.35);
+  border: 0;
+  font-family: "Poppins";
+  color: #ddd;
+  border-radius: 12px;
+}
+
+#tourneyEdit button:hover {
+  background-color: hsla(224, 35%, 50%, 0.45);
+}
+
+.settingsMultiplier {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 8px;
+}
+
+.tourneyEditName,
+.editSocials,
+.startEndDates {
+  display: flex;
+  flex-flow: row;
+  width: 100%;
+  gap: 8px;
+}
+
+.multipliers {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 8px;
+}
+
+.tourneyEditName .acronym,
+.tourneyEditName .name,
+.editSocials .forum,
+.editSocials .website,
+.startEndDates .start,
+.startEndDates .end,
+.multipliers .multiplier {
+  display: flex;
+  flex-flow: column wrap;
+  width: 100%;
+}

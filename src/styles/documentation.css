@@ -1,0 +1,62 @@
+/* DOCUMENTATION PAGE */
+
+.documentationContainer {
+  padding: 4em 0em 2em 0em;
+  color: #fff;
+  font-family: "Poppins";
+  text-align: center;
+}
+
+.documentationContainer img {
+  border-radius: 6px;
+}
+
+.documentationContainer .divider {
+  content: "";
+  width: 72%;
+  position: relative;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin: 0px auto 8px auto;
+  border-radius: 10px;
+}
+
+.documentationContainer span#header {
+  text-align: center;
+  font-weight: 700;
+  font-size: 3.8em;
+}
+
+.documentationContainer span.string {
+  font-weight: 700;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 1px 5px;
+  border-radius: 20px;
+}
+
+.documentationContainer span.string.link {
+  color: #70b7fd;
+}
+
+.documentationContainer span.string.link span {
+  color: rgb(240, 217, 89);
+}
+
+.documentationContainer .installation,
+.documentationContainer .fields,
+.documentationContainer .obs {
+  width: 70%;
+  margin: auto;
+  text-align: left;
+}
+
+.documentationContainer .installation a,
+.documentationContainer .fields a,
+.documentationContainer .obs a {
+  color: #70b7fd;
+}
+
+.documentationContainer h1,
+.documentationContainer h2 {
+  margin: 0px 0px -15px 0px;
+}

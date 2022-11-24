@@ -1,0 +1,295 @@
+/* ============================== SETTINGS PAGE =================================== */
+
+.settingsPage {
+  padding: 60px 0;
+  width: 100vw;
+  height: 100%;
+}
+
+.settingsContainer {
+  margin: 20px auto;
+  display: flex;
+  flex-flow: column;
+  width: 55em;
+  border-radius: 20px;
+  background-color: var(--action-div-color);
+  padding: 20px 30px;
+}
+
+.settingsContainer .title {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: 20px;
+  background-color: var(--settings-container-background-color);
+  color: #eee;
+  font-size: 18pt;
+  font-weight: 500;
+}
+
+.settingsContainer .section {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  color: #eee;
+  font-size: 18pt;
+  margin: 10px 0 0 0;
+}
+
+.settingsContainer .section:last-of-type {
+  margin: 10px 0;
+}
+
+.settingsContainer .section .subtitle {
+  font-size: 13pt;
+  color: #dadada;
+  font-weight: 400;
+  margin: 0 0 2px 0;
+}
+
+.settingsContainer .section .mintitle {
+  font-size: 12pt;
+  color: #eee;
+  font-weight: 300;
+  margin: 8px 0 4px 0;
+}
+
+.settingsContainer .section .description {
+  width: 165%;
+  font-size: 11pt;
+  color: #ddd;
+  font-weight: 300;
+  display: flex;
+  flex-direction: column;
+  padding: 5px 0 0 0;
+  gap: 4px;
+}
+
+.inviteBot {
+  font-size: 11.2pt;
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 2em;
+  border-radius: 4px;
+  color: #ddd;
+  cursor: pointer;
+  margin: 10px 0 6px 0;
+  background-color: hsl(219, 40%, 46%, 0.6);
+  transition: all 0.2s ease-out;
+}
+
+.inviteBot:hover {
+  background-color: hsl(219, 40%, 46%, 0.8);
+  transition: all 0.2s ease-in;
+}
+
+span.command {
+  background-color: #121b2b;
+  padding: 1px 8px;
+  border-radius: 6px;
+  color: #eee;
+  font-weight: 400;
+}
+
+.settingsContainer .section .field,
+.settingsContainer .section .buttons {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  gap: 4px;
+}
+
+.settingsContainer .section .field input {
+  width: 100%;
+  height: 1.8em;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 0;
+  color: #ddd;
+  background-color: hsl(219, 40%, 46%, 0.2);
+  font-family: "Poppins";
+  font-weight: 300;
+}
+
+.settingsContainer .section .field input::placeholder {
+  color: #ddd;
+}
+
+.settingsContainer .section .field span {
+  font-size: 12pt;
+  font-weight: 300;
+  color: #ddd;
+  padding: 0 0 0 2px;
+}
+
+.settingsContainer .section .field button {
+  min-width: 40px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 4px;
+  color: #dadada;
+  background-color: hsl(219, 40%, 46%, 0.6);
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+}
+
+.settingsContainer .section .field button:hover {
+  background-color: hsl(219, 40%, 46%, 0.8);
+  color: #eee;
+  transition: all 0.2s ease-in;
+}
+
+.settingsContainer .section .buttons button {
+  width: 100%;
+  height: 2.2em;
+  margin: 4px 0 0 0;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: 4px;
+  color: #dadada;
+  font-family: "Poppins";
+  transition: all 0.2s ease-out;
+  cursor: pointer;
+}
+
+.settingsContainer .section .buttons button:first-of-type {
+  background-color: hsl(219, 40%, 46%, 0.6);
+  font-weight: 400;
+}
+
+.settingsContainer .section .buttons button:first-of-type:hover {
+  background-color: hsl(219, 40%, 46%, 0.8);
+  color: #eee;
+  transition: all 0.2s ease-in;
+}
+
+.settingsContainer .section .buttons button:last-of-type {
+  background-color: rgba(164, 70, 70, 0.6);
+  font-weight: 400;
+}
+
+.settingsContainer .section .buttons button:last-of-type:hover {
+  background-color: rgba(164, 70, 70, 0.8);
+  font-weight: 400;
+  transition: all 0.2s ease-in;
+}
+
+.settingsContainer .section .list {
+  display: flex;
+  flex-flow: column;
+  gap: 4px;
+}
+
+.settingsContainer .section .list .item {
+  height: 2em;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  gap: 8px;
+  border-radius: 6px;
+  background-color: hsl(219, 40%, 36%, 0.35);
+  padding: 2px 12px;
+  font-size: 13.5pt;
+  color: #dedede;
+  user-select: none;
+  cursor: pointer;
+  transition: all 0.15s ease-out;
+}
+
+.settingsContainer .section .list .item:hover {
+  background-color: hsl(219, 40%, 36%, 0.5);
+  transition: all 0.15s ease-in;
+}
+
+.settingsContainer .section .list .item span {
+  color: rgba(255, 255, 255, 0.1);
+  font-weight: 100;
+}
+
+.settingsContainer .section .list .item .server {
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 60%;
+}
+
+.settingsContainer .section .list .item .channel {
+  font-size: 11.5pt;
+  font-weight: 300;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* SWITCH THING */
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22.4px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--site-background-color);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 15px;
+  width: 15px;
+  left: 3.5px;
+  bottom: 4px;
+  background-color: var(--action-div-color);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: hsl(219, 40%, 46%, 0.6);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px transparent;
+}
+
+input:checked + .slider:before {
+  background-color: hsl(219, 40%, 60%);
+  -webkit-transform: translateX(18px);
+  -ms-transform: translateX(18px);
+  transform: translateX(18px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
