@@ -1,9 +1,10 @@
-import { getSession } from "next-auth/react";
-import supabase from "../config/supabaseClient";
+import { ArrowDown } from 'iconsax-react';
+import { getSession } from 'next-auth/react';
+import supabase from '../config/supabaseClient';
 
 export default function Event({ session, playersList }) {
   const joinEvent = async () => {
-    await supabase.from("event_players").insert({
+    await supabase.from('event_players').insert({
       ID: session.id,
       rank: session.statistics.global_rank,
     });
@@ -11,9 +12,112 @@ export default function Event({ session, playersList }) {
   };
 
   const leaveEvent = async () => {
-    await supabase.from("event_players").delete().eq("ID", session?.id);
+    await supabase.from('event_players').delete().eq('ID', session?.id);
     return window.location.reload();
   };
+
+  let qualifiersPool = [
+    {
+      title: 'Hana - Sakura no Uta',
+      difficulty: 'Etude of Light and Sound',
+      mapper: 'jasontime12345',
+      starRating: '6.48',
+      beatmapID: '2576664',
+      beatmapsetID: '1239324',
+      mod: 'NM',
+      number: '1',
+    },
+    {
+      title: 'Ice - 02: Amber Wishes',
+      difficulty: "Shizuku's Extra",
+      mapper: 'FrenZ396',
+      starRating: '6.11',
+      beatmapID: '1714161',
+      beatmapsetID: '801704',
+      mod: 'NM',
+      number: '2',
+    },
+    {
+      title: 'Perfume - Daijobanai',
+      difficulty: 'Expert',
+      mapper: 'Leminine',
+      starRating: '6.13',
+      beatmapID: '966034',
+      beatmapsetID: '450272',
+      mod: 'NM',
+      number: '3',
+    },
+    {
+      title: 'Lime - 8bit Voyager',
+      difficulty: 'Journey',
+      mapper: 'Hazu-',
+      starRating: '6.12',
+      beatmapID: '2549327',
+      beatmapsetID: '1225869',
+      mod: 'NM',
+      number: '4',
+    },
+    {
+      title: 'Yousei Teikoku - Mischievous of Alice',
+      difficulty: 'Extreme',
+      mapper: 'Hazu-',
+      starRating: '6.28',
+      beatmapID: '1315116',
+      beatmapsetID: '623960',
+      mod: 'HD',
+      number: '1',
+    },
+    {
+      title: 'Hyadain - Rap de Chocobo',
+      difficulty: 'Insane',
+      mapper: 'mrowswares',
+      starRating: '5.28',
+      beatmapID: '2699675',
+      beatmapsetID: '1125851',
+      mod: 'HD',
+      number: '2',
+    },
+    {
+      title: 'TUYU - Daemonisch',
+      difficulty: "Guan's Extra",
+      mapper: 'Keqing',
+      starRating: '6.37',
+      beatmapID: '2973619',
+      beatmapsetID: '1443294',
+      mod: 'HR',
+      number: '1',
+    },
+    {
+      title: 'A.SAKA - Nanatsu Hiiragisuikou',
+      difficulty: "Pata-Mon's Hyper",
+      mapper: 'mrowswares',
+      starRating: '5.58',
+      beatmapID: '3396297',
+      beatmapsetID: '1650533',
+      mod: 'HR',
+      number: '2',
+    },
+    {
+      title: 'senya - Theta de Tsukisashite',
+      difficulty: 'Theta',
+      mapper: 'Serafeim',
+      starRating: '6.4',
+      beatmapID: '2801940',
+      beatmapsetID: '1353531',
+      mod: 'DT',
+      number: '1',
+    },
+    {
+      title: 'Hanatan - Kitsune no Yomeiri',
+      difficulty: 'Kitsuneko',
+      mapper: 'Ryafuka',
+      starRating: '6.48',
+      beatmapID: '144387',
+      beatmapsetID: '46070',
+      mod: 'DT',
+      number: '2',
+    },
+  ];
 
   return (
     <div className="homeContent">
@@ -33,25 +137,25 @@ export default function Event({ session, playersList }) {
             <button
               onClick={() =>
                 window.open(
-                  "https://discord.gg/XCw3SYuzvP?event=1045274987138928680",
-                  "Discord Invite"
+                  'https://discord.gg/XCw3SYuzvP?event=1045274987138928680',
+                  'Discord Invite'
                 )
               }
               id="discord"
             >
               <i
                 className="bx bxl-discord-alt"
-                style={{ fontSize: "20px" }}
+                style={{ fontSize: '20px' }}
               ></i>
               Join Discord Server
             </button>
             <button
               onClick={() =>
-                window.open("https://twitch.tv/akinari_live", "Twitch Channel")
+                window.open('https://twitch.tv/akinari_live', 'Twitch Channel')
               }
               id="twitch"
             >
-              <i className="bx bxl-twitch" style={{ fontSize: "20px" }}></i>
+              <i className="bx bxl-twitch" style={{ fontSize: '20px' }}></i>
               Twitch Channel
             </button>
           </div>
@@ -71,33 +175,33 @@ export default function Event({ session, playersList }) {
                   <br />
                   <a
                     href="https://discord.gg/XCw3SYuzvP?event=1045274987138928680"
-                    target={"_blank"}
-                    rel={"noreferrer"}
+                    target={'_blank'}
+                    rel={'noreferrer'}
                   >
                     Discord Server
-                  </a>{" "}
+                  </a>{' '}
                   to get updates about the event!
                 </li>
                 <li>
-                  This event will be entirely streamed on Twitch at{" "}
+                  This event will be entirely streamed on Twitch at{' '}
                   <a
                     href="https://twitch.tv/akinari_live"
-                    target={"_blank"}
-                    rel={"noreferrer"}
+                    target={'_blank'}
+                    rel={'noreferrer'}
                   >
                     akinari_live
                   </a>
                 </li>
                 <li>
                   Depending how many commentators I&apos;ll find, the stream
-                  could be in{" "}
+                  could be in{' '}
                   <b>
                     <i>Italian</i>
-                  </b>{" "}
-                  language, but feel free to join and message in{" "}
+                  </b>{' '}
+                  language, but feel free to join and message in{' '}
                   <b>
                     <i>English</i>
-                  </b>{" "}
+                  </b>{' '}
                   too!
                 </li>
                 <li>App will be released at the end of the stream</li>
@@ -189,8 +293,44 @@ export default function Event({ session, playersList }) {
         </div>
         <div className="section">
           <div className="subheader">Mappool</div>
-          <div className="message">
-            Mappool will be released on <b>5th January 2023</b>
+          <div className="stage">Qualifiers</div>
+          <div className="mappool">
+            {qualifiersPool.map((map) => {
+              return (
+                <div
+                  key={`${map.mod}${map.number}`}
+                  className={`map ${map.mod}`}
+                  style={{
+                    backgroundImage: `url('https://assets.ppy.sh/beatmaps/${map.beatmapsetID}/covers/cover.jpg')`,
+                  }}
+                >
+                  <div className="mod">
+                    {map.mod}
+                    {map.number}
+                  </div>
+                  <div
+                    className="info"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      window.open(
+                        `https://osu.ppy.sh/beatmapsets/${map.beatmapsetID}#osu/${map.beatmapID}`,
+                        'newtab'
+                      );
+                    }}
+                  >
+                    {map.title} [{map.difficulty}] ({map.mapper})
+                  </div>
+                  <div className="starRating">{map.starRating}*</div>
+                  <div className="beatmapID">{map.beatmapID}</div>
+                  <a
+                    className="downloadBTN"
+                    href={`https://osu.ppy.sh/beatmapsets/${map.beatmapsetID}/download`}
+                  >
+                    <ArrowDown size="22" />{' '}
+                  </a>
+                </div>
+              );
+            })}
           </div>
         </div>
         <div className="section">
@@ -232,7 +372,7 @@ export default function Event({ session, playersList }) {
                 return (
                   <tr
                     key={index}
-                    className={`${session?.id === user.users.ID ? "me" : ""}`}
+                    className={`${session?.id === user.users.ID ? 'me' : ''}`}
                   >
                     <td>#{index + 1}</td>
                     <td>
@@ -242,7 +382,7 @@ export default function Event({ session, playersList }) {
                         onClick={() =>
                           window.open(
                             `https://osu.ppy.sh/users/${user.users.ID}`,
-                            "User Window"
+                            'User Window'
                           )
                         }
                       />
@@ -253,7 +393,7 @@ export default function Event({ session, playersList }) {
                         onClick={() =>
                           window.open(
                             `https://osu.ppy.sh/users/${user.users.ID}`,
-                            "User Window"
+                            'User Window'
                           )
                         }
                       >
@@ -265,9 +405,9 @@ export default function Event({ session, playersList }) {
                         className="flag"
                       />
                     </td>
-                    <td>#{user.rank.toLocaleString("en-US")}</td>
+                    <td>#{user.rank.toLocaleString('en-US')}</td>
                     {/* <td>{user.points ?? 0}pt</td> */}
-                    <td>{user.average.toLocaleString("en-US") ?? 0}</td>
+                    <td>{user.average.toLocaleString('en-US') ?? 0}</td>
                   </tr>
                 );
               })}
@@ -284,9 +424,9 @@ export async function getServerSideProps(context) {
   const session = await getSession(context);
 
   let { data: playersList, error } = await supabase
-    .from("event_players")
-    .select("users(ID,username,country),rank,points,average")
-    .order("rank", { ascending: true });
+    .from('event_players')
+    .select('users(ID,username,country),rank,points,average')
+    .order('rank', { ascending: true });
 
   return {
     props: {
