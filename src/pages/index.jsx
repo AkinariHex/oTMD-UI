@@ -132,7 +132,7 @@ export default function Event({ session, playersList }) {
           />
           <div className="title">osu! Tourney Match Displayer v2.0</div>
           <div className="subtitle">App Release and Showmatches</div>
-          <div className="subtitle date">12th January 2023 @17:00UTC</div>
+          <div className="subtitle date">15th January 2023 @17:00UTC</div>
           <div className="buttons">
             <button
               onClick={() =>
@@ -406,7 +406,6 @@ export default function Event({ session, playersList }) {
                       />
                     </td>
                     <td>#{user.rank.toLocaleString('en-US')}</td>
-                    {/* <td>{user.points ?? 0}pt</td> */}
                     <td>{user.average.toLocaleString('en-US') ?? 0}</td>
                   </tr>
                 );
