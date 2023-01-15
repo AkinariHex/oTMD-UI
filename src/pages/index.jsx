@@ -657,7 +657,7 @@ export async function getServerSideProps(context) {
   let { data: playersList, error } = await supabase
     .from('event_players')
     .select('users(ID,username,country),rank,points,average')
-    .order('rank', { ascending: true });
+    .order('average', { ascending: true });
 
   return {
     props: {
