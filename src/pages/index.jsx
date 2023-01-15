@@ -119,6 +119,199 @@ export default function Event({ session, playersList }) {
     },
   ];
 
+  let matchesPool = [
+    {
+      title: 'AliA - utopia',
+      difficulty: 'Feelings',
+      mapper: 'Akitoshi',
+      starRating: '6.56',
+      beatmapID: '2335100',
+      beatmapsetID: '1117851',
+      mod: 'NM',
+      number: '1',
+    },
+    {
+      title: 'Xi - Shoujo Kisoukyoku ~ Speed Battle',
+      difficulty: 'Extra Stage',
+      mapper: 'Leader',
+      starRating: '6.42',
+      beatmapID: '2670759',
+      beatmapsetID: '1286282',
+      mod: 'NM',
+      number: '2',
+    },
+    {
+      title: 'yuikonnu x sana - Fuzzy Future',
+      difficulty: "kwk's Extra",
+      mapper: 'Aeril',
+      starRating: '6.27',
+      beatmapID: '1566520',
+      beatmapsetID: '545956',
+      mod: 'NM',
+      number: '3',
+    },
+    {
+      title: 'Mysteka - Hesperos',
+      difficulty: '3dyoshispin',
+      mapper: 'Acylica',
+      starRating: '6.26',
+      beatmapID: '3287875',
+      beatmapsetID: '1610294',
+      mod: 'NM',
+      number: '4',
+    },
+    {
+      title: 'Project Gabbangelion - Lolit Speed (Cut Ver.)',
+      difficulty: 'crack collab',
+      mapper: 'alden',
+      starRating: '6.73',
+      beatmapID: '3287485',
+      beatmapsetID: '1610082',
+      mod: 'NM',
+      number: '5',
+    },
+    {
+      title: 'xi - Mirage Garden',
+      difficulty: "Down's Extra",
+      mapper: 'DeviousPanda',
+      starRating: '6.73',
+      beatmapID: '3395093',
+      beatmapsetID: '1663184',
+      mod: 'NM',
+      number: '6',
+    },
+    {
+      title: 'Imaginary Shame Daimajin 50 - BOCCHI ROCK',
+      difficulty: 'Guitar Devil',
+      mapper: 'Arushii09',
+      starRating: '6.39',
+      beatmapID: '3930612',
+      beatmapsetID: '1906151',
+      mod: 'HD',
+      number: '1',
+    },
+    {
+      title: 'ShinRa-Bansho - Subarashiki Hani World',
+      difficulty: 'Sentience',
+      mapper: 'Kurashina Asuka',
+      starRating: '5.63',
+      beatmapID: '3183124',
+      beatmapsetID: '1558276',
+      mod: 'HD',
+      number: '2',
+    },
+    {
+      title: 'HyuN - Illusion of Inflict',
+      difficulty: "N/A's Extra",
+      mapper: 'Icekalt',
+      starRating: '5.95',
+      beatmapID: '2109396',
+      beatmapsetID: '968923',
+      mod: 'HD',
+      number: '3',
+    },
+    {
+      title: 'Endorfin. - Luminous Rage',
+      difficulty: 'Lucent',
+      mapper: 'Kibbleru',
+      starRating: '6.59',
+      beatmapID: '1403318',
+      beatmapsetID: '492845',
+      mod: 'HR',
+      number: '1',
+    },
+    {
+      title: 'ZUN - The Venerable Ancient Battlefield ~ Suwa Foughten Field',
+      difficulty: 'Extra',
+      mapper: 'sjoy',
+      starRating: '6.1',
+      beatmapID: '266778',
+      beatmapsetID: '100444',
+      mod: 'HR',
+      number: '2',
+    },
+    {
+      title: 'Zekk - Freefall',
+      difficulty: 'Extra',
+      mapper: 'Fursum',
+      starRating: '5.7',
+      beatmapID: '3156885',
+      beatmapsetID: '1544463',
+      mod: 'HR',
+      number: '3',
+    },
+    {
+      title: 'Shinra-Bansho - Aqua Terrarium',
+      difficulty: "DelizeE's Terrarium",
+      mapper: 'CoLouRed GlaZeE',
+      starRating: '6.6',
+      beatmapID: '1925706',
+      beatmapsetID: '922144',
+      mod: 'DT',
+      number: '1',
+    },
+    {
+      title: 'DJ Amuro remixed by DM Ashura - AAA',
+      difficulty: 'Insane',
+      mapper: 'Clickz',
+      starRating: '6.6',
+      beatmapID: '80515',
+      beatmapsetID: '22607',
+      mod: 'DT',
+      number: '2',
+    },
+    {
+      title: 'Ueda Reina - Literature',
+      difficulty: 'Collab Insane',
+      mapper: '-Hitomi',
+      starRating: '6.3',
+      beatmapID: '3606065',
+      beatmapsetID: '1749893',
+      mod: 'DT',
+      number: '3',
+    },
+    {
+      title: 'Nakiri Ayame - Good-bye sengen',
+      difficulty: 'Extra',
+      mapper: 'Mir',
+      starRating: '5.8',
+      beatmapID: '3020125',
+      beatmapsetID: '1471082',
+      mod: 'FM',
+      number: '1',
+    },
+    {
+      title: 'ZUN - Solar Sect of Mystic Wisdom ~ Nuclear Fusion',
+      difficulty: 'Extra Stage',
+      mapper: 'pieguy1372',
+      starRating: '5.55',
+      beatmapID: '78166',
+      beatmapsetID: '22697',
+      mod: 'FM',
+      number: '2',
+    },
+    {
+      title: 'Sound Souler - Paradise',
+      difficulty: "Asaiga & kwk's Expert",
+      mapper: 'kwk',
+      starRating: '5.51',
+      beatmapID: '1573887',
+      beatmapsetID: '686777',
+      mod: 'FM',
+      number: '3',
+    },
+    {
+      title: 'BlackY - Double Pendulum',
+      difficulty: 'Reflector Program v1.0 -Next Generation-',
+      mapper: 'rrtyui',
+      starRating: '6.44',
+      beatmapID: '1472242',
+      beatmapsetID: '695053',
+      mod: 'TB',
+      number: '1',
+    },
+  ];
+
   return (
     <div className="homeContent">
       <div className="eventContainer">
@@ -296,6 +489,45 @@ export default function Event({ session, playersList }) {
           <div className="stage">Qualifiers</div>
           <div className="mappool">
             {qualifiersPool.map((map) => {
+              return (
+                <div
+                  key={`${map.mod}${map.number}`}
+                  className={`map ${map.mod}`}
+                  style={{
+                    backgroundImage: `url('https://assets.ppy.sh/beatmaps/${map.beatmapsetID}/covers/cover.jpg')`,
+                  }}
+                >
+                  <div className="mod">
+                    {map.mod}
+                    {map.number}
+                  </div>
+                  <div
+                    className="info"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      window.open(
+                        `https://osu.ppy.sh/beatmapsets/${map.beatmapsetID}#osu/${map.beatmapID}`,
+                        'newtab'
+                      );
+                    }}
+                  >
+                    {map.title} [{map.difficulty}] ({map.mapper})
+                  </div>
+                  <div className="starRating">{map.starRating}*</div>
+                  <div className="beatmapID">{map.beatmapID}</div>
+                  <a
+                    className="downloadBTN"
+                    href={`https://osu.ppy.sh/beatmapsets/${map.beatmapsetID}/download`}
+                  >
+                    <ArrowDown size="22" />{' '}
+                  </a>
+                </div>
+              );
+            })}
+          </div>
+          <div className="stage">Matches</div>
+          <div className="mappool">
+            {matchesPool.map((map) => {
               return (
                 <div
                   key={`${map.mod}${map.number}`}
