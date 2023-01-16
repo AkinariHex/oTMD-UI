@@ -1,321 +1,12 @@
-import { ArrowDown } from 'iconsax-react';
-import { getSession } from 'next-auth/react';
-import supabase from '../config/supabaseClient';
+import { motion } from 'framer-motion';
+import { ExternalLink } from 'react-external-link';
+import Faq from '../components/Faq/Faq';
 
-export default function Event({ session, playersList }) {
-  const joinEvent = async () => {
-    await supabase.from('event_players').insert({
-      ID: session.id,
-      rank: session.statistics.global_rank,
-    });
-    return window.location.reload();
-  };
-
-  const leaveEvent = async () => {
-    await supabase.from('event_players').delete().eq('ID', session?.id);
-    return window.location.reload();
-  };
-
-  let qualifiersPool = [
-    {
-      title: 'Hana - Sakura no Uta',
-      difficulty: 'Etude of Light and Sound',
-      mapper: 'jasontime12345',
-      starRating: '6.48',
-      beatmapID: '2576664',
-      beatmapsetID: '1239324',
-      mod: 'NM',
-      number: '1',
-    },
-    {
-      title: 'Ice - 02: Amber Wishes',
-      difficulty: "Shizuku's Extra",
-      mapper: 'FrenZ396',
-      starRating: '6.11',
-      beatmapID: '1714161',
-      beatmapsetID: '801704',
-      mod: 'NM',
-      number: '2',
-    },
-    {
-      title: 'Perfume - Daijobanai',
-      difficulty: 'Expert',
-      mapper: 'Leminine',
-      starRating: '6.13',
-      beatmapID: '966034',
-      beatmapsetID: '450272',
-      mod: 'NM',
-      number: '3',
-    },
-    {
-      title: 'Lime - 8bit Voyager',
-      difficulty: 'Journey',
-      mapper: 'Hazu-',
-      starRating: '6.12',
-      beatmapID: '2549327',
-      beatmapsetID: '1225869',
-      mod: 'NM',
-      number: '4',
-    },
-    {
-      title: 'Yousei Teikoku - Mischievous of Alice',
-      difficulty: 'Extreme',
-      mapper: 'Hazu-',
-      starRating: '6.28',
-      beatmapID: '1315116',
-      beatmapsetID: '623960',
-      mod: 'HD',
-      number: '1',
-    },
-    {
-      title: 'Hyadain - Rap de Chocobo',
-      difficulty: 'Insane',
-      mapper: 'mrowswares',
-      starRating: '5.28',
-      beatmapID: '2699675',
-      beatmapsetID: '1125851',
-      mod: 'HD',
-      number: '2',
-    },
-    {
-      title: 'TUYU - Daemonisch',
-      difficulty: "Guan's Extra",
-      mapper: 'Keqing',
-      starRating: '6.37',
-      beatmapID: '2973619',
-      beatmapsetID: '1443294',
-      mod: 'HR',
-      number: '1',
-    },
-    {
-      title: 'A.SAKA - Nanatsu Hiiragisuikou',
-      difficulty: "Pata-Mon's Hyper",
-      mapper: 'mrowswares',
-      starRating: '5.58',
-      beatmapID: '3396297',
-      beatmapsetID: '1650533',
-      mod: 'HR',
-      number: '2',
-    },
-    {
-      title: 'senya - Theta de Tsukisashite',
-      difficulty: 'Theta',
-      mapper: 'Serafeim',
-      starRating: '6.4',
-      beatmapID: '2801940',
-      beatmapsetID: '1353531',
-      mod: 'DT',
-      number: '1',
-    },
-    {
-      title: 'Hanatan - Kitsune no Yomeiri',
-      difficulty: 'Kitsuneko',
-      mapper: 'Ryafuka',
-      starRating: '6.48',
-      beatmapID: '144387',
-      beatmapsetID: '46070',
-      mod: 'DT',
-      number: '2',
-    },
-  ];
-
-  let matchesPool = [
-    {
-      title: 'AliA - utopia',
-      difficulty: 'Feelings',
-      mapper: 'Akitoshi',
-      starRating: '6.56',
-      beatmapID: '2335100',
-      beatmapsetID: '1117851',
-      mod: 'NM',
-      number: '1',
-    },
-    {
-      title: 'Xi - Shoujo Kisoukyoku ~ Speed Battle',
-      difficulty: 'Extra Stage',
-      mapper: 'Leader',
-      starRating: '6.42',
-      beatmapID: '2670759',
-      beatmapsetID: '1286282',
-      mod: 'NM',
-      number: '2',
-    },
-    {
-      title: 'yuikonnu x sana - Fuzzy Future',
-      difficulty: "kwk's Extra",
-      mapper: 'Aeril',
-      starRating: '6.27',
-      beatmapID: '1566520',
-      beatmapsetID: '545956',
-      mod: 'NM',
-      number: '3',
-    },
-    {
-      title: 'Mysteka - Hesperos',
-      difficulty: '3dyoshispin',
-      mapper: 'Acylica',
-      starRating: '6.26',
-      beatmapID: '3287875',
-      beatmapsetID: '1610294',
-      mod: 'NM',
-      number: '4',
-    },
-    {
-      title: 'Project Gabbangelion - Lolit Speed (Cut Ver.)',
-      difficulty: 'crack collab',
-      mapper: 'alden',
-      starRating: '6.73',
-      beatmapID: '3287485',
-      beatmapsetID: '1610082',
-      mod: 'NM',
-      number: '5',
-    },
-    {
-      title: 'xi - Mirage Garden',
-      difficulty: "Down's Extra",
-      mapper: 'DeviousPanda',
-      starRating: '6.73',
-      beatmapID: '3395093',
-      beatmapsetID: '1663184',
-      mod: 'NM',
-      number: '6',
-    },
-    {
-      title: 'Imaginary Shame Daimajin 50 - BOCCHI ROCK',
-      difficulty: 'Guitar Devil',
-      mapper: 'Arushii09',
-      starRating: '6.39',
-      beatmapID: '3930612',
-      beatmapsetID: '1906151',
-      mod: 'HD',
-      number: '1',
-    },
-    {
-      title: 'ShinRa-Bansho - Subarashiki Hani World',
-      difficulty: 'Sentience',
-      mapper: 'Kurashina Asuka',
-      starRating: '5.63',
-      beatmapID: '3183124',
-      beatmapsetID: '1558276',
-      mod: 'HD',
-      number: '2',
-    },
-    {
-      title: 'HyuN - Illusion of Inflict',
-      difficulty: "N/A's Extra",
-      mapper: 'Icekalt',
-      starRating: '5.95',
-      beatmapID: '2109396',
-      beatmapsetID: '968923',
-      mod: 'HD',
-      number: '3',
-    },
-    {
-      title: 'Endorfin. - Luminous Rage',
-      difficulty: 'Lucent',
-      mapper: 'Kibbleru',
-      starRating: '6.59',
-      beatmapID: '1403318',
-      beatmapsetID: '492845',
-      mod: 'HR',
-      number: '1',
-    },
-    {
-      title: 'ZUN - The Venerable Ancient Battlefield ~ Suwa Foughten Field',
-      difficulty: 'Extra',
-      mapper: 'sjoy',
-      starRating: '6.1',
-      beatmapID: '266778',
-      beatmapsetID: '100444',
-      mod: 'HR',
-      number: '2',
-    },
-    {
-      title: 'Zekk - Freefall',
-      difficulty: 'Extra',
-      mapper: 'Fursum',
-      starRating: '5.7',
-      beatmapID: '3156885',
-      beatmapsetID: '1544463',
-      mod: 'HR',
-      number: '3',
-    },
-    {
-      title: 'Shinra-Bansho - Aqua Terrarium',
-      difficulty: "DelizeE's Terrarium",
-      mapper: 'CoLouRed GlaZeE',
-      starRating: '6.6',
-      beatmapID: '1925706',
-      beatmapsetID: '922144',
-      mod: 'DT',
-      number: '1',
-    },
-    {
-      title: 'DJ Amuro remixed by DM Ashura - AAA',
-      difficulty: 'Insane',
-      mapper: 'Clickz',
-      starRating: '6.6',
-      beatmapID: '80515',
-      beatmapsetID: '22607',
-      mod: 'DT',
-      number: '2',
-    },
-    {
-      title: 'Ueda Reina - Literature',
-      difficulty: 'Collab Insane',
-      mapper: '-Hitomi',
-      starRating: '6.3',
-      beatmapID: '3606065',
-      beatmapsetID: '1749893',
-      mod: 'DT',
-      number: '3',
-    },
-    {
-      title: 'Nakiri Ayame - Good-bye sengen',
-      difficulty: 'Extra',
-      mapper: 'Mir',
-      starRating: '5.8',
-      beatmapID: '3020125',
-      beatmapsetID: '1471082',
-      mod: 'FM',
-      number: '1',
-    },
-    {
-      title: 'ZUN - Solar Sect of Mystic Wisdom ~ Nuclear Fusion',
-      difficulty: 'Extra Stage',
-      mapper: 'pieguy1372',
-      starRating: '5.55',
-      beatmapID: '78166',
-      beatmapsetID: '22697',
-      mod: 'FM',
-      number: '2',
-    },
-    {
-      title: 'Sound Souler - Paradise',
-      difficulty: "Asaiga & kwk's Expert",
-      mapper: 'kwk',
-      starRating: '5.51',
-      beatmapID: '1573887',
-      beatmapsetID: '686777',
-      mod: 'FM',
-      number: '3',
-    },
-    {
-      title: 'BlackY - Double Pendulum',
-      difficulty: 'Reflector Program v1.0 -Next Generation-',
-      mapper: 'rrtyui',
-      starRating: '6.44',
-      beatmapID: '1472242',
-      beatmapsetID: '695053',
-      mod: 'TB',
-      number: '1',
-    },
-  ];
-
+export default function Home({ release }) {
   return (
     <div className="homeContent">
-      <div className="eventContainer">
-        <div className="header">
+      <div className="appContext">
+        <div className="appHeader">
           <object
             type="image/svg+xml"
             data="/img/otmdLOGO.svg"
@@ -323,346 +14,120 @@ export default function Event({ session, playersList }) {
             alt="otmd logo"
             loading="lazy"
           />
-          <div className="title">osu! Tourney Match Displayer v2.0</div>
-          <div className="subtitle">App Release and Showmatches</div>
-          <div className="subtitle date">15th January 2023 @17:00UTC</div>
-          <div className="buttons">
-            <button
-              onClick={() =>
-                window.open(
-                  'https://discord.gg/XCw3SYuzvP?event=1045274987138928680',
-                  'Discord Invite'
-                )
-              }
-              id="discord"
-            >
-              <i
-                className="bx bxl-discord-alt"
-                style={{ fontSize: '20px' }}
-              ></i>
-              Join Discord Server
-            </button>
-            <button
-              onClick={() =>
-                window.open('https://twitch.tv/akinari_live', 'Twitch Channel')
-              }
-              id="twitch"
-            >
-              <i className="bx bxl-twitch" style={{ fontSize: '20px' }}></i>
-              Twitch Channel
-            </button>
-          </div>
         </div>
-        <div className="section">
-          <div className="subheader">Rules</div>
-          <div className="cards">
-            <div className="card">
-              <div className="title">
-                <span>General</span>
-                <span>17:00UTC</span>
-              </div>
-              <ul>
-                <li>Everyone can register</li>
-                <li>
-                  Players <b>must</b> be in the
-                  <br />
-                  <a
-                    href="https://discord.gg/XCw3SYuzvP?event=1045274987138928680"
-                    target={'_blank'}
-                    rel={'noreferrer'}
-                  >
-                    Discord Server
-                  </a>{' '}
-                  to get updates about the event!
-                </li>
-                <li>
-                  This event will be entirely streamed on Twitch at{' '}
-                  <a
-                    href="https://twitch.tv/akinari_live"
-                    target={'_blank'}
-                    rel={'noreferrer'}
-                  >
-                    akinari_live
-                  </a>
-                </li>
-                <li>
-                  Depending how many commentators I&apos;ll find, the stream
-                  could be in{' '}
-                  <b>
-                    <i>Italian</i>
-                  </b>{' '}
-                  language, but feel free to join and message in{' '}
-                  <b>
-                    <i>English</i>
-                  </b>{' '}
-                  too!
-                </li>
-                <li>App will be released at the end of the stream</li>
-              </ul>
-            </div>
-            <div className="card">
-              <div className="title">
-                <span>Qualifiers</span>
-                <span>18:00UTC</span>
-              </div>
-              <ul>
-                <li>
-                  Depending on how many players will register, we will make
-                  qualifiers lobbies every 16 players
-                </li>
-                <li>
-                  All the qualifiers lobbies will be played at the same time
-                </li>
-                <li>
-                  Top 16 players will be ordered by <b>Average</b> score using
-                  descending order.
-                </li>
-                <li>
-                  Top 2 players will play the <b>1vs1</b> Match and be captains
-                  for <b>TeamVS</b> Match
-                </li>
-                <li>
-                  Top 16 players will proceed to <b>TeamVS</b> Match
-                </li>
-              </ul>
-            </div>
-            <div className="card">
-              <div className="title">
-                <span>TeamVS</span>
-                <span>19:00UTC</span>
-              </div>
-              <ul>
-                <li>
-                  <b>Top 1</b> and <b>Top 2</b> will be the captains
-                </li>
-                <li>
-                  The top 16 players from qualifiers will be chosen by the
-                  captains using <b>Draft</b> format
-                </li>
-                <li>Best of 9</li>
-                <li>1 Ban</li>
-              </ul>
-              <div className="prize">
-                <span>Players gets:</span>
-                <img
-                  src="/img/badges/otmd_event_team_winner.png"
-                  alt="1st badge"
-                />
-                <img
-                  src="/img/badges/otmd_event_team_2nd.png"
-                  alt="2nd badge"
-                />
-              </div>
-              <span className="infoMess">
-                Badges will be displayed on o!TMD profiles and Akinari Website
-                profiles
-              </span>
-            </div>
-            <div className="card">
-              <div className="title">
-                <span>1vs1</span>
-                <span>20:00UTC</span>
-              </div>
-              <ul>
-                <li>
-                  <b>Top 1</b> will match against <b>Top 2</b>
-                </li>
-                <li>Best of 9</li>
-                <li>1 Ban</li>
-              </ul>
-              <div className="prize">
-                <span>Winner get:</span>
-                <img
-                  src="/img/badges/otmd_event_winner.png"
-                  alt="Winner badge"
-                />
-              </div>
-              <span className="infoMess">
-                Badge will be displayed on o!TMD profile and Akinari Website
-                profile
-              </span>
-            </div>
-          </div>
+        <div className="appText">
+          Display easily your osu! Tournament Matches while streaming on Twitch.
         </div>
-        <div className="section">
-          <div className="subheader">Mappool</div>
-          <div className="stage">Qualifiers</div>
-          <div className="mappool">
-            {qualifiersPool.map((map) => {
-              return (
-                <div
-                  key={`${map.mod}${map.number}`}
-                  className={`map ${map.mod}`}
-                  style={{
-                    backgroundImage: `url('https://assets.ppy.sh/beatmaps/${map.beatmapsetID}/covers/cover.jpg')`,
-                  }}
-                >
-                  <div className="mod">
-                    {map.mod}
-                    {map.number}
-                  </div>
-                  <div
-                    className="info"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      window.open(
-                        `https://osu.ppy.sh/beatmapsets/${map.beatmapsetID}#osu/${map.beatmapID}`,
-                        'newtab'
-                      );
-                    }}
-                  >
-                    {map.title} [{map.difficulty}] ({map.mapper})
-                  </div>
-                  <div className="starRating">{map.starRating}*</div>
-                  <div className="beatmapID">{map.beatmapID}</div>
-                  <a
-                    className="downloadBTN"
-                    href={`https://osu.ppy.sh/beatmapsets/${map.beatmapsetID}/download`}
-                  >
-                    <ArrowDown size="22" />{' '}
-                  </a>
-                </div>
-              );
-            })}
-          </div>
-          <div className="stage">Matches</div>
-          <div className="mappool">
-            {matchesPool.map((map) => {
-              return (
-                <div
-                  key={`${map.mod}${map.number}`}
-                  className={`map ${map.mod}`}
-                  style={{
-                    backgroundImage: `url('https://assets.ppy.sh/beatmaps/${map.beatmapsetID}/covers/cover.jpg')`,
-                  }}
-                >
-                  <div className="mod">
-                    {map.mod}
-                    {map.number}
-                  </div>
-                  <div
-                    className="info"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      window.open(
-                        `https://osu.ppy.sh/beatmapsets/${map.beatmapsetID}#osu/${map.beatmapID}`,
-                        'newtab'
-                      );
-                    }}
-                  >
-                    {map.title} [{map.difficulty}] ({map.mapper})
-                  </div>
-                  <div className="starRating">{map.starRating}*</div>
-                  <div className="beatmapID">{map.beatmapID}</div>
-                  <a
-                    className="downloadBTN"
-                    href={`https://osu.ppy.sh/beatmapsets/${map.beatmapsetID}/download`}
-                  >
-                    <ArrowDown size="22" />{' '}
-                  </a>
-                </div>
-              );
-            })}
-          </div>
+        <div className="appButtons">
+          <ExternalLink
+            id="downloadEXE"
+            href={`https://github.com/AkinariHex/oTMD/releases/download/${release[0].tag_name}/otmd_${release[0].tag_name}_x64_installer.exe`}
+          >
+            <div className="icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path d="M0 12v-8.646l10-1.355v10.001h-10zm11 0h13v-12l-13 1.807v10.193zm-1 1h-10v7.646l10 1.355v-9.001zm1 0v9.194l13 1.806v-11h-13z" />
+              </svg>
+            </div>
+            <div className="text">
+              Download <span id="app_ver">{release[0].tag_name}</span>
+            </div>
+            <div className="file">
+              <span className="btn_text_below">installer.exe</span>
+            </div>
+          </ExternalLink>
+          <ExternalLink
+            id="downloadLIN"
+            href={`https://github.com/AkinariHex/oTMD/releases/download/${release[0].tag_name}/otmd_${release[0].tag_name}_amd64.deb`}
+          >
+            <div className="icon">
+              <svg viewBox="0 0 24 24" height="30" width="30">
+                <path d="M18.5 10.57l-.2.37c.26-.78.11-1.63.15-2.37l-.07-.02c-.07-1.85-1.67-3.82-3.09-4.48-1.23-.57-3.12-.67-3.99-.24.12-.11.6-.15.45-.23-1.37.13-1.06.47-2.11.74-.29.28.86-.22.23.16-.56.13-.82-.12-1.65.74.07.12.53-.35.15.12-.79-.09-2.48 1.8-2.84 2.42l.19.04c-.31.77-.72 1.26-.77 1.72-.08 1.14-.45 3.21.08 3.85l-.06.53.23.45-.12.01c.58 1.83.62.04 1.39 1.94-.11-.04-.23-.08-.39-.32-.02.19.24.69.54 1.08l-.12.14c.16.31.32.38.43.49-.63-.35.57 1.13.7 1.32l.1-.17c-.02.24.17.56.53 1.01l.3-.01c.13.24.58.68.85.7l-.18.24c.69.2.33.29 1.18.59l-.17-.3c.43.37.56.7 1.17.98.85.3.96.18 1.82.43-.73 0-1.59 0-2.17-.22-3.96-1.07-7.56-5.72-7.32-10.5-.06-.97.1-2.18-.06-2.42.22-.74.48-1.64 1.01-2.71-.04-.07.09.21.36-.24.16-.36.29-.75.5-1.1l.1-.03c.11-.61 1.43-1.55 1.85-2.02v.18c.86-.81 2.4-1.35 3.26-1.73-.23.25.51-.03 1.04-.06l-.49.28c.63-.16.6.07 1.25-.03-.23.03-.5.1-.46.16.72.08.84-.22 1.51 0l-.05-.2c.94.34 1.13.28 2.14.82.36.01.4-.22.93 0 .1.16-.02.19.64.59.07-.03-.13-.22-.27-.37 1.3.71 2.75 2.22 3.18 3.84-.41-.74-.04.39-.18.33.18.49.33 1 .43 1.53-.12-.43-.39-1.48-.86-2.15-.03.43-.6-.3-.29.66.22.34.05-.35.34.25 0 .29.11.58.18.95-.1-.02-.22-.41-.3-.31.1.5.27.72.33.76-.03.08-.12-.08-.12.24.04.74.21.43.29.46-.09.37-.41.79-.25 1.42l-.2-.56c-.05.53.11.63-.13 1.28.18-.6.16-1.1-.01-.85.09.82-.65 1.45-.58 1.98l-.21-.29c-.57.83-.01.45-.4 1.06.14-.23-.07-.08.11-.36-.12.01-.55.53-.94.83-1.54 1.23-3.39 1.4-5.15.73h-.01c.01-.04 0-.09-.12-.17-1.51-1.15-2.4-2.13-2.11-4.41.25-.17.31-1.12.84-1.45.32-.71 1.28-1.36 2.31-1.38 1.05-.06 1.94.56 2.39 1.14-.82-.75-2.14-.98-3.28-.43-1.15.53-1.84 1.8-1.76 3.07.06-.07.1-.02.12-.18-.03 2.47 2.66 4.28 4.6 3.37l.03.05c.78-.22.68-.39 1.19-.75-.04.09-.34.3-.16.3.25-.06 1.03-.79 1.42-1.13.17-.38-.1-.23.15-.69l.3-.15c.17-.48.35-.75.35-1.32" />
+              </svg>
+            </div>
+            <div className="text">
+              Download <span id="app_ver">{release[0].tag_name}</span>
+            </div>
+            <div className="file">
+              <span className="btn_text_below">.deb</span>
+            </div>
+          </ExternalLink>
+          <ExternalLink
+            id="discordServer"
+            href={'https://discord.com/invite/gf7rWj942q'}
+          >
+            <div className="icon">
+              <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19.54 0c1.356 0 2.46 1.104 2.46 2.472v21.528l-2.58-2.28-1.452-1.344-1.536-1.428.636 2.22h-13.608c-1.356 0-2.46-1.104-2.46-2.472v-16.224c0-1.368 1.104-2.472 2.46-2.472h16.08zm-4.632 15.672c2.652-.084 3.672-1.824 3.672-1.824 0-3.864-1.728-6.996-1.728-6.996-1.728-1.296-3.372-1.26-3.372-1.26l-.168.192c2.04.624 2.988 1.524 2.988 1.524-1.248-.684-2.472-1.02-3.612-1.152-.864-.096-1.692-.072-2.424.024l-.204.024c-.42.036-1.44.192-2.724.756-.444.204-.708.348-.708.348s.996-.948 3.156-1.572l-.12-.144s-1.644-.036-3.372 1.26c0 0-1.728 3.132-1.728 6.996 0 0 1.008 1.74 3.66 1.824 0 0 .444-.54.804-.996-1.524-.456-2.1-1.416-2.1-1.416l.336.204.048.036.047.027.014.006.047.027c.3.168.6.3.876.408.492.192 1.08.384 1.764.516.9.168 1.956.228 3.108.012.564-.096 1.14-.264 1.74-.516.42-.156.888-.384 1.38-.708 0 0-.6.984-2.172 1.428.36.456.792.972.792.972zm-5.58-5.604c-.684 0-1.224.6-1.224 1.332 0 .732.552 1.332 1.224 1.332.684 0 1.224-.6 1.224-1.332.012-.732-.54-1.332-1.224-1.332zm4.38 0c-.684 0-1.224.6-1.224 1.332 0 .732.552 1.332 1.224 1.332.684 0 1.224-.6 1.224-1.332 0-.732-.54-1.332-1.224-1.332z" />
+              </svg>
+            </div>
+            <div className="text">Official</div>
+            <div className="file">Discord Server</div>
+          </ExternalLink>
+          <ExternalLink
+            id="githubRep"
+            href={'https://github.com/AkinariHex/oTMD'}
+          >
+            <div className="icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+              </svg>
+            </div>
+            <div className="text">Github</div>
+            <div className="file">Repository</div>
+          </ExternalLink>
+          <ExternalLink id="kofiDon" href={'https://ko-fi.com/akinari'}>
+            <div className="icon">
+              <img
+                height="35px"
+                width="35px"
+                src="/img/kofi_Icon.png"
+                alt="Ko-fi Logo"
+              />
+            </div>
+            <div className="text">Support the app</div>
+            {/* 
+            <div className="file">
+              Repository
+            </div> */}
+          </ExternalLink>
         </div>
-        <div className="section">
-          <div className="buttons">
-            {session ? (
-              playersList.filter((player) => player.users.ID === session.id)
-                .length > 0 ? (
-                <div className="button leave" onClick={leaveEvent}>
-                  Leave the event
-                </div>
-              ) : (
-                <div className="button join" onClick={joinEvent}>
-                  Join the event
-                </div>
-              )
-            ) : (
-              <div className="alert">
-                You have to login to be able to join the event!
-              </div>
-            )}
-          </div>
-          <div className="subheader">Players</div>
-          <table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th></th>
-                <th>Player</th>
-                <th>Rank</th>
-                {/* <th>Points</th> */}
-                <th>Average</th>
-              </tr>
-            </thead>
-            <tbody>
-              {playersList.map((user, index) => {
-                let country = JSON.parse(user.users.country);
-                let flag = country.code;
-
-                return (
-                  <tr
-                    key={index}
-                    className={`${session?.id === user.users.ID ? 'me' : ''}`}
-                  >
-                    <td>#{index + 1}</td>
-                    <td>
-                      <img
-                        src={`http://s.ppy.sh/a/${user.users.ID}`}
-                        alt={`${user.users.username} propic`}
-                        onClick={() =>
-                          window.open(
-                            `https://osu.ppy.sh/users/${user.users.ID}`,
-                            'User Window'
-                          )
-                        }
-                      />
-                    </td>
-                    <td>
-                      <div
-                        className="name"
-                        onClick={() =>
-                          window.open(
-                            `https://osu.ppy.sh/users/${user.users.ID}`,
-                            'User Window'
-                          )
-                        }
-                      >
-                        {user.users.username}
-                      </div>
-                      <img
-                        src={`https://raw.githubusercontent.com/ppy/osu-resources/master/osu.Game.Resources/Textures/Flags/${flag}.png`}
-                        alt={`${user.users.username} flag`}
-                        className="flag"
-                      />
-                    </td>
-                    <td>#{user.rank.toLocaleString('en-US')}</td>
-                    <td>{user.average.toLocaleString('en-US') ?? 0}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        <motion.div
+          animate={{ y: -100, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="appImage"
+        >
+          <img
+            src="/img/appv2.0.png"
+            className="app"
+            alt="otmd app image"
+            loading="lazy"
+          />
+        </motion.div>
+        {/* <AppExample /> */}
+        <Faq />
       </div>
     </div>
   );
 }
 
-export async function getServerSideProps(context) {
-  // Get user session
-  const session = await getSession(context);
-
-  let { data: playersList, error } = await supabase
-    .from('event_players')
-    .select('users(ID,username,country),rank,points,average')
-    .order('average', { ascending: true });
+export async function getServerSideProps() {
+  const release = await fetch(
+    'https://api.github.com/repos/AkinariHex/oTMD/releases'
+  );
 
   return {
     props: {
-      session,
-      playersList,
+      release: await release.json(),
     },
   };
 }

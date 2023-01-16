@@ -1,15 +1,14 @@
-import { getSession } from "next-auth/react";
-import "../styles/styles.css";
-import "../styles/documentation.css";
-import "../styles/settings.css";
-import "../styles/tournaments.css";
-import "../styles/profile.css";
-import "../styles/event.css";
-import "../styles/teamschedule.css";
-import Navbar from "../components/Navbar/Navbar";
-import Head from "next/head";
-import Footer from "../components/Footer/Footer";
-import supabase from "../config/supabaseClient";
+import { getSession } from 'next-auth/react';
+import Head from 'next/head';
+import Footer from '../components/Footer/Footer';
+import Navbar from '../components/Navbar/Navbar';
+import supabase from '../config/supabaseClient';
+import '../styles/documentation.css';
+import '../styles/profile.css';
+import '../styles/settings.css';
+import '../styles/styles.css';
+import '../styles/teamschedule.css';
+import '../styles/tournaments.css';
 
 function MyApp({ Component, pageProps, session, userStatus }) {
   return (
@@ -33,11 +32,11 @@ MyApp.getInitialProps = async (context) => {
     session !== null
       ? await (
           await supabase
-            .from("users")
-            .select("permissions")
-            .eq("ID", session.id)
+            .from('users')
+            .select('permissions')
+            .eq('ID', session.id)
         ).data[0]
-      : "User";
+      : 'User';
 
   return {
     session: session,

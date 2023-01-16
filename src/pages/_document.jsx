@@ -28,6 +28,10 @@ class MyDocument extends Document {
             property="og:description"
             content="Display easily the score of your osu! matches in real-time while streaming on twitch!"
           />
+          <meta
+            property="og:image"
+            content="https://akinariosu.s-ul.eu/oMHsqwch"
+          />
           {/* TWITTER */}
           <meta name="twitter:card" content="summary_large_image" />
           <meta property="twitter:domain" content="otmd.app" />
@@ -39,7 +43,10 @@ class MyDocument extends Document {
           />
           <meta name="twitter:site" content="@akinari_osu" />
           <meta name="twitter:image:alt" content="OTMD Logo" />
-
+          <meta
+            name="twitter:image"
+            content="https://akinariosu.s-ul.eu/oMHsqwch"
+          ></meta>
           <link
             href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
             rel="stylesheet"

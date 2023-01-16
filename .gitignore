@@ -34,7 +34,10 @@ yarn-error.log*
 # vercel
 .vercel
 
-# folder
+# files
+pages/index.jsx.backup
+
+# folders
 src/pages/schedule/
 JSON Examples/
 src/pages/api/socketio/

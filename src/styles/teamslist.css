@@ -1,0 +1,64 @@
+/* ============================ TEAM LIST PAGE ================================== */
+
+.teamsContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  color: #ffffff;
+  padding: 4em 1.8em 0 1.8em;
+}
+
+.teamsContainer h1,
+.teamsContainer h2 {
+  margin: 5px 0 0 0;
+}
+
+.teamsList {
+  display: flex;
+  flex-direction: row wrap;
+  width: 100%;
+  overflow-y: auto;
+  margin: 10px auto;
+  gap: 10px;
+}
+
+.teamsList .item {
+  height: 150px;
+  width: 200px;
+  background-color: var(--navbar-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  text-align: center;
+  user-select: none;
+  cursor: pointer;
+}
+
+.teamsList .item:is(.add, .join) {
+  color: var(--team-mappool-input-placeholder-color);
+  font-weight: 400;
+  font-size: 12pt;
+}
+
+.teamsList .item img.normal {
+  border-radius: 100vh;
+  height: 45px;
+  width: 45px;
+  margin: 5px auto;
+}
+
+.teamsList .item img.national {
+  width: 45px;
+  margin: 13px auto;
+}
+
+.teamsList .item .item-name {
+  font-size: 14pt;
+  font-weight: 600;
+}
+
+.teamsList .item .item-tournament {
+  font-size: 11pt;
+}

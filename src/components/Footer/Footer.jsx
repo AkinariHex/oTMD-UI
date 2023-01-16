@@ -1,6 +1,8 @@
-import React from "react";
+import React from 'react';
 
 function Footer() {
+  let year = new Date().getFullYear();
+
   return (
     <div className="footer">
       <div className="app">
@@ -14,7 +16,7 @@ function Footer() {
           />
         </div>
         <div className="copyright">
-          © 2022 <a href="https://osu.ppy.sh/users/4001304">Akinari</a>
+          © {year} <a href="https://osu.ppy.sh/users/4001304">Akinari</a>
         </div>
         <div className="affiliation">
           Not affiliated with <a href="https://osu.ppy.sh">osu.ppy.sh</a>
@@ -42,7 +44,7 @@ function Footer() {
                 target="_blank"
               >
                 chat4osu!
-              </a>{" "}
+              </a>{' '}
               by <a href="https://osu.ppy.sh/users/1874761">hallowatcher</a>
             </div>
             <div className="item">
@@ -52,7 +54,7 @@ function Footer() {
                 target="_blank"
               >
                 osu!Collector
-              </a>{" "}
+              </a>{' '}
               by <a href="https://osu.ppy.sh/users/2051389">FunOrange</a>
             </div>
             <div className="item">
@@ -62,13 +64,13 @@ function Footer() {
                 target="_blank"
               >
                 Mutualify
-              </a>{" "}
+              </a>{' '}
               by <a href="https://osu.ppy.sh/users/7217455">StanR</a>
             </div>
             <div className="item">
               <a href="https://ronnia.me/" rel="noreferrer" target="_blank">
                 Ronnia
-              </a>{" "}
+              </a>{' '}
               by <a href="https://osu.ppy.sh/users/5642779">heyronii</a>
             </div>
           </div>
