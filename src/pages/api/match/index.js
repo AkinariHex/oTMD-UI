@@ -113,7 +113,7 @@ async function calculateMatchCost(match, warmups) {
 export default async function handler(req, res) {
   await NextCors(req, res, {
     // Options
-    methods: ['POST'],
+    methods: ['POST', 'OPTIONS'],
     origin: '*',
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   });
@@ -412,6 +412,10 @@ export default async function handler(req, res) {
       return res.status(200).json({ message: 'posted on Discord!' });
     }
     return res.status(404).json({ error: 'no discord post' });
+  }
+
+  if (method === 'OPTIONS') {
+    return res.status(200).send('ok');
   }
 
   return res.status(404).json({ error: 'invalid method' });
