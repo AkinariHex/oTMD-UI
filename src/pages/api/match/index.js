@@ -1,21 +1,5 @@
-import Cors from "cors";
-import supabase from "../../../config/supabaseClient";
-
-const cors = Cors({
-  methods: ["POST"],
-});
-
-function runMiddleware(req, res, fn) {
-  return new Promise((resolve, reject) => {
-    fn(req, res, (result) => {
-      if (result instanceof Error) {
-        return reject(result);
-      }
-
-      return resolve(result);
-    });
-  });
-}
+import NextCors from 'nextjs-cors';
+import supabase from '../../../config/supabaseClient';
 
 function median_of_arr(arr) {
   const middle = (arr.length + 1) / 2;
@@ -105,7 +89,7 @@ async function calculateMatchCost(match, warmups) {
       playersData[score.user_id][game.beatmap_id] = parseInt(score.score);
       mapsData[game.beatmap_id].push(parseInt(score.score));
       namesData[score.user_id].team =
-        score.team === "0" ? "none" : score.team === "1" ? "blue" : "red";
+        score.team === '0' ? 'none' : score.team === '1' ? 'blue' : 'red';
 
       return namesData;
     });
@@ -119,34 +103,39 @@ async function calculateMatchCost(match, warmups) {
   assignMedal[1].medal = 2;
   if (assignMedal.length > 2) assignMedal[2].medal = 3;
 
-  let redTeam = lobbyMC.filter((player) => player.team === "red");
-  let blueTeam = lobbyMC.filter((player) => player.team === "blue");
-  let noneTeam = lobbyMC.filter((player) => player.team === "none");
+  let redTeam = lobbyMC.filter((player) => player.team === 'red');
+  let blueTeam = lobbyMC.filter((player) => player.team === 'blue');
+  let noneTeam = lobbyMC.filter((player) => player.team === 'none');
 
   return { redTeam, blueTeam, noneTeam };
 }
 
 export default async function handler(req, res) {
-  await runMiddleware(req, res, cors);
+  await NextCors(req, res, {
+    // Options
+    methods: ['GET', 'POST'],
+    origin: '*',
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  });
 
-  if (req.method === "POST" && req.query.m === "db") {
+  if (req.method === 'POST' && req.query.m === 'db') {
     const body = JSON.parse(req.body);
 
     const { data, err } = await supabase
-      .from("users")
-      .select("sendMatchesDiscord,discordChannelsMatch")
-      .eq("api_key", body.webapikey);
+      .from('users')
+      .select('sendMatchesDiscord,discordChannelsMatch')
+      .eq('api_key', body.webapikey);
 
     if (err) {
       return res.status(404).send(err);
     }
 
     if (data.length < 1) {
-      return res.status(404).json({ message: "Wrong apikey!" });
+      return res.status(404).json({ message: 'Wrong apikey!' });
     }
 
-    if (body.stage === "Qualifiers") {
-      await supabase.from("matches").insert([
+    if (body.stage === 'Qualifiers') {
+      await supabase.from('matches').insert([
         {
           owner: body.me,
           matchID: body.matchID,
@@ -160,7 +149,7 @@ export default async function handler(req, res) {
         },
       ]);
     } else {
-      await supabase.from("matches").insert([
+      await supabase.from('matches').insert([
         {
           owner: body.me,
           matchID: body.matchID,
@@ -176,43 +165,43 @@ export default async function handler(req, res) {
         },
       ]);
     }
-    return res.status(200).json({ message: "saved in DB" });
+    return res.status(200).json({ message: 'saved in DB' });
   }
 
-  if (req.method === "POST" && req.query.m === "discordWebhook") {
+  if (req.method === 'POST' && req.query.m === 'discordWebhook') {
     const body = JSON.parse(req.body);
 
     const { data, err } = await supabase
-      .from("users")
-      .select("sendMatchesDiscord,discordChannelsMatch")
-      .eq("api_key", body.webapikey);
+      .from('users')
+      .select('sendMatchesDiscord,discordChannelsMatch')
+      .eq('api_key', body.webapikey);
 
     let sendMatches = data[0].sendMatchesDiscord;
     let channels = JSON.parse(data[0].discordChannelsMatch);
 
     if (sendMatches === true && channels.length > 0) {
-      var results = "";
-      var dataWebhook = "";
+      var results = '';
+      var dataWebhook = '';
 
       /* If match is 1vs1 or teamVS */
-      if (body.stage !== "Qualifiers") {
+      if (body.stage !== 'Qualifiers') {
         results =
           (await body.scores.winner) === 1
             ? `:first_place: :red_circle: **${
-                body.matchType === "1vs1"
+                body.matchType === '1vs1'
                   ? `${body.players[0].username} | ${body.scores.player1}`
                   : `${body.teams[0]} | ${body.scores.team1}`
               }** - ${
-                body.matchType === "1vs1"
+                body.matchType === '1vs1'
                   ? `${body.scores.player2} | ${body.players[1].username}`
                   : `${body.scores.team2} | ${body.teams[1]}`
               } :blue_circle:`
             : `:red_circle: ${
-                body.matchType === "1vs1"
+                body.matchType === '1vs1'
                   ? `${body.players[0].username} | ${body.scores.player1}`
                   : `${body.teams[0]} | ${body.scores.team1}`
               } - **${
-                body.matchType === "1vs1"
+                body.matchType === '1vs1'
                   ? `${body.scores.player2} | ${body.players[1].username}`
                   : `${body.scores.team2} | ${body.teams[1]}`
               }** :blue_circle: :first_place:`;
@@ -220,22 +209,22 @@ export default async function handler(req, res) {
         let matchCost = await calculateMatchCost(body.matchJSON, body.warmups);
 
         dataWebhook = {
-          content: "",
+          content: '',
           embeds: [
             {
               author: {
                 name: `${body.tournament.acronym} ${
-                  body.tournament.name !== "" ? `- ${body.tournament.name}` : ""
+                  body.tournament.name !== '' ? `- ${body.tournament.name}` : ''
                 }`,
                 url: `https://osu.ppy.sh/community/matches/${body.matchID}`,
                 icon_url: `https://akinariosu.s-ul.eu/f72xTlsv`,
               },
               title: `${body.tournament.acronym}: (${
-                body.matchType === "1vs1"
+                body.matchType === '1vs1'
                   ? body.players[0].username
                   : body.teams[0]
               }) vs (${
-                body.matchType === "1vs1"
+                body.matchType === '1vs1'
                   ? body.players[1].username
                   : body.teams[1]
               })`,
@@ -247,107 +236,107 @@ export default async function handler(req, res) {
                 {
                   name: `Match Cost`,
                   value: `${
-                    body.scores.winner === 1 ? ":medal:" : ""
-                  } :red_circle: ${body.scores.winner === 1 ? "**" : ""}${
-                    body.matchType === "1vs1"
+                    body.scores.winner === 1 ? ':medal:' : ''
+                  } :red_circle: ${body.scores.winner === 1 ? '**' : ''}${
+                    body.matchType === '1vs1'
                       ? `${body.players[0].username} | ${body.scores.player1}`
                       : `${body.teams[0]} | ${body.scores.team1}`
-                  }${body.scores.winner === 1 ? "**" : ""}\n${
-                    body.matchType === "1vs1"
+                  }${body.scores.winner === 1 ? '**' : ''}\n${
+                    body.matchType === '1vs1'
                       ? matchCost.noneTeam
                           .map((player) => {
                             if (player.id === body.players[0].userid) {
                               return `[${
                                 player.username
                               }](https://osu.ppy.sh/users/${player.id}): ${
-                                player.medal ? "**" : ""
-                              }${player.match_cost}${player.medal ? "**" : ""}${
+                                player.medal ? '**' : ''
+                              }${player.match_cost}${player.medal ? '**' : ''}${
                                 player.medal === 1
-                                  ? "🥇"
+                                  ? '🥇'
                                   : player.medal === 2
-                                  ? "🥈"
+                                  ? '🥈'
                                   : player.medal === 3
-                                  ? "🥉"
-                                  : ""
+                                  ? '🥉'
+                                  : ''
                               }`;
                             }
                           })
-                          .join("\n")
+                          .join('\n')
                       : matchCost.redTeam
                           .map(
                             (player) =>
                               `[${player.username}](https://osu.ppy.sh/users/${
                                 player.id
-                              }): ${player.medal ? "**" : ""}${
+                              }): ${player.medal ? '**' : ''}${
                                 player.match_cost
-                              }${player.medal ? "**" : ""}${
+                              }${player.medal ? '**' : ''}${
                                 player.medal === 1
-                                  ? "🥇"
+                                  ? '🥇'
                                   : player.medal === 2
-                                  ? "🥈"
-                                  : ""
+                                  ? '🥈'
+                                  : ''
                               }`
                           )
-                          .join("")
+                          .join('')
                   }`,
                   inline: true,
                 },
                 /* Blue Team */
                 {
                   name: `\u200b`,
-                  value: `${body.scores.winner === 2 ? "**" : ""}${
-                    body.matchType === "1vs1"
+                  value: `${body.scores.winner === 2 ? '**' : ''}${
+                    body.matchType === '1vs1'
                       ? `${body.scores.player2} | ${body.players[1].username}`
                       : `${body.scores.team2} | ${body.teams[1]}`
-                  }${body.scores.winner === 2 ? "**" : ""} :blue_circle: ${
-                    body.scores.winner === 2 ? ":medal:" : ""
+                  }${body.scores.winner === 2 ? '**' : ''} :blue_circle: ${
+                    body.scores.winner === 2 ? ':medal:' : ''
                   }\n${
-                    body.matchType === "1vs1"
+                    body.matchType === '1vs1'
                       ? matchCost.noneTeam
                           .map((player) => {
                             if (player.id === body.players[1].userid) {
                               return `[${
                                 player.username
                               }](https://osu.ppy.sh/users/${player.id}): ${
-                                player.medal ? "**" : ""
-                              }${player.match_cost}${player.medal ? "**" : ""}${
+                                player.medal ? '**' : ''
+                              }${player.match_cost}${player.medal ? '**' : ''}${
                                 player.medal === 1
-                                  ? "🥇"
+                                  ? '🥇'
                                   : player.medal === 2
-                                  ? "🥈"
-                                  : ""
+                                  ? '🥈'
+                                  : ''
                               }`;
                             }
                           })
-                          .join("")
+                          .join('')
                       : matchCost.blueTeam
                           .map(
                             (player) =>
                               `[${player.username}](https://osu.ppy.sh/users/${
                                 player.id
-                              }): ${player.medal ? "**" : ""}${
+                              }): ${player.medal ? '**' : ''}${
                                 player.match_cost
-                              }${player.medal ? "**" : ""}${
+                              }${player.medal ? '**' : ''}${
                                 player.medal === 1
-                                  ? "🥇"
+                                  ? '🥇'
                                   : player.medal === 2
-                                  ? "🥈"
+                                  ? '🥈'
                                   : player.medal === 3
-                                  ? "🥉"
-                                  : ""
+                                  ? '🥉'
+                                  : ''
                               }`
                           )
-                          .join("\n")
+                          .join('\n')
                   }`,
                   inline: true,
                 },
                 {
-                  name: "\u200b",
+                  name: '\u200b',
                   value: `${body.matchType} - ${body.stage} - BO${body.bestOF} - ${body.warmups} warmups - [MP Link](https://osu.ppy.sh/community/matches/${body.matchID})`,
                   inline: false,
                 },
               ],
-              color: body.scores.winner === 1 ? "16731212" : "4748982",
+              color: body.scores.winner === 1 ? '16731212' : '4748982',
               footer: {
                 text: getTimeSpent(body.matchStart),
               },
@@ -355,20 +344,20 @@ export default async function handler(req, res) {
           ],
           attachments: [],
         };
-      } else if (body.stage === "Qualifiers") {
+      } else if (body.stage === 'Qualifiers') {
         var mods = {
-          NM: "<:nomod:868095234217750558>",
-          NF: "<:nofail:868095234230353960>",
-          EZ: "<:easy:868095234108710922>",
-          HD: "<:hidden:868095234150658079>",
-          HR: "<:hardrock:868095234129690664>",
-          DT: "<:doubletime:868095234079350844>",
-          HT: "<:halftime:943890234330972160>",
-          FL: "<:flashlight:868095233932533781>",
+          NM: '<:nomod:868095234217750558>',
+          NF: '<:nofail:868095234230353960>',
+          EZ: '<:easy:868095234108710922>',
+          HD: '<:hidden:868095234150658079>',
+          HR: '<:hardrock:868095234129690664>',
+          DT: '<:doubletime:868095234079350844>',
+          HT: '<:halftime:943890234330972160>',
+          FL: '<:flashlight:868095233932533781>',
         };
 
         await body?.scores?.list.forEach((object) => {
-          let modstring = "";
+          let modstring = '';
           object?.mods.forEach((mod) => {
             modstring += mods[mod];
           });
@@ -380,7 +369,7 @@ export default async function handler(req, res) {
             {
               author: {
                 name: `${body.tournament.acronym} ${
-                  body.tournament.name !== "" ? `- ${body.tournament.name}` : ""
+                  body.tournament.name !== '' ? `- ${body.tournament.name}` : ''
                 }`,
                 url: `https://osu.ppy.sh/community/matches/${body.matchID}`,
                 icon_url: `https://akinariosu.s-ul.eu/f72xTlsv`,
@@ -388,7 +377,7 @@ export default async function handler(req, res) {
               title: `${body.player.username}'s Qualifier`,
               url: `https://osu.ppy.sh/community/matches/${body.matchID}`,
               description: `${results}\n**Average: ${body.scores.average}** - Played Maps: ${body.scores.list.length} - Total maps: ${body.totalMaps} - [MP Link](https://osu.ppy.sh/community/matches/${body.matchID})`,
-              color: "4748982",
+              color: '4748982',
               thumbnail: {
                 url: `http://s.ppy.sh/a/${body.me}`,
               },
@@ -403,10 +392,10 @@ export default async function handler(req, res) {
 
       await channels.forEach(async (channel) => {
         await fetch(channel.WebhookURL, {
-          method: "POST",
+          method: 'POST',
           headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(dataWebhook),
         })
@@ -420,12 +409,12 @@ export default async function handler(req, res) {
           });
       });
 
-      return res.status(200).json({ message: "posted on Discord!" });
+      return res.status(200).json({ message: 'posted on Discord!' });
     }
-    return res.status(404).json({ error: "no discord post" });
+    return res.status(404).json({ error: 'no discord post' });
   }
 
-  return res.status(404).json({ error: "invalid method" });
+  return res.status(404).json({ error: 'invalid method' });
 }
 
 const getTimeSpent = (startTime) => {
