@@ -111,7 +111,7 @@ async function calculateMatchCost(match, warmups) {
 }
 
 const cors = Cors({
-  methods: ['POST', 'GET'],
+  methods: ['POST', 'OPTIONS'],
 });
 
 function runMiddleware(req, res, fn) {
