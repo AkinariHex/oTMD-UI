@@ -288,7 +288,7 @@ export default async function handler(req, res) {
                                   : ''
                               }`
                           )
-                          .join('')
+                          .join('\n')
                   }`,
                   inline: true,
                 },
@@ -319,7 +319,7 @@ export default async function handler(req, res) {
                               }`;
                             }
                           })
-                          .join('')
+                          .join('\n')
                       : matchCost.blueTeam
                           .map(
                             (player) =>
