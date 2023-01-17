@@ -1,4 +1,4 @@
-import NextCors from 'nextjs-cors';
+import Cors from 'cors';
 import supabase from '../../../config/supabaseClient';
 
 function median_of_arr(arr) {
@@ -110,13 +110,24 @@ async function calculateMatchCost(match, warmups) {
   return { redTeam, blueTeam, noneTeam };
 }
 
-export default async function handler(req, res) {
-  await NextCors(req, res, {
-    // Options
-    methods: ['POST', 'OPTIONS'],
-    origin: '*',
-    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+const cors = Cors({
+  methods: ['POST', 'GET'],
+});
+
+function runMiddleware(req, res, fn) {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
+
+      return resolve(result);
+    });
   });
+}
+
+export default async function handler(req, res) {
+  await runMiddleware(req, res, cors);
 
   if (req.method === 'POST' && req.query.m === 'db') {
     const body = JSON.parse(req.body);
@@ -175,6 +186,8 @@ export default async function handler(req, res) {
       .from('users')
       .select('sendMatchesDiscord,discordChannelsMatch')
       .eq('api_key', body.webapikey);
+
+    console.log(body);
 
     let sendMatches = data[0].sendMatchesDiscord;
     let channels = JSON.parse(data[0].discordChannelsMatch);
@@ -414,7 +427,7 @@ export default async function handler(req, res) {
     return res.status(404).json({ error: 'no discord post' });
   }
 
-  if (method === 'OPTIONS') {
+  if (req.method === 'OPTIONS') {
     return res.status(200).send('ok');
   }
 
