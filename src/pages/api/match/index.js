@@ -187,8 +187,6 @@ export default async function handler(req, res) {
       .select('sendMatchesDiscord,discordChannelsMatch')
       .eq('api_key', body.webapikey);
 
-    console.log(body);
-
     let sendMatches = data[0].sendMatchesDiscord;
     let channels = JSON.parse(data[0].discordChannelsMatch);
 
@@ -403,24 +401,27 @@ export default async function handler(req, res) {
         };
       }
 
-      await channels.forEach(async (channel) => {
-        await fetch(channel.WebhookURL, {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(dataWebhook),
-        })
-          .then((res) => {
-            if (!res.ok) {
-              throw new Error(); // Will take you to the `catch` below
-            }
+      await channels.forEach(
+        /* async  */ (channel) => {
+          /* await  */ fetch(channel.WebhookURL, {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataWebhook),
           })
-          .catch((error) => {
-            console.log(error);
-          });
-      });
+            .then((res) => {
+              console.log(res);
+              if (!res.ok) {
+                throw new Error(); // Will take you to the `catch` below
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      );
 
       return res.status(200).json({ message: 'posted on Discord!' });
     }
