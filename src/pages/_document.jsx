@@ -1,4 +1,5 @@
-import Document, { Html, Head, Main, NextScript } from "next/document";
+import Document, { Head, Html, Main, NextScript } from 'next/document';
+import Script from 'next/script';
 
 class MyDocument extends Document {
   render() {
@@ -51,11 +52,12 @@ class MyDocument extends Document {
             href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
             rel="stylesheet"
           ></link>
-          <script
+          <Script
             async
             src="https://www.googletagmanager.com/gtag/js?id=G-FB42B4PE0Q"
-          ></script>
-          <script
+            strategy="worker"
+          ></Script>
+          <Script
             dangerouslySetInnerHTML={{
               __html: ` window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
@@ -63,7 +65,8 @@ class MyDocument extends Document {
 
           gtag('config', 'G-FB42B4PE0Q');`,
             }}
-          ></script>
+            strategy="worker"
+          ></Script>
         </Head>
         <body>
           <Main />
