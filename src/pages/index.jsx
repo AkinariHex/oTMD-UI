@@ -106,12 +106,7 @@ export default function Home({ release }) {
           transition={{ duration: 0.5 }}
           className="appImage"
         >
-          <img
-            src="/img/appv2.0.png"
-            className="app"
-            alt="otmd app image"
-            loading="lazy"
-          />
+          <img src="/img/appv2.0.webp" className="app" alt="otmd app image" />
         </motion.div>
         {/* <AppExample /> */}
         <Faq />
