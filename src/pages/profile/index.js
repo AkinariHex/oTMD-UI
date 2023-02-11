@@ -1,11 +1,11 @@
-import { getSession } from "next-auth/react";
-import TournamentRequest from "../../components/Forms/TournamentRequest";
-import EditTournament from "../../components/Forms/EditTournament";
-import { useState } from "react";
-import Collapsible from "react-collapsible";
-import { ExternalLink } from "react-external-link";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import supabase from "../../config/supabaseClient";
+import { getSession } from 'next-auth/react';
+import { useState } from 'react';
+import Collapsible from 'react-collapsible';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { ExternalLink } from 'react-external-link';
+import EditTournament from '../../components/Forms/EditTournament';
+import TournamentRequest from '../../components/Forms/TournamentRequest';
+import supabase from '../../config/supabaseClient';
 
 export default function Account({
   session,
@@ -14,11 +14,11 @@ export default function Account({
   mytournaments,
 }) {
   let statusColor = {
-    Server: "rgb(197, 56, 56)",
-    "Tourney Manager": "rgb(48, 164, 226)",
-    "Tournaments Host": "rgb(226, 168, 48)",
-    Tester: "hsl(276, 30%, 60%)",
-    User: "rgb(20,20,20)",
+    Server: 'rgb(197, 56, 56)',
+    'Tourney Manager': 'rgb(48, 164, 226)',
+    'Tournaments Host': 'rgb(226, 168, 48)',
+    Tester: 'hsl(276, 30%, 60%)',
+    User: 'rgb(20,20,20)',
   };
 
   let joinDate = new Date(userStatus.dateJoin * 1000);
@@ -46,8 +46,8 @@ export default function Account({
     },
   };
 
-  const [tournamentList, setTournamentList] = useState(["action", "down"]);
-  const [tournamentForm, setTournamentForm] = useState(["action", "down"]);
+  const [tournamentList, setTournamentList] = useState(['action', 'down']);
+  const [tournamentForm, setTournamentForm] = useState(['action', 'down']);
 
   return (
     <div className="homeContent">
@@ -97,7 +97,7 @@ export default function Account({
                   {mytournaments.map((tournament, index) => {
                     if (tournament.tourney_end) {
                       let todayDate = new Date();
-                      let tDate = tournament.tourney_end.split("/");
+                      let tDate = tournament.tourney_end.split('/');
                       let endDate = new Date(tDate[2], tDate[0] - 1, tDate[1]);
                       return (
                         todayDate < endDate && (
@@ -123,8 +123,8 @@ export default function Account({
                 </div>
               </div>
             )}
-            {(userStatus.permissions === "Server" ||
-              userStatus.permissions === "Tourney Manager") && (
+            {(userStatus.permissions === 'Server' ||
+              userStatus.permissions === 'Tourney Manager') && (
               <div className="actionCategory">
                 <h2>Tournaments Management</h2>
                 <div className="actionCentre">
@@ -142,10 +142,10 @@ export default function Account({
               <div className="actionCentre">
                 <Collapsible
                   onTriggerOpening={() => {
-                    setTournamentList(["actionOpen", "up"]);
+                    setTournamentList(['actionOpen', 'up']);
                   }}
                   onTriggerClosing={() => {
-                    setTournamentList(["action", "down"]);
+                    setTournamentList(['action', 'down']);
                   }}
                   transitionTime="200"
                   easing="ease-out"
@@ -189,10 +189,10 @@ export default function Account({
                 </Collapsible>
                 <Collapsible
                   onTriggerOpening={() => {
-                    setTournamentForm(["actionOpen", "up"]);
+                    setTournamentForm(['actionOpen', 'up']);
                   }}
                   onTriggerClosing={() => {
-                    setTournamentForm(["action", "down"]);
+                    setTournamentForm(['action', 'down']);
                   }}
                   transitionTime="200"
                   easing="ease-out"
@@ -224,9 +224,9 @@ export async function getServerSideProps(context) {
     session !== null
       ? await (
           await supabase
-            .from("users")
-            .select("ID,UUID,permissions,twitter,discord,dateJoin")
-            .eq("ID", session.id)
+            .from('users')
+            .select('ID,UUID,permissions,twitter,discord,dateJoin')
+            .eq('ID', session.id)
         ).data[0]
       : [{}];
 
@@ -235,8 +235,8 @@ export async function getServerSideProps(context) {
       ? await (
           await supabase
             .from(`${process.env.NEXT_PUBLIC_DB_TOURNEY_REQUESTS}`)
-            .select("*")
-            .eq("requester", session.id)
+            .select('*')
+            .eq('requester', session.id)
         ).data
       : [{}];
 
@@ -245,8 +245,8 @@ export async function getServerSideProps(context) {
       ? await (
           await supabase
             .from(`${process.env.NEXT_PUBLIC_DB_TOURNAMENTS}`)
-            .select("*")
-            .eq("host", session.id)
+            .select('*')
+            .contains('host', { id: session.id })
         ).data
       : [{}];
 
@@ -254,7 +254,7 @@ export async function getServerSideProps(context) {
     session === null
       ? {
           redirect: {
-            destination: "/",
+            destination: '/',
             permanent: false,
           },
         }

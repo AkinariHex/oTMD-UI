@@ -1,8 +1,8 @@
-import { Chainlink, Link1 } from "iconsax-react";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { useState } from "react";
-import supabase from "../../config/supabaseClient";
+import { motion } from 'framer-motion';
+import { Chainlink, Link1 } from 'iconsax-react';
+import Image from 'next/image';
+import { useState } from 'react';
+import supabase from '../../config/supabaseClient';
 
 export default function Tournaments({ tournaments, requests }) {
   const [isTournamentOpen, setIsTournamentOpen] = useState([]);
@@ -30,13 +30,13 @@ export default function Tournaments({ tournaments, requests }) {
                 <div
                   className="entry"
                   key={index}
-                  onClick={() => window.open(item.forumID, "_blank")}
+                  onClick={() => window.open(item.forumID, '_blank')}
                 >
                   <span className="acronym">{item.acronym}</span>
                   <span className="name">
                     {item.name}
                     <span className="request">
-                      Requested by{" "}
+                      Requested by{' '}
                       <img
                         src={`http://s.ppy.sh/a/${item.requester.ID}`}
                         className="propic"
@@ -72,89 +72,95 @@ export default function Tournaments({ tournaments, requests }) {
                 <span className={`status ${item.class}`}>
                   <span>{item.class}</span>
                 </span>
-                {isTournamentOpen[0] == index && isTournamentOpen[1] == true && (
-                  <motion.div
-                    className="info"
-                    initial={{ opacity: 0, y: -5, display: "none", height: 0 }}
-                    animate={{
-                      opacity: 1,
-                      y: 0,
-                      display: "flex",
-                      height: "auto",
-                    }}
-                    exit={{ opacity: 0, y: -5, display: "none", height: 0 }}
-                  >
-                    {item.stages.stages[0] && (
-                      <div className="progressbar-container">
-                        <ol className="progress-bar">
-                          {item.stages.stages.map((stage, index) => {
-                            return (
-                              <li
-                                key={index}
-                                className={item.stagesStatus[index]}
-                              >
-                                <span>{stage.stage}</span>
-                              </li>
-                            );
-                          })}
-                        </ol>
+                {isTournamentOpen[0] == index &&
+                  isTournamentOpen[1] == true && (
+                    <motion.div
+                      className="info"
+                      initial={{
+                        opacity: 0,
+                        y: -5,
+                        display: 'none',
+                        height: 0,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                        display: 'flex',
+                        height: 'auto',
+                      }}
+                      exit={{ opacity: 0, y: -5, display: 'none', height: 0 }}
+                    >
+                      {item.stages.stages[0] && (
+                        <div className="progressbar-container">
+                          <ol className="progress-bar">
+                            {item.stages.stages.map((stage, index) => {
+                              return (
+                                <li
+                                  key={index}
+                                  className={item.stagesStatus[index]}
+                                >
+                                  <span>{stage.stage}</span>
+                                </li>
+                              );
+                            })}
+                          </ol>
+                        </div>
+                      )}
+                      <br />
+                      <div className="about">
+                        {item.forumID && (
+                          <div
+                            className="forum"
+                            onClick={() =>
+                              window.open(
+                                `https://osu.ppy.sh/community/forums/topics/${item.forumID}`,
+                                '_blank'
+                              )
+                            }
+                          >
+                            <Chainlink
+                              size="16"
+                              style={{ marginTop: '2px' }}
+                              color="hsla(219, 40%, 60%, 1)"
+                            />{' '}
+                            Forum Thread
+                          </div>
+                        )}
+                        {item.website && (
+                          <div
+                            className="website"
+                            onClick={() => window.open(item.Website, '_blank')}
+                          >
+                            <Link1
+                              size="16"
+                              style={{ marginTop: '2px' }}
+                              color="hsla(219, 40%, 60%, 1)"
+                            />{' '}
+                            Website
+                          </div>
+                        )}
+                        {item.pickem && (
+                          <div
+                            className="website"
+                            onClick={() => window.open(item.Pickem, '_blank')}
+                          >
+                            <img
+                              src="img/hwr-pickem-logo.png"
+                              height={16}
+                              width={16}
+                              style={{
+                                marginTop: '2px',
+                                filter:
+                                  'invert(51%) sepia(57%) saturate(305%) hue-rotate(180deg) brightness(96%) contrast(91%)',
+                              }}
+                              alt="pickem logo"
+                            />{' '}
+                            Pick&apos;em
+                          </div>
+                        )}
                       </div>
-                    )}
-                    <br />
-                    <div className="about">
-                      {item.forumID && (
-                        <div
-                          className="forum"
-                          onClick={() =>
-                            window.open(
-                              `https://osu.ppy.sh/community/forums/topics/${item.forumID}`,
-                              "_blank"
-                            )
-                          }
-                        >
-                          <Chainlink
-                            size="16"
-                            style={{ marginTop: "2px" }}
-                            color="hsla(219, 40%, 60%, 1)"
-                          />{" "}
-                          Forum Thread
-                        </div>
-                      )}
-                      {item.website && (
-                        <div
-                          className="website"
-                          onClick={() => window.open(item.Website, "_blank")}
-                        >
-                          <Link1
-                            size="16"
-                            style={{ marginTop: "2px" }}
-                            color="hsla(219, 40%, 60%, 1)"
-                          />{" "}
-                          Website
-                        </div>
-                      )}
-                      {item.pickem && (
-                        <div
-                          className="website"
-                          onClick={() => window.open(item.Pickem, "_blank")}
-                        >
-                          <img
-                            src="img/hwr-pickem-logo.png"
-                            height={16}
-                            width={16}
-                            style={{
-                              marginTop: "2px",
-                              filter:
-                                "invert(51%) sepia(57%) saturate(305%) hue-rotate(180deg) brightness(96%) contrast(91%)",
-                            }}
-                            alt="pickem logo"
-                          />{" "}
-                          Pick&apos;em
-                        </div>
-                      )}
-                    </div>
-                  </motion.div>
-                )}
+                    </motion.div>
+                  )}
               </div>
             );
           })}
@@ -168,9 +174,9 @@ export async function getServerSideProps() {
   var tournaments = await supabase
     .from(`${process.env.NEXT_PUBLIC_DB_TOURNAMENTS}`)
     .select(
-      "UUID,acronym,name,forumID,website,pickem,stages,tourney_start,tourney_end,isActive"
+      'UUID,acronym,name,forumID,website,pickem,stages,tourney_start,tourney_end,isActive'
     )
-    .order("tourney_start", { ascending: false });
+    .order('tourney_start', { ascending: false });
   tournaments = tournaments.data;
 
   tournaments = await tournaments.sort((a, b) => {
@@ -188,19 +194,19 @@ export async function getServerSideProps() {
 
       if (todayDate > tournamentStartDate && todayDate < tournamentEndDate) {
         item.status = true;
-        item.class = "Active";
+        item.class = 'Active';
       } else if (tournamentEndDate < todayDate) {
         item.status = false;
-        item.class = "Ended";
+        item.class = 'Ended';
       } else if (todayDate < tournamentStartDate) {
         var Difference_In_Time = tournamentStartDate - todayDate;
         // To calculate the no. of days between two dates
         var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
         item.status =
           Math.floor(Difference_In_Days) == 0
-            ? "Tomorrow"
+            ? 'Tomorrow'
             : `${Math.floor(Difference_In_Days)} days`;
-        item.class = "Active";
+        item.class = 'Active';
       }
 
       if (item.isActive !== item.status) {
@@ -209,10 +215,11 @@ export async function getServerSideProps() {
           .update({
             isActive: item.status,
           })
-          .eq("UUID", item.UUID);
+          .eq('UUID', item.UUID);
       }
 
-      item.stages = JSON.parse(item.stages);
+      item.stages =
+        typeof item.stages !== 'string' ? item.stages : JSON.parse(item.stages);
 
       var prevDate = todayDate - 86400000;
       var stageStatus = [];
@@ -221,11 +228,11 @@ export async function getServerSideProps() {
         let stageDate = new Date(el.date);
         if (prevDate === null) prevDate = stageDate;
         if (todayDate > stageDate && todayDate > prevDate) {
-          stageStatus.push("is-complete");
+          stageStatus.push('is-complete');
         } else if (todayDate <= stageDate && todayDate > prevDate) {
-          stageStatus.push("is-active");
+          stageStatus.push('is-active');
         } else if (todayDate > prevDate && todayDate < stageDate) {
-          stageStatus.push("");
+          stageStatus.push('');
         }
         prevDate = stageDate;
       });
@@ -239,7 +246,7 @@ export async function getServerSideProps() {
   var requests = await (
     await supabase
       .from(`${process.env.NEXT_PUBLIC_DB_TOURNEY_REQUESTS}`)
-      .select("*, requester(ID,username)")
+      .select('*, requester(ID,username)')
   ).data;
 
   return {

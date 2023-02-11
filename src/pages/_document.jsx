@@ -58,6 +58,7 @@ class MyDocument extends Document {
             strategy="worker"
           ></Script>
           <Script
+            id="googletag"
             dangerouslySetInnerHTML={{
               __html: ` window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}

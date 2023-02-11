@@ -1,12 +1,12 @@
-import { Formik, Field, Form } from "formik";
-import { useState } from "react";
-import Collapsible from "react-collapsible";
-import supabase from "../../config/supabaseClient";
+import { Field, Form, Formik } from 'formik';
+import { useState } from 'react';
+import Collapsible from 'react-collapsible';
+import supabase from '../../config/supabaseClient';
 
 function EditTournament({ profile, session, tournament }) {
   const [isSubmitted, setSubmitted] = useState(false);
 
-  const [tournamentForm, setTournamentForm] = useState(["action", "down"]);
+  const [tournamentForm, setTournamentForm] = useState(['action', 'down']);
 
   const multipliersJSON = JSON.parse(tournament.multipliers);
   const multipliers = Object.keys(multipliersJSON);
@@ -14,10 +14,10 @@ function EditTournament({ profile, session, tournament }) {
   return (
     <Collapsible
       onTriggerOpening={() => {
-        setTournamentForm(["actionOpen", "up"]);
+        setTournamentForm(['actionOpen', 'up']);
       }}
       onTriggerClosing={() => {
-        setTournamentForm(["action", "down"]);
+        setTournamentForm(['action', 'down']);
       }}
       transitionTime="200"
       easing="ease-out"
@@ -67,37 +67,37 @@ function EditTournament({ profile, session, tournament }) {
 
                 let multipliers = {
                   NM: {
-                    type: values?.NMstatus ?? "*",
-                    value: values?.NMvalue ?? "1.00",
+                    type: values?.NMstatus ?? '*',
+                    value: values?.NMvalue ?? '1.00',
                   },
                   HD: {
-                    type: values?.HDstatus ?? "*",
-                    value: values?.HDvalue ?? "1.00",
+                    type: values?.HDstatus ?? '*',
+                    value: values?.HDvalue ?? '1.00',
                   },
                   HR: {
-                    type: values?.HRstatus ?? "*",
-                    value: values?.HRvalue ?? "1.00",
+                    type: values?.HRstatus ?? '*',
+                    value: values?.HRvalue ?? '1.00',
                   },
                   DT: {
-                    type: values?.DTstatus ?? "*",
-                    value: values?.DTvalue ?? "1.00",
+                    type: values?.DTstatus ?? '*',
+                    value: values?.DTvalue ?? '1.00',
                   },
                   EZ: {
-                    type: values?.EZstatus ?? "*",
-                    value: values?.EZvalue ?? "1.00",
+                    type: values?.EZstatus ?? '*',
+                    value: values?.EZvalue ?? '1.00',
                   },
                   FL: {
-                    type: values?.FLstatus ?? "*",
-                    value: values?.FLvalue ?? "1.00",
+                    type: values?.FLstatus ?? '*',
+                    value: values?.FLvalue ?? '1.00',
                   },
                   SD: {
-                    type: values?.SDstatus ?? "*",
-                    value: values?.SDvalue ?? "1.00",
-                    failValue: values?.SDfailValue ?? "1.00",
+                    type: values?.SDstatus ?? '*',
+                    value: values?.SDvalue ?? '1.00',
+                    failValue: values?.SDfailValue ?? '1.00',
                   },
                   HT: {
-                    type: values?.HTstatus ?? "*",
-                    value: values?.HTvalue ?? "1.00",
+                    type: values?.HTstatus ?? '*',
+                    value: values?.HTvalue ?? '1.00',
                   },
                 };
 
@@ -112,8 +112,8 @@ function EditTournament({ profile, session, tournament }) {
                     website: values.website,
                     multipliers: JSON.stringify(multipliers),
                   })
-                  .eq("UUID", tournament.UUID)
-                  .eq("host", profile.ID);
+                  .eq('UUID', tournament.UUID)
+                  .contains('host', { id: profile.ID });
 
                 if (err) {
                   return console.log(err);
@@ -172,7 +172,7 @@ function EditTournament({ profile, session, tournament }) {
                   <div className="startEndDates">
                     <div className="start">
                       <label htmlFor="startDate">
-                        Qualifiers Date{" "}
+                        Qualifiers Date{' '}
                         <span className="specialInfo">*mm/dd/yyyy</span>
                       </label>
                       <Field
@@ -185,7 +185,7 @@ function EditTournament({ profile, session, tournament }) {
                     </div>
                     <div className="end">
                       <label htmlFor="endDate">
-                        Grand Finals Date{" "}
+                        Grand Finals Date{' '}
                         <span className="specialInfo">*mm/dd/yyyy</span>
                       </label>
                       <Field
@@ -202,7 +202,7 @@ function EditTournament({ profile, session, tournament }) {
                       return (
                         <div className="multiplier" key={index}>
                           <label htmlFor="settingsMultiplier">
-                            {multiplier} Multiplier{" "}
+                            {multiplier} Multiplier{' '}
                             <span className="specialInfo">
                               &nbsp;* = multiplication&nbsp; / = division
                             </span>
@@ -224,11 +224,11 @@ function EditTournament({ profile, session, tournament }) {
                               spellCheck="false"
                               required
                             />
-                            {multiplier === "SD" && (
+                            {multiplier === 'SD' && (
                               <Field
                                 id={`${multiplier}failValue`}
                                 name={`${multiplier}failValue`}
-                                style={{ display: "none" }}
+                                style={{ display: 'none' }}
                                 placeholder={`Fail Value`}
                                 spellCheck="false"
                               />

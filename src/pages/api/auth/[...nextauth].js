@@ -1,18 +1,19 @@
-import NextAuth from "next-auth";
-import supabase from "../../../config/supabaseClient";
-import { v4 as uuidv4 } from "uuid";
+import NextAuth from 'next-auth';
+import { v4 as uuidv4 } from 'uuid';
+import supabase from '../../../config/supabaseClient';
 
 const postUserDBsupabase = async (profile) => {
-  const { data, error } = await supabase.from("users").insert([
+  const { data, error } = await supabase.from('users').insert([
     {
       ID: profile.id,
       username: profile.username,
+      cover: profile.cover_url,
       UUID: uuidv4(),
-      permissions: "User",
+      permissions: 'User',
       discord: profile.discord,
       twitter: profile.twitter,
       country: JSON.stringify(profile.country),
-      discordChannelsMatch: "[]",
+      discordChannelsMatch: '[]',
       dateJoin: Math.floor(new Date().getTime() / 1000.0),
     },
   ]);
@@ -25,17 +26,18 @@ const postUserDBsupabase = async (profile) => {
 };
 
 const checkUserDBsupabase = async (profile) => {
-  const player = await supabase.from("users").select("*").eq("ID", profile.id);
+  const player = await supabase.from('users').select('*').eq('ID', profile.id);
 
   if (player.data && player.data.length > 0) {
     const { data, error } = await supabase
-      .from("users")
+      .from('users')
       .update({
         username: profile.username,
+        cover: profile.cover_url,
         UUID: player.data.UUID ?? uuidv4(),
         country: JSON.stringify(profile.country),
       })
-      .eq("ID", profile.id);
+      .eq('ID', profile.id);
 
     if (error) {
       console.log(error);
@@ -51,17 +53,17 @@ const checkUserDBsupabase = async (profile) => {
 export default NextAuth({
   providers: [
     {
-      id: "osu",
-      name: "Osu!",
-      type: "oauth",
-      token: "https://osu.ppy.sh/oauth/token",
+      id: 'osu',
+      name: 'Osu!',
+      type: 'oauth',
+      token: 'https://osu.ppy.sh/oauth/token',
       authorization: {
-        url: "https://osu.ppy.sh/oauth/authorize",
+        url: 'https://osu.ppy.sh/oauth/authorize',
         params: {
-          scope: "identify public",
+          scope: 'identify public',
         },
       },
-      userinfo: "https://osu.ppy.sh/api/v2/me",
+      userinfo: 'https://osu.ppy.sh/api/v2/me',
       profile(profile) {
         return {
           id: profile.id,
@@ -76,7 +78,7 @@ export default NextAuth({
   ],
 
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
   },
 
   callbacks: {
@@ -88,7 +90,7 @@ export default NextAuth({
         },
       }).then((res) => res.json());
 
-      if (userData.authentication === "basic") return {};
+      if (userData.authentication === 'basic') return {};
 
       userData.access_token = token?.access_token;
 
